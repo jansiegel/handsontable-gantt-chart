@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Handsontable Gantt Chart</title>
+</head>
+
+<link rel="stylesheet" href="http://localhost/pro/dist/handsontable.css">
+<link rel="stylesheet" href="http://localhost/pro/dist/pikaday/pikaday.css">
+
+<link rel="stylesheet" href='css/main.css' type="text/css">
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.5.1.min.js">\x3C/script>')</script>
+
+<script src="js/pikaday/pikaday.js"></script>
+<script src="js/moment/moment.js"></script>
+<script src="js/zeroclipboard/ZeroClipboard.js"></script>
+
+<script>
+  if (window.location.href.indexOf('localhost') > - 1) {
+    document.write('<script src="http://localhost/pro/dist/handsontable.js">\x3C/script>');
+  } else {
+    document.write('<script src="js/handsontable.js">\x3C/script>')
+  }
+  </script>
+
+
+<script src="js/main.js"></script>
+
+<body>
+<h1 class="main">Handsontable Gantt Chart</h1>
+
+
+<div id="hot"></div>
+
+<h2>Data source table:</h2>
+<h4>Editing the source HOT currently not working.</h4>
+<div id="source"></div>
+
+<script type="text/javascript">
+
+</script>
+
+</body>
+</html>

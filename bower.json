@@ -1,0 +1,20 @@
+{
+  "name": "Handsontable Gantt Chart",
+  "version": "0.0.1",
+  "authors": [
+    "Jan Siegel <js.ziggle@gmail.com>"
+  ],
+  "description": "Handsontable-based Gantt chart",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "private": true,
+  "dependencies": {
+    "susy": "~2.2.6"
+  }
+}
