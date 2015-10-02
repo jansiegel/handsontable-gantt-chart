@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
       {
         title: 'Vendor',
         type: 'autocomplete',
-        source: ['Vendor One', 'Vendor Two'],
+        source: ['Vendor One', 'Vendor Two', 'Vendor Three',],
         strict: true
       }, {
         title: 'Format',
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }, {
         title: 'Market',
         type: 'autocomplete',
-        source: ['New York, NY', 'Los Angeles, CA'],
+        source: ['New York, NY', 'Los Angeles, CA', 'Chicago, IL','Philadelphia, PA','San Francisco, CA','Dallas, TX', 'Atlanta, GA', 'Houston, TX','Phoenix, AZ','Detroit, MI','Seattle, WA'],
         strict: true
       },{
         title: 'Size',

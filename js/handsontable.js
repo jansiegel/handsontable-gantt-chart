@@ -7,13 +7,13 @@
  * Licensed under the MIT license.
  * http://handsontable.com/
  *
- * Date: Thu Oct 01 2015 13:43:27 GMT+0200 (CEST)
+ * Date: Fri Oct 02 2015 11:37:10 GMT+0200 (CEST)
  */
 /*jslint white: true, browser: true, plusplus: true, indent: 4, maxerr: 50 */
 
 window.Handsontable = {
   version: '0.18.0',
-  buildDate: 'Thu Oct 01 2015 13:43:27 GMT+0200 (CEST)',
+  buildDate: 'Fri Oct 02 2015 11:37:10 GMT+0200 (CEST)',
 };
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Handsontable = f()}})(function(){var define,module,exports;return (function init(modules, cache, entry) {
   (function outer (modules, cache, entry) {
@@ -1351,6 +1351,15 @@ var $GanttChart = GanttChart;
       this.settings.division = 'weeks';
     }
   },
+  disablePlugin: function() {
+    $traceurRuntime.superGet(this, $GanttChart.prototype, "disablePlugin").call(this);
+  },
+  init: function() {
+    $traceurRuntime.superGet(this, $GanttChart.prototype, "init").call(this);
+  },
+  updatePlugin: function() {
+    $traceurRuntime.superGet(this, $GanttChart.prototype, "updatePlugin").call(this);
+  },
   addDaysToCache: function(monthNumber, columnNumber, start, end) {
     if (!this.daysInColumns[monthNumber][columnNumber]) {
       this.daysInColumns[monthNumber][columnNumber] = [];
@@ -1429,15 +1438,6 @@ var $GanttChart = GanttChart;
     };
     this.hot.updateSettings(additionalSettings);
   },
-  disablePlugin: function() {
-    $traceurRuntime.superGet(this, $GanttChart.prototype, "disablePlugin").call(this);
-  },
-  init: function() {
-    $traceurRuntime.superGet(this, $GanttChart.prototype, "init").call(this);
-  },
-  updatePlugin: function() {
-    $traceurRuntime.superGet(this, $GanttChart.prototype, "updatePlugin").call(this);
-  },
   parseData: function() {},
   loadChartData: function(source) {},
   connectToHOTInstance: function(instance, startDateColumn, endDateColumn, additionalData) {
@@ -1447,12 +1447,25 @@ var $GanttChart = GanttChart;
       endColumn: endDateColumn,
       additionalData: additionalData
     };
+    this.addSourceHOTHooks();
     this.updateFromHOT();
   },
-  updateFromHOT: function() {
+  addSourceHOTHooks: function() {
+    var $__5 = this;
+    this.HOTsource.instance.addHook('afterChange', (function(changes, source) {
+      return $__5.onAfterSourceChange(changes, source);
+    }));
+  },
+  updateFromHOT: function(row, keptProperties) {
     var additionalObjectData = {};
     var hotSource = this.HOTsource;
-    var sourceHOTRows = hotSource.instance.getData();
+    var sourceHOTRows;
+    if (row) {
+      sourceHOTRows = [];
+      sourceHOTRows[row] = hotSource.instance.getDataAtRow(row);
+    } else {
+      sourceHOTRows = hotSource.instance.getData();
+    }
     var rangeList = this.rangeList;
     var $__13 = this,
         $__14 = function(i, dataLength) {
@@ -1462,11 +1475,11 @@ var $GanttChart = GanttChart;
           objectEach(hotSource.additionalData, (function(prop, j) {
             additionalObjectData[j] = sourceHOTRows[i][prop];
           }));
-          $__13.addRangeBar(i, sourceHOTRows[i][hotSource.startColumn], sourceHOTRows[i][hotSource.endColumn], additionalObjectData);
+          $__13.addRangeBar(i, sourceHOTRows[i][hotSource.startColumn], sourceHOTRows[i][hotSource.endColumn], additionalObjectData, i);
         },
         $__15;
-    $__12: for (var i = 0,
-        dataLength = sourceHOTRows.length; i < dataLength; i++) {
+    $__12: for (var i = row || 0,
+        dataLength = sourceHOTRows.length; i < (row ? row + 1 : dataLength); i++) {
       $__15 = $__14(i, dataLength);
       switch ($__15) {
         case 0:
@@ -1475,11 +1488,9 @@ var $GanttChart = GanttChart;
     }
   },
   dateToColumn: function(date) {
-    if (!(date instanceof Date)) {
-      date = new Date(date);
-      if (date.toString() === 'Invalid Date') {
-        return null;
-      }
+    date = this.parseDate(date);
+    if (!date) {
+      return;
     }
     var month = date.getMonth();
     var day = date.getDate() - 1;
@@ -1511,12 +1522,19 @@ var $GanttChart = GanttChart;
       return this.daysInColumns[month][column];
     }
   },
-  isOnTheEdgeOfWeek: function(date) {
+  parseDate: function(date) {
     if (!(date instanceof Date)) {
       date = new Date(date);
       if (date.toString() === 'Invalid Date') {
         return null;
       }
+    }
+    return date;
+  },
+  isOnTheEdgeOfWeek: function(date) {
+    date = this.parseDate(date);
+    if (!date) {
+      return null;
     }
     var month = date.getMonth();
     var day = date.getDate() - 1;
@@ -1534,8 +1552,14 @@ var $GanttChart = GanttChart;
     }));
     return isOnTheEdgeOfWeek;
   },
+  isValidRangeBarData: function(startDate, endDate) {
+    return this.parseDate(startDate) && this.parseDate(endDate);
+  },
   addRangeBar: function(row, startDate, endDate, additionalData, sourceIndex) {
     var $__5 = this;
+    if (!this.isValidRangeBarData(startDate, endDate)) {
+      return false;
+    }
     var startColumn = this.dateToColumn(startDate);
     var endColumn = this.dateToColumn(endDate);
     if (!this.rangeBars[row]) {
@@ -1543,7 +1567,6 @@ var $GanttChart = GanttChart;
     }
     this.rangeBars[row][startColumn] = {
       barLength: endColumn - startColumn + 1,
-      color: 'color-' + parseInt(Math.floor(Math.random() * 10) + 1, 10),
       partialStart: !this.isOnTheEdgeOfWeek(startDate)[0],
       partialEnd: !this.isOnTheEdgeOfWeek(endDate)[1],
       additionalData: {}
@@ -1556,25 +1579,11 @@ var $GanttChart = GanttChart;
     this.hot.render();
     return [row, startColumn];
   },
-  updateRangeBar: function(barId, newData) {
-    if (!this.rangeList[barId]) {
-      return false;
-    }
-    var baseData = this.rangeList[barId];
-    var baseDataSize = Object.keys(baseData).length;
-    var newDataSize = Object.keys(newData).length;
-    var largerObj = Math.max(baseDataSize, newDataSize) === baseDataSize ? baseData : newData;
-    objectEach(largerObj, (function(prop, i) {
-      if (!baseData[i] || (baseData[i] && baseData[i] !== newData[i])) {
-        baseData[i] = newData[i];
-      }
-    }));
-  },
   renderRangeBar: function(row, startColumn, endColumn, additionalData) {
     var currentBar = this.rangeBars[row][startColumn];
     for (var i = startColumn; i <= endColumn; i++) {
       var cellMeta = this.hot.getCellMeta(row, i);
-      var newClassName = (cellMeta.className || '') + ' rangeBar ' + currentBar.color;
+      var newClassName = (cellMeta.className || '') + ' rangeBar ' + 'color-green';
       if ((i === startColumn && currentBar.partialStart) || (i === endColumn && currentBar.partialEnd)) {
         newClassName += ' partial';
       }
@@ -1589,9 +1598,18 @@ var $GanttChart = GanttChart;
     this.removeRangeBarByColumn(row, startColumn);
   },
   removeRangeBarByColumn: function(row, startColumn) {
+    var $__5 = this;
     var rangeBar = this.rangeBars[row][startColumn];
+    if (!rangeBar) {
+      return;
+    }
     this.unrenderRangeBar(row, startColumn, startColumn + rangeBar.barLength - 1);
     this.rangeBars[row][startColumn] = null;
+    objectEach(this.rangeList, (function(prop, i) {
+      if (prop === [row, startColumn]) {
+        $__5.rangeList[i] = null;
+      }
+    }));
   },
   unrenderRangeBar: function(row, startColumn, endColumn) {
     for (var i = startColumn; i <= endColumn; i++) {
@@ -1615,6 +1633,26 @@ var $GanttChart = GanttChart;
     this.assignGanttSettings();
     this.nestedHeadersPlugin = this.hot.getPlugin('nestedHeaders');
     addClass(this.hot.rootElement, 'ganttChart');
+  },
+  onAfterSourceChange: function(changes, source) {
+    var $__5 = this;
+    var changesByRows = {};
+    for (var i = 0,
+        changesLength = changes.length; i < changesLength; i++) {
+      var currentChange = changes[i];
+      var row = parseInt(currentChange[0], 10);
+      var col = parseInt(currentChange[1], 10);
+      if (!changesByRows[row]) {
+        changesByRows[row] = {};
+      }
+      changesByRows[row][col] = [currentChange[2], currentChange[3]];
+    }
+    objectEach(changesByRows, (function(prop, i) {
+      if ($__5.rangeList[i]) {
+        $__5.removeRangeBarByColumn(i, $__5.rangeList[i][1]);
+      }
+      $__5.updateFromHOT(i);
+    }));
   },
   destroy: function() {},
   dataStructureHelperDELETEME: function() {
@@ -11191,10 +11229,8 @@ function filterEmptyClassNames(classNames) {
   if (!classNames || !classNames.length) {
     return result;
   }
-  while (classNames[len] !== void 0) {
-    if (classNames[len]) {
-      result.push(classNames[len]);
-    }
+  while (classNames[len]) {
+    result.push(classNames[len]);
     len++;
   }
   return result;
