@@ -22,6 +22,8 @@ $susy: (
 
 body {
   background: #fefefe;
+  margin-bottom: 5em;
+  @include container();
 }
 
 h1, h2, h3, h4 {
@@ -36,15 +38,66 @@ h1.main {
   margin: 2em 0 2em 0;
 }
 
+#hot-container {
+  @include span(6 last);
+  text-align: left;
+  float: left;
+}
+
 #hot {
-  width: span(6);
-  margin: 0 auto;
+  //margin: 0 auto;
   overflow: hidden;
 }
 
 #source {
-  width: span(6);
-  margin: 0 auto;
+  width: span(10);
+  margin: 0 auto 3em auto;
   overflow: hidden;
-  height: 300px;
+  height: 201px;
+  clear: both;
+}
+
+#filter {
+  @include span(6 no-gutters);
+  overflow: auto;
+
+  #visible-columns {
+    //TODO: REMOVE THE VISIBILITY:HIDDEN
+    visibility: hidden;
+
+    padding-bottom: 5px;
+    border-bottom: 1px solid #F1EAEA;
+
+    .column {
+      display: inline-block;
+      font-size: 12px;
+
+      input[type=checkbox] {
+        margin-right: 5px;
+      }
+
+      label {
+        margin-right: 15px;
+      }
+    }
+  }
+}
+
+#filter table {
+  font-size: 14px;
+  width: 100%;
+  white-space: nowrap;
+
+  tr {
+    line-height: 25px;
+
+    td {
+      border-top: 1px solid #F1EAEA;
+      padding: 0 15px 0 15px;
+    }
+  }
+}
+
+.handsontable.ganttChart table tbody tr td:first-of-type {
+  border-left: 0;
 }

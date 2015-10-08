@@ -1,81 +1,17 @@
 var hot,
   source;
 document.addEventListener('DOMContentLoaded', function() {
-
-  var monthList = [
-    {name: 'January', days: 31},
-    {name: 'February', days: 28},
-    {name: 'March', days: 31},
-    {name: 'April', days: 30},
-    {name: 'May', days: 31},
-    {name: 'June', days: 30},
-    {name: 'July', days: 31},
-    {name: 'August', days: 31},
-    {name: 'September', days: 30},
-    {name: 'October', days: 31},
-    {name: 'November', days: 30},
-    {name: 'December', days: 31}
-  ];
-
-  function generateMonthHeaders() {
-    var headers = [];
-    for (var month in monthList) {
-      month = parseInt(month, 10);
-      if (monthList.hasOwnProperty(month)) {
-        headers.push({
-          label: monthList[month].name,
-          colspan: monthList[month].days
-        });
-      }
-    }
-
-    return headers;
-  }
-
-  function generateDayHeaders() {
-    var headers = [];
-    for (var month in monthList) {
-      month = parseInt(month, 10);
-      if (monthList.hasOwnProperty(month)) {
-        for (var i = 0; i < monthList[month].days; i++) {
-          headers.push(i + 1);
-        }
-      }
-    }
-
-    return headers;
-  }
-
-  function generateEmptyData(rows, cols) {
-    var data = [];
-    var row;
-
-    for (var i = 0; i < rows; i++) {
-      row = [];
-      for (var j = 0; j < cols; j++) {
-        row.push('');
-      }
-      data.push(row);
-    }
-
-    return data;
-  }
-
-  var hotContainer = document.querySelector('#hot');
-  hot = new Handsontable(hotContainer, {
-    data: generateEmptyData(20, 365),
-    ganttChart: {
-      firstWeekDay: 'monday'
-    },
-    height: 500
-  });
-
-
   var sourceHotContainer = document.querySelector('#source');
   source = new Handsontable(sourceHotContainer, {
     data: [
-      ["Vendor One", "Posters", "New York, NY", "2", "1/5/2015", "1/20/2015"],
-      ["Vendor Two", "Malls", "Los Angeles, CA", "1", "1/11/2015", "1/29/2015"]
+      ['Vendor One', 'Posters', 'New York, NY', '2', '1/5/2015', '1/20/2015'],
+      ['Vendor Two', 'Malls', 'Los Angeles, CA', '1', '1/11/2015', '1/29/2015'],
+      ['Vendor Three', 'Posters', 'Chicago, IL', '2', '1/15/2015', '2/20/2015'],
+      ['Vendor Four', 'Malls', 'Philadelphia, PA', '1', '1/3/2015', '3/29/2015'],
+      ['Vendor One', 'Posters', 'San Francisco, CA', '2', '4/5/2015', '4/20/2015'],
+      ['Vendor Four', 'Malls', 'Los Angeles, CA', '1', '2/11/2015', '5/29/2015'],
+      ['Vendor Two', 'Posters', 'New York, NY', '2', '2/15/2015', '3/20/2015'],
+      ['Vendor Two', 'Malls', 'Los Angeles, CA', '1', '3/2/2015', '4/12/2015'],
     ],
     minRows: 10,
     minCols: 10,
@@ -85,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
       {
         title: 'Vendor',
         type: 'autocomplete',
-        source: ['Vendor One', 'Vendor Two', 'Vendor Three',],
+        source: ['Vendor One', 'Vendor Two', 'Vendor Three', 'Vendor Four', 'Vendor Five', 'Vendor Six', 'Vendor Seven', 'Vendor Eight'],
         strict: true
       }, {
         title: 'Format',
@@ -95,12 +31,12 @@ document.addEventListener('DOMContentLoaded', function() {
       }, {
         title: 'Market',
         type: 'autocomplete',
-        source: ['New York, NY', 'Los Angeles, CA', 'Chicago, IL','Philadelphia, PA','San Francisco, CA','Dallas, TX', 'Atlanta, GA', 'Houston, TX','Phoenix, AZ','Detroit, MI','Seattle, WA'],
+        source: ['New York, NY', 'Los Angeles, CA', 'Chicago, IL', 'Philadelphia, PA', 'San Francisco, CA', 'Dallas, TX', 'Atlanta, GA', 'Houston, TX', 'Phoenix, AZ', 'Detroit, MI', 'Seattle, WA'],
         strict: true
-      },{
+      }, {
         title: 'Size',
         allowInvalid: true
-      },{
+      }, {
         title: 'Start Date',
         type: 'date',
         dateFormat: 'M/D/YYYY'
@@ -109,21 +45,26 @@ document.addEventListener('DOMContentLoaded', function() {
         type: 'date',
         dateFormat: 'M/D/YYYY'
       },
-      //{
-      //  title: '# of Cycles',
-      //  type: 'numeric',
-      //  format: '0,0.0[000]'
-      //}, {
-      //  title: 'Cycle Type',
-      //  type: 'autocomplete',
-      //  source: ['month', '1-week', '4-week', 'days', 'hours'],
-      //  strict: true
-      //}
     ],
-    xautoColumnSize: true
+    columnSorting: true
   });
 
-  source.render();
+  var filterChartController = new FilterChart(hot, source);
+  filterChartController.fillTheFilterTable();
+
+  var hotContainer = document.querySelector('#hot');
+  var hotContainerParentWidth = hotContainer.parentNode.offsetWidth;
+  var filterPanelHeight = document.querySelector('#filter').offsetHeight;
+  hot = new Handsontable(hotContainer, {
+    colHeaders: true,
+    rowHeights: 26,
+    ganttChart: {
+      firstWeekDay: 'monday',
+      startYear: 2015
+    },
+    height: filterPanelHeight + Handsontable.Dom.getScrollbarWidth() + 10,
+    width: hotContainerParentWidth - 20
+  });
 
   hot.getPlugin('ganttChart').connectToHOTInstance(source, 4, 5, {
     vendor: 0,

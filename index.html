@@ -1,35 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Handsontable Gantt Chart</title>
+    <meta charset="UTF-8">
+    <title>Handsontable Gantt Chart</title>
 </head>
 
-<!--<link rel="stylesheet" href="http://localhost/pro/dist/handsontable.css">-->
-<!--<link rel="stylesheet" href="http://localhost/pro/dist/pikaday/pikaday.css">-->
 <link rel="stylesheet" href="js/pikaday/pikaday.css">
 <link rel="stylesheet" href="css/handsontable.css">
 <link rel="stylesheet" href='css/main.css' type="text/css">
 
-<script src="js/pikaday/pikaday.js"></script>
 <script src="js/moment/moment.js"></script>
+<script src="js/pikaday/pikaday.js"></script>
 <script src="js/zeroclipboard/ZeroClipboard.js"></script>
-
-<!--<script src="http://localhost/pro/dist/handsontable.js"></script>-->
 <script src="js/handsontable.js"></script>
 
 
+<!--<link rel="stylesheet" href="http://localhost/pro/dist/handsontable.css">-->
+<!--<script src="http://localhost/pro/dist/handsontable.js"></script>-->
+
+<script src="js/filterChart.js"></script>
 <script src="js/main.js"></script>
 
 <body>
 <h1 class="main">Handsontable Gantt Chart</h1>
 
-
-<div id="hot"></div>
-
 <h2>Data source table:</h2>
-<h4>Editing the source HOT currently not working.</h4>
+
 <div id="source"></div>
+
+<div id="filter">
+    <div id="visible-columns">
+        <div class="column"><input type="checkbox"><label></label></div>
+    </div>
+    <table cellpadding="0" cellspacing="0">
+        <thead>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<div id="hot-container">
+    <div id="hot"></div>
+</div>
 
 <script type="text/javascript">
 

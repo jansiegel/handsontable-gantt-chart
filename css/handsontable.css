@@ -1,12 +1,12 @@
 /*!
- * Handsontable 0.18.0
+ * Handsontable 0.19.0
  * Handsontable is a JavaScript library for editable tables with basic copy-paste compatibility with Excel and Google Docs
  *
  * Copyright 2015 Handsoncode sp. z o.o. <hello@handsontable.com>
  * Licensed under the MIT license.
  * http://handsontable.com/
  *
- * Date: Fri Oct 02 2015 11:37:10 GMT+0200 (CEST)
+ * Date: Thu Oct 08 2015 10:54:08 GMT+0200 (CEST)
  */
 
 .handsontable {
@@ -1254,94 +1254,106 @@ thead .htCollapseButton:after {
 .handsontable.ganttChart td:not(.rangeBar) {
     border: 0;
     border-right: 1px solid #F3F3F3;
+    border-top: 1px solid #F1EAEA;
 }
 
 .handsontable.ganttChart td.rangeBar {
-    border: 0;
-    border-top: 3px solid #fff;
+    border-right: 0;
+    /*border-top: 3px solid #fff;*/
+    -webkit-box-shadow: inset 0px 3px 0px 0px rgba(255,255,255,1);
+    -moz-box-shadow: inset 0px 3px 0px 0px rgba(255,255,255,1);
+    box-shadow: inset 0px 3px 0px 0px rgba(255,255,255,1);
+}
+
+.handsontable.ganttChart tbody tr th {
+    padding-top: 3px;
 }
 
 .handsontable.ganttChart tr:first-of-type td {
     border-top: 1px solid #CCC;
 }
 
-.rangeBar.color-1 {
+.handsontable.ganttChart tr td:first-of-type {
+    border-left: 1px solid #CCC;
+}
+
+.handsontable.ganttChart td.rangeBar.color-1 {
     background: #002F32
 }
 
-.rangeBar.color-1.partial {
+.handsontable.ganttChart td.rangeBar.color-1.partial {
     background: #00464a
 }
 
-.rangeBar.color-2 {
+.handsontable.ganttChart td.rangeBar.color-2 {
     background: #42826C
 }
 
-.rangeBar.color-2.partial {
+.handsontable.ganttChart td.rangeBar.color-2.partial {
     background: #5bb394
 }
 
-.rangeBar.color-3 {
+.handsontable.ganttChart td.rangeBar.color-3 {
     background: #A5C77F
 }
 
-.rangeBar.color-3.partial {
+.handsontable.ganttChart td.rangeBar.color-3.partial {
     background: #d0faa0
 }
 
-.rangeBar.color-4 {
+.handsontable.ganttChart td.rangeBar.color-4 {
     background: #FFC861
 }
 
-.rangeBar.color-4.partial {
+.handsontable.ganttChart td.rangeBar.color-4.partial {
     background: #ffe272
 }
 
-.rangeBar.color-5 {
+.handsontable.ganttChart td.rangeBar.color-5 {
     background: #C84663
 }
 
-.rangeBar.color-5.partial {
+.handsontable.ganttChart td.rangeBar.color-5.partial {
     background: #fa577d
 }
 
-.rangeBar.color-6 {
+.handsontable.ganttChart td.rangeBar.color-6 {
     background: #5A1F00
 }
 
-.rangeBar.color-6.partial {
+.handsontable.ganttChart td.rangeBar.color-6.partial {
     background: #8c2f00
 }
 
-.rangeBar.color-7 {
+.handsontable.ganttChart td.rangeBar.color-7 {
     background: #D1570D
 }
 
-.rangeBar.color-7.partial {
+.handsontable.ganttChart td.rangeBar.color-7.partial {
     background: #ff6912
 }
 
-.rangeBar.color-8 {
+.handsontable.ganttChart td.rangeBar.color-8 {
     background: #FDE792
 }
 
-.rangeBar.color-8.partial {
+.handsontable.ganttChart td.rangeBar.color-8.partial {
     background: #fdf5ad
 }
 
-.rangeBar.color-9 {
+.handsontable.ganttChart td.rangeBar.color-9 {
     background: #477725
 }
 
-.rangeBar.color-9.partial {
+.handsontable.ganttChart td.rangeBar.color-9.partial {
     background: #66a836
 }
 
-.rangeBar.color-10 {
+.handsontable.ganttChart td.rangeBar.color-10 {
     background: #A9CC66
 }
 
-.rangeBar.color-10.partial {
+.handsontable.ganttChart td.rangeBar.color-10.partial {
     background: #b7cc89
 }
 
@@ -1352,11 +1364,11 @@ thead .htCollapseButton:after {
 /*background: #ff6162;*/
 /*}*/
 
-.rangeBar.color-green {
+.handsontable.ganttChart td.rangeBar.color-green {
     background: #48b703;
 }
 
-.rangeBar.color-green.partial {
+.handsontable.ganttChart td.rangeBar.color-green.partial {
     background: #8edf5a;
 }
 
