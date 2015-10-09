@@ -49,20 +49,22 @@ document.addEventListener('DOMContentLoaded', function() {
     columnSorting: true
   });
 
-  var filterChartController = new FilterChart(hot, source);
+  var filterChartController = new FilterChart(source);
   filterChartController.fillTheFilterTable();
+  filterChartController.fillTheFilterModal(0, 1, 2);
 
   var hotContainer = document.querySelector('#hot');
   var hotContainerParentWidth = hotContainer.parentNode.offsetWidth;
   var filterPanelHeight = document.querySelector('#filter').offsetHeight;
   hot = new Handsontable(hotContainer, {
     colHeaders: true,
+    hiddenRows: true,
     rowHeights: 26,
     ganttChart: {
       firstWeekDay: 'monday',
       startYear: 2015
     },
-    height: filterPanelHeight + Handsontable.Dom.getScrollbarWidth() + 10,
+    height: filterPanelHeight + Handsontable.Dom.getScrollbarWidth() + 42,
     width: hotContainerParentWidth - 20
   });
 
@@ -72,4 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
     market: 2
   });
 
+  filterChartController.setChartInstance(hot);
+  filterChartController.positionTableWithChart();
+  filterChartController.bindEvents();
 });
