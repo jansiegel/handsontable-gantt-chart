@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
       firstWeekDay: 'monday',
       startYear: 2015
     },
+    disableVisualSelection: true,
     height: filterPanelHeight + Handsontable.Dom.getScrollbarWidth() + 42,
     width: hotContainerParentWidth - 20
   });
