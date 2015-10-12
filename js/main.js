@@ -45,8 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
         type: 'date',
         dateFormat: 'M/D/YYYY'
       },
-    ],
-    columnSorting: true
+    ]
   });
 
   var filterChartController = new FilterChart(source);
