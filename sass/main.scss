@@ -47,6 +47,10 @@ h1.main {
   margin: 2em 0 2em 0;
 }
 
+.handsontable {
+  font-size: 14px;
+}
+
 #hot-container {
   @include span(6 last);
   text-align: left;

@@ -23,6 +23,9 @@ h1, h2, h3, h4 {
 h1.main {
   margin: 2em 0 2em 0; }
 
+.handsontable {
+  font-size: 14px; }
+
 #hot-container {
   width: 49.39759%;
   float: right;
