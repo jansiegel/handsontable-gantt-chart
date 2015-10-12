@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     disableVisualSelection: true,
     height: filterPanelHeight + Handsontable.Dom.getScrollbarWidth() + 42,
-    width: hotContainerParentWidth - 20
+    width: hotContainerParentWidth
   });
 
   hot.getPlugin('ganttChart').connectToHOTInstance(source, 4, 5, {
