@@ -52,7 +52,8 @@ h1.main {
 }
 
 #hot-container {
-  @include span(6 last);
+  //@include span(6);
+  width: span(6) + gutter();
   text-align: left;
   float: left;
 }
