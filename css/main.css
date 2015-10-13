@@ -38,7 +38,7 @@ h1.main {
   width: 100%;
   margin: 0 auto 3em auto;
   overflow: hidden;
-  height: 201px;
+  height: 188px;
   clear: both; }
 
 #filter {
@@ -54,7 +54,7 @@ h1.main {
     display: block;
     width: 98%;
     padding: 3px;
-    background: #F9F9F9;
+    background: #EEE;
     text-align: center; }
 
 #filter table {
