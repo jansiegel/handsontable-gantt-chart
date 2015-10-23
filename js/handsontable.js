@@ -7,13 +7,13 @@
  * Licensed under the MIT license.
  * http://handsontable.com/
  *
- * Date: Thu Oct 08 2015 10:54:08 GMT+0200 (CEST)
+ * Date: Fri Oct 23 2015 10:05:59 GMT+0200 (CEST)
  */
 /*jslint white: true, browser: true, plusplus: true, indent: 4, maxerr: 50 */
 
 window.Handsontable = {
   version: '0.19.0',
-  buildDate: 'Thu Oct 08 2015 10:54:08 GMT+0200 (CEST)',
+  buildDate: 'Fri Oct 23 2015 10:05:59 GMT+0200 (CEST)',
 };
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Handsontable = f()}})(function(){var define,module,exports;return (function init(modules, cache, entry) {
   (function outer (modules, cache, entry) {
@@ -138,7 +138,7 @@ arrayHelpers.arrayEach([domHelpers, domEventHelpers], (function(helper) {
 }));
 
 //# 
-},{"cellTypes":35,"core":36,"es6collections":"es6collections","helpers/array":52,"helpers/browser":53,"helpers/data":54,"helpers/dom/element":55,"helpers/dom/event":56,"helpers/function":57,"helpers/mixed":58,"helpers/number":59,"helpers/object":60,"helpers/setting":61,"helpers/string":62,"helpers/unicode":63,"pluginHooks":65,"plugins/jqueryHandsontable":13,"renderers/_cellDecorator":98,"shims/classes":105}],2:[function(require,module,exports){
+},{"cellTypes":41,"core":42,"es6collections":"es6collections","helpers/array":59,"helpers/browser":60,"helpers/data":61,"helpers/dom/element":62,"helpers/dom/event":63,"helpers/function":64,"helpers/mixed":65,"helpers/number":66,"helpers/object":67,"helpers/setting":68,"helpers/string":69,"helpers/unicode":70,"pluginHooks":74,"plugins/jqueryHandsontable":19,"renderers/_cellDecorator":107,"shims/classes":114}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableBottomOverlay: {get: function() {
@@ -362,7 +362,7 @@ window.WalkontableBottomOverlay = WalkontableBottomOverlay;
 WalkontableOverlay.registerOverlay(WalkontableOverlay.CLONE_BOTTOM, WalkontableBottomOverlay);
 
 //# 
-},{"../../../../../node_modules/hot-builder/node_modules/handsontable/src/3rdparty/walkontable/src/overlay/_base.js":23,"../../../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":55}],3:[function(require,module,exports){
+},{"../../../../../node_modules/hot-builder/node_modules/handsontable/src/3rdparty/walkontable/src/overlay/_base.js":29,"../../../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":62}],3:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableBottomLeftCornerOverlay: {get: function() {
@@ -433,7 +433,7 @@ window.WalkontableBottomLeftCornerOverlay = WalkontableBottomLeftCornerOverlay;
 WalkontableOverlay.registerOverlay(WalkontableOverlay.CLONE_BOTTOM_LEFT_CORNER, WalkontableBottomLeftCornerOverlay);
 
 //# 
-},{"../../../../../node_modules/hot-builder/node_modules/handsontable/src/3rdparty/walkontable/src/overlay/_base.js":23,"../../../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":55}],4:[function(require,module,exports){
+},{"../../../../../node_modules/hot-builder/node_modules/handsontable/src/3rdparty/walkontable/src/overlay/_base.js":29,"../../../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":62}],4:[function(require,module,exports){
 "use strict";
 var $__3rdparty_47_walkontable_47_src_47_overlay_47_bottom_46_js__,
     $__3rdparty_47_walkontable_47_src_47_overlay_47_bottomLeftCorner_46_js__;
@@ -442,6 +442,138 @@ var WalkontableBottomLeftCornerOverlay = ($__3rdparty_47_walkontable_47_src_47_o
 
 //# 
 },{"3rdparty/walkontable/src/overlay/bottom.js":2,"3rdparty/walkontable/src/overlay/bottomLeftCorner.js":3}],5:[function(require,module,exports){
+"use strict";
+Object.defineProperties(exports, {
+  BindRowsWithHeaders: {get: function() {
+      return BindRowsWithHeaders;
+    }},
+  __esModule: {value: true}
+});
+var $__handsontable_47_plugins_47__95_base__,
+    $__handsontable_47_helpers_47_array__,
+    $__handsontable_47_helpers_47_number__,
+    $__handsontable_47_plugins__,
+    $__rowsMapper__;
+var BasePlugin = ($__handsontable_47_plugins_47__95_base__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base"), $__handsontable_47_plugins_47__95_base__ && $__handsontable_47_plugins_47__95_base__.__esModule && $__handsontable_47_plugins_47__95_base__ || {default: $__handsontable_47_plugins_47__95_base__}).default;
+var arrayEach = ($__handsontable_47_helpers_47_array__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array"), $__handsontable_47_helpers_47_array__ && $__handsontable_47_helpers_47_array__.__esModule && $__handsontable_47_helpers_47_array__ || {default: $__handsontable_47_helpers_47_array__}).arrayEach;
+var rangeEach = ($__handsontable_47_helpers_47_number__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number"), $__handsontable_47_helpers_47_number__ && $__handsontable_47_helpers_47_number__.__esModule && $__handsontable_47_helpers_47_number__ || {default: $__handsontable_47_helpers_47_number__}).rangeEach;
+var registerPlugin = ($__handsontable_47_plugins__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/plugins"), $__handsontable_47_plugins__ && $__handsontable_47_plugins__.__esModule && $__handsontable_47_plugins__ || {default: $__handsontable_47_plugins__}).registerPlugin;
+var RowsMapper = ($__rowsMapper__ = require("rowsMapper"), $__rowsMapper__ && $__rowsMapper__.__esModule && $__rowsMapper__ || {default: $__rowsMapper__}).RowsMapper;
+var BindRowsWithHeaders = function BindRowsWithHeaders(hotInstance) {
+  $traceurRuntime.superConstructor($BindRowsWithHeaders).call(this, hotInstance);
+  this.rowsMapper = new RowsMapper(this);
+  this.removedRows = [];
+};
+var $BindRowsWithHeaders = BindRowsWithHeaders;
+($traceurRuntime.createClass)(BindRowsWithHeaders, {
+  isEnabled: function() {
+    return !!this.hot.getSettings().bindRowsWithHeaders;
+  },
+  enablePlugin: function() {
+    var $__5 = this;
+    if (this.enabled) {
+      return;
+    }
+    this.rowsMapper.setLength(this.hot.countSourceRows());
+    this.rowsMapper.createMap();
+    this.addHook('modifyRowHeader', (function(row) {
+      return $__5.onModifyRowHeader(row);
+    }));
+    this.addHook('afterCreateRow', (function(index, amount) {
+      return $__5.rowsMapper.insertItems(index, amount);
+    }));
+    this.addHook('beforeRemoveRow', (function(index, amount) {
+      return $__5.onBeforeRemoveRow(index, amount);
+    }));
+    this.addHook('afterRemoveRow', (function(index, amount) {
+      return $__5.onAfterRemoveRow(index, amount);
+    }));
+    this.addHook('afterLoadData', (function(firstRun) {
+      return $__5.onAfterLoadData(firstRun);
+    }));
+    $traceurRuntime.superGet(this, $BindRowsWithHeaders.prototype, "enablePlugin").call(this);
+  },
+  updatePlugin: function() {
+    this.disablePlugin();
+    this.enablePlugin();
+    $traceurRuntime.superGet(this, $BindRowsWithHeaders.prototype, "updatePlugin").call(this);
+  },
+  disablePlugin: function() {
+    this.removedRows.length = 0;
+    this.rowsMapper.clearMap();
+    $traceurRuntime.superGet(this, $BindRowsWithHeaders.prototype, "disablePlugin").call(this);
+  },
+  onModifyRowHeader: function(row) {
+    return this.rowsMapper.getValueByIndex(this.hot.runHooks('modifyRow', row));
+  },
+  onBeforeRemoveRow: function(index, amount) {
+    var $__5 = this;
+    this.removedRows.length = 0;
+    if (index !== false) {
+      rangeEach(index, index + amount - 1, (function(removedIndex) {
+        $__5.removedRows.push($__5.hot.runHooks('modifyRow', removedIndex));
+      }));
+    }
+  },
+  onAfterRemoveRow: function(index, amount) {
+    this.rowsMapper.removeItems(this.removedRows);
+  },
+  onAfterLoadData: function(firstRun) {
+    if (!firstRun) {
+      this.rowsMapper.setLength(this.hot.countSourceRows());
+      this.rowsMapper.createMap();
+    }
+  },
+  destroy: function() {
+    this.rowsMapper.destroy();
+    $traceurRuntime.superGet(this, $BindRowsWithHeaders.prototype, "destroy").call(this);
+  }
+}, {}, BasePlugin);
+;
+registerPlugin('bindRowsWithHeaders', BindRowsWithHeaders);
+
+//# 
+},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins":75,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base":76,"rowsMapper":6}],6:[function(require,module,exports){
+"use strict";
+Object.defineProperties(exports, {
+  RowsMapper: {get: function() {
+      return RowsMapper;
+    }},
+  __esModule: {value: true}
+});
+var $__handsontable_47_mixins_47_arrayMapper__,
+    $__handsontable_47_helpers_47_object__,
+    $__handsontable_47_helpers_47_number__;
+var arrayMapper = ($__handsontable_47_mixins_47_arrayMapper__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/mixins/arrayMapper"), $__handsontable_47_mixins_47_arrayMapper__ && $__handsontable_47_mixins_47_arrayMapper__.__esModule && $__handsontable_47_mixins_47_arrayMapper__ || {default: $__handsontable_47_mixins_47_arrayMapper__}).arrayMapper;
+var mixin = ($__handsontable_47_helpers_47_object__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object"), $__handsontable_47_helpers_47_object__ && $__handsontable_47_helpers_47_object__.__esModule && $__handsontable_47_helpers_47_object__ || {default: $__handsontable_47_helpers_47_object__}).mixin;
+var rangeEach = ($__handsontable_47_helpers_47_number__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number"), $__handsontable_47_helpers_47_number__ && $__handsontable_47_helpers_47_number__.__esModule && $__handsontable_47_helpers_47_number__ || {default: $__handsontable_47_helpers_47_number__}).rangeEach;
+var RowsMapper = function RowsMapper(bindRowsWithHeaders) {
+  this.bindRowsWithHeaders = bindRowsWithHeaders;
+  this.length = 0;
+};
+($traceurRuntime.createClass)(RowsMapper, {
+  setLength: function(length) {
+    this.length = length;
+  },
+  createMap: function() {
+    var $__3 = this;
+    var rowOffset = 0;
+    this._arrayMap.length = 0;
+    rangeEach(this.length - 1, (function(itemIndex) {
+      $__3._arrayMap.push(itemIndex);
+    }));
+  },
+  destroy: function() {
+    this._arrayMap = null;
+  }
+}, {});
+mixin(RowsMapper, arrayMapper);
+;
+Handsontable.utils = Handsontable.utils || {};
+Handsontable.utils.BindRowsWithHeadersRowsMapper = RowsMapper;
+
+//# 
+},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object":67,"../../../node_modules/hot-builder/node_modules/handsontable/src/mixins/arrayMapper":71}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   CollapsibleColumns: {get: function() {
@@ -525,7 +657,7 @@ var $CollapsibleColumns = CollapsibleColumns;
     var headerLevels = this.hot.view.wt.getSetting('columnHeaders').length;
     var mainHeaders = this.hot.view.wt.wtTable.THEAD;
     var topHeaders = this.hot.view.wt.wtOverlays.topOverlay.clone.wtTable.THEAD;
-    var topLeftCornerHeaders = this.hot.view.wt.wtOverlays.topLeftCornerOverlay ? hot.view.wt.wtOverlays.topLeftCornerOverlay.clone.wtTable.THEAD : null;
+    var topLeftCornerHeaders = this.hot.view.wt.wtOverlays.topLeftCornerOverlay ? this.hot.view.wt.wtOverlays.topLeftCornerOverlay.clone.wtTable.THEAD : null;
     var removeButton = function(button) {
       if (button) {
         button.parentNode.removeChild(button);
@@ -617,13 +749,56 @@ var $CollapsibleColumns = CollapsibleColumns;
     }
   },
   expandSection: function(coords) {
-    this.toggleCollapsedSection(coords, 'expand');
+    this.markSectionAs('expanded', coords.row, coords.col, true);
+    this.toggleCollapsibleSection(coords, 'expand');
   },
   collapseSection: function(coords) {
-    this.toggleCollapsedSection(coords, 'collapse');
+    this.markSectionAs('collapsed', coords.row, coords.col, true);
+    this.toggleCollapsibleSection(coords, 'collapse');
   },
-  toggleCollapsedSection: function(coords, action) {
+  toggleAllCollapsibleSections: function(action) {
     var $__8 = this;
+    var nestedHeadersColspanArray = this.nestedHeadersPlugin.colspanArray;
+    if (this.settings === true) {
+      arrayEach(nestedHeadersColspanArray, (function(headerLevel, i) {
+        arrayEach(headerLevel, (function(header, j) {
+          if (header.colspan > 1) {
+            var row = $__8.nestedHeadersPlugin.levelToRowCoords(i);
+            var col = j;
+            $__8.markSectionAs(action === 'collapse' ? 'collapsed' : 'expanded', row, col, true);
+            $__8.toggleCollapsibleSection({
+              row: row,
+              col: col
+            }, action);
+          }
+        }));
+      }));
+    } else {
+      objectEach(this.buttonEnabledList, (function(headerRow, i) {
+        objectEach(headerRow, (function(header, j) {
+          $__8.markSectionAs(action === 'collapse' ? 'collapsed' : 'expanded', i, j, true);
+          $__8.toggleCollapsibleSection({
+            row: i,
+            col: j
+          }, action);
+        }));
+      }));
+    }
+  },
+  collapseAll: function() {
+    this.toggleAllCollapsibleSections('collapse');
+  },
+  expandAll: function() {
+    this.toggleAllCollapsibleSections('expand');
+  },
+  toggleCollapsibleSection: function(coords, action) {
+    var $__8 = this;
+    if (coords.row) {
+      coords.row = parseInt(coords.row, 10);
+    }
+    if (coords.col) {
+      coords.col = parseInt(coords.col, 10);
+    }
     var hiddenColumns = this.hiddenColumnsPlugin.hiddenColumns;
     var colspanArray = this.nestedHeadersPlugin.colspanArray;
     var level = this.nestedHeadersPlugin.rowCoordsToLevel(coords.row);
@@ -669,10 +844,10 @@ var $CollapsibleColumns = CollapsibleColumns;
           this.collapsedSections[coords.row] = [];
         }
         this.markSectionAs('collapsed', coords.row, coords.col, true);
-        this.toggleCollapsedSection(coords, 'collapse');
+        this.toggleCollapsibleSection(coords, 'collapse');
       } else if (hasClass(event.target, 'collapsed')) {
         this.markSectionAs('expanded', coords.row, coords.col, true);
-        this.toggleCollapsedSection(coords, 'expand');
+        this.toggleCollapsibleSection(coords, 'expand');
       }
       stopImmediatePropagation(event);
       return false;
@@ -700,7 +875,7 @@ var $CollapsibleColumns = CollapsibleColumns;
 registerPlugin('collapsibleColumns', CollapsibleColumns);
 
 //# 
-},{"../../../node_modules/hot-builder/node_modules/handsontable/src/eventManager":51,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":52,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":55,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/event":56,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object":60,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base":67}],6:[function(require,module,exports){
+},{"../../../node_modules/hot-builder/node_modules/handsontable/src/eventManager":58,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":62,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/event":63,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object":67,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins":75,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base":76}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   ColumnSummary: {get: function() {
@@ -1067,7 +1242,7 @@ var $ColumnSummary = ColumnSummary;
 registerPlugin('columnSummary', ColumnSummary);
 
 //# 
-},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":52,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object":60,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins.js":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base.js":67}],7:[function(require,module,exports){
+},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object":67,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins.js":75,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base.js":76}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   DropdownMenu: {get: function() {
@@ -1195,13 +1370,6 @@ var $DropdownMenu = DropdownMenu;
       params[$__13] = arguments[$__13];
     this.commandExecutor.execute.apply(this.commandExecutor, params);
   },
-  destroy: function() {
-    this.close();
-    if (this.menu) {
-      this.menu.destroy();
-    }
-    $traceurRuntime.superGet(this, $DropdownMenu.prototype, "destroy").call(this);
-  },
   onTableClick: function(event) {
     stopPropagation(event);
     if (hasClass(event.target, BUTTON_CLASS_NAME) && !this.menu.isOpened()) {
@@ -1230,6 +1398,13 @@ var $DropdownMenu = DropdownMenu;
     button.innerHTML = '\u25BC';
     button.className = BUTTON_CLASS_NAME;
     TH.firstChild.insertBefore(button, TH.firstChild.firstChild);
+  },
+  destroy: function() {
+    this.close();
+    if (this.menu) {
+      this.menu.destroy();
+    }
+    $traceurRuntime.superGet(this, $DropdownMenu.prototype, "destroy").call(this);
   }
 }, {get DEFAULT_ITEMS() {
     return [COLUMN_LEFT, COLUMN_RIGHT, SEPARATOR, REMOVE_COLUMN, SEPARATOR, CLEAR_COLUMN, SEPARATOR, READ_ONLY, SEPARATOR, ALIGNMENT];
@@ -1245,64 +1420,136 @@ Handsontable.plugins = Handsontable.plugins || {};
 Handsontable.plugins.DropdownMenu = DropdownMenu;
 
 //# 
-},{"../../../node_modules/hot-builder/node_modules/handsontable/src/eventManager":51,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":52,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":55,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/event":56,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object":60,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base":67,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/contextMenu/commandExecutor":74,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/contextMenu/itemsFactory":77,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/contextMenu/menu":78,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/contextMenu/predefinedItems":79}],8:[function(require,module,exports){
+},{"../../../node_modules/hot-builder/node_modules/handsontable/src/eventManager":58,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":62,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/event":63,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object":67,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins":75,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base":76,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/contextMenu/commandExecutor":83,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/contextMenu/itemsFactory":86,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/contextMenu/menu":87,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/contextMenu/predefinedItems":88}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
-  GanttChart: {get: function() {
-      return GanttChart;
+  DateCalculator: {get: function() {
+      return DateCalculator;
     }},
   __esModule: {value: true}
 });
-var $__handsontable_47_helpers_47_dom_47_element__,
-    $__handsontable_47_helpers_47_object__,
-    $__handsontable_47_helpers_47_number__,
-    $__handsontable_47_plugins_46_js__,
-    $__handsontable_47_plugins_47__95_base_46_js__;
-var $__0 = ($__handsontable_47_helpers_47_dom_47_element__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element"), $__handsontable_47_helpers_47_dom_47_element__ && $__handsontable_47_helpers_47_dom_47_element__.__esModule && $__handsontable_47_helpers_47_dom_47_element__ || {default: $__handsontable_47_helpers_47_dom_47_element__}),
-    addClass = $__0.addClass,
-    removeClass = $__0.removeClass;
-var $__1 = ($__handsontable_47_helpers_47_object__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object"), $__handsontable_47_helpers_47_object__ && $__handsontable_47_helpers_47_object__.__esModule && $__handsontable_47_helpers_47_object__ || {default: $__handsontable_47_helpers_47_object__}),
-    objectEach = $__1.objectEach,
-    deepClone = $__1.deepClone;
-var rangeEach = ($__handsontable_47_helpers_47_number__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number"), $__handsontable_47_helpers_47_number__ && $__handsontable_47_helpers_47_number__.__esModule && $__handsontable_47_helpers_47_number__ || {default: $__handsontable_47_helpers_47_number__}).rangeEach;
-var registerPlugin = ($__handsontable_47_plugins_46_js__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/plugins.js"), $__handsontable_47_plugins_46_js__ && $__handsontable_47_plugins_46_js__.__esModule && $__handsontable_47_plugins_46_js__ || {default: $__handsontable_47_plugins_46_js__}).registerPlugin;
-var BasePlugin = ($__handsontable_47_plugins_47__95_base_46_js__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base.js"), $__handsontable_47_plugins_47__95_base_46_js__ && $__handsontable_47_plugins_47__95_base_46_js__.__esModule && $__handsontable_47_plugins_47__95_base_46_js__ || {default: $__handsontable_47_plugins_47__95_base_46_js__}).default;
-var GanttChart = function GanttChart(hotInstance) {
-  $traceurRuntime.superConstructor($GanttChart).call(this, hotInstance);
-  this.settings = {};
-  this.currentYear = null;
-  this.monthList = [];
-  this.rangeBars = {};
-  this.rangeList = {};
-  this.nestedHeadersPlugin = null;
+var $__handsontable_47_helpers_47_array__,
+    $__handsontable_47_helpers_47_object__;
+var arrayEach = ($__handsontable_47_helpers_47_array__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array"), $__handsontable_47_helpers_47_array__ && $__handsontable_47_helpers_47_array__.__esModule && $__handsontable_47_helpers_47_array__ || {default: $__handsontable_47_helpers_47_array__}).arrayEach;
+var objectEach = ($__handsontable_47_helpers_47_object__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object"), $__handsontable_47_helpers_47_object__ && $__handsontable_47_helpers_47_object__.__esModule && $__handsontable_47_helpers_47_object__ || {default: $__handsontable_47_helpers_47_object__}).objectEach;
+var DateCalculator = function DateCalculator(year) {
+  this.year = year;
+  this.firstWeekDay = 'monday';
+  this.weekSectionCount = 0;
+  this.monthList = this.calculateMonthData();
   this.daysInColumns = {};
-  this.hotSource = null;
-  this.overallWeeks = null;
-  this.initialSettings = null;
+  this.calculateWeekStructure();
 };
-var $GanttChart = GanttChart;
-($traceurRuntime.createClass)(GanttChart, {
-  checkDependencies: function() {
-    if (!this.hot.getSettings().colHeaders) {
-      console.warn('You need to enable the colHeaders property in your Gantt Chart Handsontable in order for it to work properly.');
+($traceurRuntime.createClass)(DateCalculator, {
+  setYear: function(year) {
+    this.year = year;
+    this.monthList = this.calculateMonthData();
+    this.calculateWeekStructure();
+  },
+  setFirstWeekDay: function(day) {
+    if (day.toLowerCase() !== 'monday' && day.toLowerCase() !== 'sunday') {
+      console.warn('First day of the week must be set to either Monday or Sunday');
+    }
+    this.firstWeekDay = day.toLowerCase();
+  },
+  countWeekSections: function() {
+    return this.weekSectionCount;
+  },
+  getFirstWeekDay: function() {
+    return this.firstWeekDay;
+  },
+  getYear: function() {
+    return this.year;
+  },
+  getMonthList: function() {
+    return this.monthList;
+  },
+  parseDate: function(date) {
+    if (!(date instanceof Date)) {
+      date = new Date(date);
+      if (date.toString() === 'Invalid Date') {
+        return null;
+      }
+    }
+    return date;
+  },
+  dateToColumn: function(date) {
+    date = this.parseDate(date);
+    if (!date || date.getFullYear() !== this.year) {
+      return false;
+    }
+    var month = date.getMonth();
+    var day = date.getDate() - 1;
+    var monthCache = this.daysInColumns[month];
+    var resultColumn = null;
+    objectEach(monthCache, (function(column, index) {
+      if (column.indexOf(day + 1) > -1) {
+        resultColumn = parseInt(index, 10);
+        return false;
+      }
+    }));
+    return resultColumn;
+  },
+  columnToDate: function(column, forceReturnArray) {
+    var month = null;
+    objectEach(this.daysInColumns, (function(monthCache, index) {
+      if (column in monthCache) {
+        month = index;
+        return false;
+      }
+    }));
+    if (this.daysInColumns[month][column].length === 1) {
+      if (forceReturnArray) {
+        return [this.daysInColumns[month][column][0]];
+      } else {
+        return new Date(this.year, month, this.daysInColumns[month][column][0]);
+      }
+    } else {
+      return this.daysInColumns[month][column];
     }
   },
-  isEnabled: function() {
-    return !!this.hot.getSettings().ganttChart;
-  },
-  enablePlugin: function() {
-    var $__5 = this;
-    if (this.enabled) {
-      return;
+  isOnTheEdgeOfWeek: function(date) {
+    date = this.parseDate(date);
+    if (!date) {
+      return null;
     }
-    this.parseSettings();
-    this.currentYear = this.settings.startYear || new Date().getFullYear();
-    this.monthList = [{
+    var month = date.getMonth();
+    var day = date.getDate() - 1;
+    var monthCache = this.daysInColumns[month];
+    var isOnTheEdgeOfWeek = false;
+    objectEach(monthCache, (function(column) {
+      var indexOfDay = column.indexOf(day + 1);
+      if ((indexOfDay === 0)) {
+        isOnTheEdgeOfWeek = [1, 0];
+        return false;
+      } else if (indexOfDay === column.length - 1) {
+        isOnTheEdgeOfWeek = [0, 1];
+        return false;
+      }
+    }));
+    return isOnTheEdgeOfWeek;
+  },
+  addDaysToCache: function(monthNumber, columnNumber, start, end) {
+    if (!this.daysInColumns[monthNumber]) {
+      this.daysInColumns[monthNumber] = {};
+    }
+    if (!this.daysInColumns[monthNumber][columnNumber]) {
+      this.daysInColumns[monthNumber][columnNumber] = [];
+    }
+    for (var j = start; j <= end; j++) {
+      this.daysInColumns[monthNumber][columnNumber].push(j);
+    }
+  },
+  isValidRangeBarData: function(startDate, endDate) {
+    return this.parseDate(startDate) && this.parseDate(endDate);
+  },
+  calculateMonthData: function() {
+    return [{
       name: 'January',
       days: 31
     }, {
       name: 'February',
-      days: new Date(this.currentYear, 2, 0).getDate()
+      days: new Date(this.year, 2, 0).getDate()
     }, {
       name: 'March',
       days: 31
@@ -1334,52 +1581,147 @@ var $GanttChart = GanttChart;
       name: 'December',
       days: 31
     }];
-    this.addHook('afterInit', (function() {
-      return $__5.onAfterInit();
+  },
+  countMonths: function() {
+    return this.monthList.length;
+  },
+  countMonthDays: function(month) {
+    return this.monthList[month - 1].days;
+  },
+  countMonthFullWeeks: function(month) {
+    return this.monthList[month - 1].fullWeeks;
+  },
+  calculateWeekStructure: function() {
+    var weekOffset = 0;
+    var weekSectionCount = 0;
+    var firstWeekDay = this.getFirstWeekDay();
+    var monthList = this.getMonthList();
+    var currentYear = this.getYear();
+    if (firstWeekDay === 'monday') {
+      weekOffset = 1;
+    }
+    arrayEach(monthList, (function(currentMonth, i) {
+      var firstMonthDay = new Date(currentYear, i, 1).getDay();
+      currentMonth.daysBeforeFullWeeks = (7 - firstMonthDay + weekOffset) % 7;
+      currentMonth.fullWeeks = Math.floor((currentMonth.days - currentMonth.daysBeforeFullWeeks) / 7);
+      currentMonth.daysAfterFullWeeks = currentMonth.days - currentMonth.daysBeforeFullWeeks - (7 * currentMonth.fullWeeks);
+      weekSectionCount += currentMonth.fullWeeks + (currentMonth.daysBeforeFullWeeks ? 1 : 0) + (currentMonth.daysAfterFullWeeks ? 1 : 0);
     }));
-    this.calculateWeeks();
-    this.checkDependencies();
-    $traceurRuntime.superGet(this, $GanttChart.prototype, "enablePlugin").call(this);
-    if (this.hot.view) {
-      this.onAfterInit();
+    this.weekSectionCount = weekSectionCount;
+  }
+}, {});
+;
+
+//# 
+},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object":67}],11:[function(require,module,exports){
+"use strict";
+Object.defineProperties(exports, {
+  GanttChart: {get: function() {
+      return GanttChart;
+    }},
+  __esModule: {value: true}
+});
+var $__handsontable_47_helpers_47_dom_47_element__,
+    $__handsontable_47_helpers_47_object__,
+    $__handsontable_47_helpers_47_array__,
+    $__handsontable_47_helpers_47_number__,
+    $__handsontable_47_helpers_47_data__,
+    $__handsontable_47_plugins_46_js__,
+    $__dateCalculator__,
+    $__ganttChartDataFeed__,
+    $__handsontable_47_plugins_47__95_base_46_js__;
+var $__0 = ($__handsontable_47_helpers_47_dom_47_element__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element"), $__handsontable_47_helpers_47_dom_47_element__ && $__handsontable_47_helpers_47_dom_47_element__.__esModule && $__handsontable_47_helpers_47_dom_47_element__ || {default: $__handsontable_47_helpers_47_dom_47_element__}),
+    addClass = $__0.addClass,
+    removeClass = $__0.removeClass;
+var $__1 = ($__handsontable_47_helpers_47_object__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object"), $__handsontable_47_helpers_47_object__ && $__handsontable_47_helpers_47_object__.__esModule && $__handsontable_47_helpers_47_object__ || {default: $__handsontable_47_helpers_47_object__}),
+    objectEach = $__1.objectEach,
+    deepClone = $__1.deepClone,
+    extend = $__1.extend;
+var arrayEach = ($__handsontable_47_helpers_47_array__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array"), $__handsontable_47_helpers_47_array__ && $__handsontable_47_helpers_47_array__.__esModule && $__handsontable_47_helpers_47_array__ || {default: $__handsontable_47_helpers_47_array__}).arrayEach;
+var rangeEach = ($__handsontable_47_helpers_47_number__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number"), $__handsontable_47_helpers_47_number__ && $__handsontable_47_helpers_47_number__.__esModule && $__handsontable_47_helpers_47_number__ || {default: $__handsontable_47_helpers_47_number__}).rangeEach;
+var createEmptySpreadsheetData = ($__handsontable_47_helpers_47_data__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/data"), $__handsontable_47_helpers_47_data__ && $__handsontable_47_helpers_47_data__.__esModule && $__handsontable_47_helpers_47_data__ || {default: $__handsontable_47_helpers_47_data__}).createEmptySpreadsheetData;
+var registerPlugin = ($__handsontable_47_plugins_46_js__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/plugins.js"), $__handsontable_47_plugins_46_js__ && $__handsontable_47_plugins_46_js__.__esModule && $__handsontable_47_plugins_46_js__ || {default: $__handsontable_47_plugins_46_js__}).registerPlugin;
+var DateCalculator = ($__dateCalculator__ = require("dateCalculator"), $__dateCalculator__ && $__dateCalculator__.__esModule && $__dateCalculator__ || {default: $__dateCalculator__}).DateCalculator;
+var GanttChartDataFeed = ($__ganttChartDataFeed__ = require("ganttChartDataFeed"), $__ganttChartDataFeed__ && $__ganttChartDataFeed__.__esModule && $__ganttChartDataFeed__ || {default: $__ganttChartDataFeed__}).GanttChartDataFeed;
+var BasePlugin = ($__handsontable_47_plugins_47__95_base_46_js__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base.js"), $__handsontable_47_plugins_47__95_base_46_js__ && $__handsontable_47_plugins_47__95_base_46_js__.__esModule && $__handsontable_47_plugins_47__95_base_46_js__ || {default: $__handsontable_47_plugins_47__95_base_46_js__}).default;
+var GanttChart = function GanttChart(hotInstance) {
+  $traceurRuntime.superConstructor($GanttChart).call(this, hotInstance);
+  this.settings = {};
+  this.dateCalculator = null;
+  this.currentYear = null;
+  this.monthList = [];
+  this.monthHeaders = [];
+  this.weekHeaders = [];
+  this.rangeBars = {};
+  this.rangeList = {};
+  this.nestedHeadersPlugin = null;
+  this.hotSource = null;
+  this.overallWeekSectionCount = null;
+  this.initialSettings = null;
+  this.dataFeed = null;
+  this.colorData = {};
+};
+var $GanttChart = GanttChart;
+($traceurRuntime.createClass)(GanttChart, {
+  checkDependencies: function() {
+    if (!this.hot.getSettings().colHeaders) {
+      console.warn('You need to enable the colHeaders property in your Gantt Chart Handsontable in order for it to work properly.');
     }
   },
-  updatePlugin: function() {
+  isEnabled: function() {
+    return !!this.hot.getSettings().ganttChart;
+  },
+  enablePlugin: function() {
+    var $__9 = this;
+    if (this.enabled) {
+      return;
+    }
+    this.checkDependencies();
+    this.parseSettings();
+    this.currentYear = this.settings.startYear || new Date().getFullYear();
+    this.dateCalculator = new DateCalculator(this.currentYear);
+    this.dateCalculator.setFirstWeekDay(this.settings.firstWeekDay);
+    this.monthList = this.dateCalculator.getMonthList();
+    this.monthHeaders = this.generateMonthHeaders();
+    this.weekHeaders = this.generateWeekHeaders();
+    this.overallWeekSectionCount = this.dateCalculator.countWeekSections();
+    this.assignGanttSettings();
+    if (this.nestedHeadersPlugin) {
+      this.applyDataSource();
+      if (this.colorData) {
+        this.setRangeBarColors(this.colorData);
+      }
+    }
+    this.addHook('afterInit', (function() {
+      return $__9.onAfterInit();
+    }));
+    addClass(this.hot.rootElement, 'ganttChart');
+    $traceurRuntime.superGet(this, $GanttChart.prototype, "enablePlugin").call(this);
+  },
+  disablePlugin: function() {
     if (this.internalUpdateSettings) {
       return;
     }
-    var hotSource;
     if (this.hotSource) {
-      hotSource = {
-        instance: this.hotSource.instance,
-        startColumn: this.hotSource.startColumn,
-        endColumn: this.hotSource.endColumn,
-        additionalData: this.hotSource.additionalData
-      };
+      this.dataFeed.removeSourceHotHooks(this.dataFeed.hotSource);
     }
+    this.settings = {};
+    this.dataFeed = {};
+    this.currentYear = null;
+    this.monthList = [];
+    this.rangeBars = {};
+    this.rangeList = {};
+    this.hotSource = null;
+    this.deassignGanttSettings();
+    this.hot.getPlugin('collapsibleColumns').disablePlugin();
+    this.hot.getPlugin('nestedHeaders').disablePlugin();
+    removeClass(this.hot.rootElement, 'ganttChart');
+    $traceurRuntime.superGet(this, $GanttChart.prototype, "disablePlugin").call(this);
+  },
+  updatePlugin: function() {
     this.disablePlugin();
     this.enablePlugin();
-    if (hotSource) {
-      this.removeSourceHotHooks(hotSource);
-      this.connectToHOTInstance(hotSource.instance, hotSource.startColumn, hotSource.endColumn, hotSource.additionalData);
-    }
     $traceurRuntime.superGet(this, $GanttChart.prototype, "updatePlugin").call(this);
-  },
-  calculateWeeks: function() {
-    var weekOffset = 0;
-    var weeks = 0;
-    if (this.settings.firstWeekDay === 'monday') {
-      weekOffset = 1;
-    }
-    for (var i = 0; i < 12; i++) {
-      var currentMonth = this.monthList[i];
-      var firstMonthDay = new Date(this.currentYear, i, 1).getDay();
-      currentMonth.preDays = (7 - firstMonthDay + weekOffset) % 7;
-      currentMonth.weeks = Math.floor((currentMonth.days - currentMonth.preDays) / 7);
-      currentMonth.postDays = currentMonth.days - currentMonth.preDays - (7 * currentMonth.weeks);
-      weeks += currentMonth.weeks + (currentMonth.preDays ? 1 : 0) + (currentMonth.postDays ? 1 : 0);
-    }
-    this.overallWeeks = weeks;
   },
   parseSettings: function() {
     this.settings = this.hot.getSettings().ganttChart;
@@ -1390,91 +1732,71 @@ var $GanttChart = GanttChart;
       this.settings.firstWeekDay = 'monday';
     }
   },
-  disablePlugin: function() {
-    if (this.internalUpdateSettings) {
-      return;
-    }
-    this.settings = {};
-    this.currentYear = null;
-    this.monthList = [];
-    this.rangeBars = {};
-    this.rangeList = {};
-    this.daysInColumns = {};
-    this.hotSource = null;
-    this.nestedHeadersPlugin = null;
-    this.deassignGanttSettings();
-    this.hot.getPlugin('collapsibleColumns').disablePlugin();
-    this.hot.getPlugin('nestedHeaders').disablePlugin();
-    removeClass(this.hot.rootElement, 'ganttChart');
-    $traceurRuntime.superGet(this, $GanttChart.prototype, "disablePlugin").call(this);
-  },
-  init: function() {
-    $traceurRuntime.superGet(this, $GanttChart.prototype, "init").call(this);
-  },
-  addDaysToCache: function(monthNumber, columnNumber, start, end) {
-    if (!this.daysInColumns[monthNumber][columnNumber]) {
-      this.daysInColumns[monthNumber][columnNumber] = [];
-    }
-    for (var j = start; j <= end; j++) {
-      this.daysInColumns[monthNumber][columnNumber].push(j);
-    }
-  },
-  generateEmptyData: function(rows, columns) {
-    var data = [];
-    var row;
-    for (var i = 0; i < rows; i++) {
-      row = [];
-      for (var j = 0; j < columns; j++) {
-        row.push('');
+  applyDataSource: function() {
+    if (this.settings.dataSource) {
+      var source = this.settings.dataSource;
+      if (source.instance) {
+        this.loadData(source.instance, source.startDateColumn, source.endDateColumn, source.additionalData);
+      } else {
+        this.loadData(source);
       }
-      data.push(row);
     }
-    return data;
+  },
+  loadData: function(data, startDateColumn, endDateColumn, additionalData) {
+    this.dataFeed = new GanttChartDataFeed(this.hot, data, startDateColumn, endDateColumn, additionalData);
+  },
+  clearRangeBars: function() {
+    this.rangeBars = {};
+  },
+  clearRangeList: function() {
+    this.rangeList = {};
+  },
+  getRangeBarCoordinates: function(row) {
+    return this.rangeList[row];
   },
   generateHeaderSet: function(type) {
-    var $__5 = this;
+    var $__9 = this;
     var headers = [];
     objectEach(this.monthList, (function(month, index) {
-      var arePreDays = month.preDays > 0 ? 1 : 0;
-      var arePostDays = month.postDays > 0 ? 1 : 0;
-      var headerCount = month.weeks + arePreDays + arePostDays;
+      var areDaysBeforeFullWeeks = month.daysBeforeFullWeeks > 0 ? 1 : 0;
+      var areDaysAfterFullWeeks = month.daysAfterFullWeeks > 0 ? 1 : 0;
+      var headerCount = month.fullWeeks + areDaysBeforeFullWeeks + areDaysAfterFullWeeks;
       var monthNumber = parseInt(index, 10);
       if (type === 'months') {
         headers.push({
           label: month.name,
           colspan: headerCount
         });
-        $__5.daysInColumns[monthNumber] = {};
       } else if (type === 'weeks') {
         for (var i = 0; i < headerCount; i++) {
-          if (arePreDays && i === 0) {
+          if (areDaysBeforeFullWeeks && i === 0) {
             var start = i + 1;
-            var end = month.preDays;
+            var end = month.daysBeforeFullWeeks;
             if (start === end) {
               headers.push(start);
             } else {
               headers.push(start + ' - ' + end);
             }
-            $__5.addDaysToCache(monthNumber, headers.length - 1, start, end);
-          } else if (arePostDays && i === headerCount - 1) {
-            var start$__7 = month.days - month.postDays + 1;
-            var end$__8 = month.days;
-            if (start$__7 === end$__8) {
-              headers.push(start$__7);
+            $__9.dateCalculator.addDaysToCache(monthNumber, headers.length - 1, start, end);
+          } else if (areDaysAfterFullWeeks && i === headerCount - 1) {
+            var start$__11 = month.days - month.daysAfterFullWeeks + 1;
+            var end$__12 = month.days;
+            if (start$__11 === end$__12) {
+              headers.push(start$__11);
             } else {
-              headers.push(start$__7 + ' - ' + end$__8);
+              headers.push(start$__11 + ' - ' + end$__12);
             }
-            $__5.addDaysToCache(monthNumber, headers.length - 1, start$__7, end$__8);
+            $__9.dateCalculator.addDaysToCache(monthNumber, headers.length - 1, start$__11, end$__12);
           } else {
-            var start$__9 = month.preDays + (i - arePreDays) * 7 + 1;
-            var end$__10 = start$__9 + 6;
-            headers.push(start$__9 + ' - ' + end$__10);
-            $__5.addDaysToCache(monthNumber, headers.length - 1, start$__9, end$__10);
+            var start$__13 = month.daysBeforeFullWeeks + (i - areDaysBeforeFullWeeks) * 7 + 1;
+            var end$__14 = start$__13 + 6;
+            headers.push(start$__13 + ' - ' + end$__14);
+            $__9.dateCalculator.addDaysToCache(monthNumber, headers.length - 1, start$__13, end$__14);
           }
         }
       } else if (type === 'days') {
-        for (var i$__11 = 0; i$__11 < month.days; i$__11++) {
-          headers.push(i$__11 + 1);
+        for (var i$__15 = 0; i$__15 < month.days; i$__15++) {
+          headers.push(i$__15 + 1);
         }
       }
     }));
@@ -1490,14 +1812,17 @@ var $GanttChart = GanttChart;
     return this.generateHeaderSet('days');
   },
   assignGanttSettings: function() {
+    var $__9 = this;
     this.initialSettings = deepClone(this.hot.getSettings());
     var additionalSettings = {
-      data: this.generateEmptyData(1, this.overallWeeks),
+      data: createEmptySpreadsheetData(1, this.overallWeekSectionCount),
       readOnly: true,
-      renderer: this.uniformBackgorundRenderer,
+      renderer: (function(instance, TD, row, col, prop, value, cellProperties) {
+        return $__9.uniformBackgroundRenderer(instance, TD, row, col, prop, value, cellProperties);
+      }),
       colWidths: 60,
       hiddenColumns: true,
-      nestedHeaders: [this.generateMonthHeaders(), this.generateWeekHeaders()],
+      nestedHeaders: [this.monthHeaders, this.weekHeaders],
       collapsibleColumns: true,
       columnSorting: false
     };
@@ -1512,170 +1837,65 @@ var $GanttChart = GanttChart;
     }
     this.internalUpdateSettings = void 0;
   },
-  loadData: function(array) {
-    for (var i = 0,
-        arrayLength = array.length; i < arrayLength; i++) {
-      this.addRangeBar(i, array[i].startDate, array[i].endDate, array[i].additionalData, i);
-    }
-  },
-  connectToHOTInstance: function(instance, startDateColumn, endDateColumn, additionalData) {
-    this.hotSource = {
-      instance: instance,
-      startColumn: startDateColumn,
-      endColumn: endDateColumn,
-      additionalData: additionalData
-    };
-    this.addSourceHotHooks();
-    this.updateFromHOT();
-  },
-  addSourceHotHooks: function() {
-    var $__5 = this;
-    this.hotSource.instance.addHook('afterChange', (function(changes, source) {
-      return $__5.onAfterSourceChange(changes, source);
-    }));
-  },
-  removeSourceHotHooks: function(hotSource) {
-    var $__5 = this;
-    hotSource.instance.removeHook('afterChange', (function(changes, source) {
-      return $__5.onAfterSourceChange(changes, source);
-    }));
-  },
-  updateFromHOT: function(row) {
-    var additionalObjectData = {};
-    var hotSource = this.hotSource;
-    var sourceHotRows;
-    if (row === void 0) {
-      sourceHotRows = hotSource.instance.getData();
-    } else {
-      var sourceHotSortPlugin = this.hotSource.instance.getPlugin('columnSorting');
-      sourceHotRows = [];
-      sourceHotRows[row] = hotSource.instance.getDataAtRow(sourceHotSortPlugin ? sourceHotSortPlugin.untranslateRow(row) || row : row);
-    }
-    var $__13 = this,
-        $__14 = function(i, dataLength) {
-          if (sourceHotRows[i][hotSource.startColumn] === null || sourceHotRows[i][hotSource.startColumn] === '') {
-            return 0;
-          }
-          objectEach(hotSource.additionalData, (function(prop, j) {
-            additionalObjectData[j] = sourceHotRows[i][prop];
-          }));
-          $__13.addRangeBar(i, sourceHotRows[i][hotSource.startColumn], sourceHotRows[i][hotSource.endColumn], additionalObjectData, i);
-        },
-        $__15;
-    $__12: for (var i = row || 0,
-        dataLength = sourceHotRows.length; i < (row ? row + 1 : dataLength); i++) {
-      $__15 = $__14(i, dataLength);
-      switch ($__15) {
-        case 0:
-          continue $__12;
-      }
-    }
-  },
-  dateToColumn: function(date) {
-    date = this.parseDate(date);
-    if (!date || date.getFullYear() !== this.currentYear) {
+  addRangeBar: function(row, startDate, endDate, additionalData) {
+    var $__9 = this;
+    if (!this.dateCalculator.isValidRangeBarData(startDate, endDate)) {
       return false;
     }
-    var month = date.getMonth();
-    var day = date.getDate() - 1;
-    var monthCache = this.daysInColumns[month];
-    var resultColumn = null;
-    objectEach(monthCache, (function(column, index) {
-      if (column.indexOf(day + 1) > -1) {
-        resultColumn = parseInt(index, 10);
-        return false;
-      }
-    }));
-    return resultColumn;
-  },
-  columnToDate: function(column, forceReturnArray) {
-    var month = null;
-    objectEach(this.daysInColumns, (function(monthCache, index) {
-      if (column in monthCache) {
-        month = index;
-        return false;
-      }
-    }));
-    if (this.daysInColumns[month][column].length === 1) {
-      if (forceReturnArray) {
-        return [this.daysInColumns[month][column][0]];
-      } else {
-        return new Date(this.currentYear, month, this.daysInColumns[month][column][0]);
-      }
-    } else {
-      return this.daysInColumns[month][column];
-    }
-  },
-  parseDate: function(date) {
-    if (!(date instanceof Date)) {
-      date = new Date(date);
-      if (date.toString() === 'Invalid Date') {
-        return null;
-      }
-    }
-    return date;
-  },
-  isOnTheEdgeOfWeek: function(date) {
-    date = this.parseDate(date);
-    if (!date) {
-      return null;
-    }
-    var month = date.getMonth();
-    var day = date.getDate() - 1;
-    var monthCache = this.daysInColumns[month];
-    var isOnTheEdgeOfWeek = false;
-    objectEach(monthCache, (function(column) {
-      var indexOfDay = column.indexOf(day + 1);
-      if ((indexOfDay === 0)) {
-        isOnTheEdgeOfWeek = [1, 0];
-        return false;
-      } else if (indexOfDay === column.length - 1) {
-        isOnTheEdgeOfWeek = [0, 1];
-        return false;
-      }
-    }));
-    return isOnTheEdgeOfWeek;
-  },
-  isValidRangeBarData: function(startDate, endDate) {
-    return this.parseDate(startDate) && this.parseDate(endDate);
-  },
-  addRangeBar: function(row, startDate, endDate, additionalData, sourceIndex) {
-    var $__5 = this;
-    if (!this.isValidRangeBarData(startDate, endDate)) {
-      return false;
-    }
-    var startColumn = this.dateToColumn(startDate);
-    var endColumn = this.dateToColumn(endDate);
-    if (startColumn === false || endColumn === false) {
+    var startDateColumn = this.dateCalculator.dateToColumn(startDate);
+    var endDateColumn = this.dateCalculator.dateToColumn(endDate);
+    if (startDateColumn === false || endDateColumn === false) {
       return false;
     }
     if (!this.rangeBars[row]) {
       this.rangeBars[row] = {};
     }
-    this.rangeBars[row][startColumn] = {
-      barLength: endColumn - startColumn + 1,
-      partialStart: !this.isOnTheEdgeOfWeek(startDate)[0],
-      partialEnd: !this.isOnTheEdgeOfWeek(endDate)[1],
+    this.rangeBars[row][startDateColumn] = {
+      barLength: endDateColumn - startDateColumn + 1,
+      partialStart: !this.dateCalculator.isOnTheEdgeOfWeek(startDate)[0],
+      partialEnd: !this.dateCalculator.isOnTheEdgeOfWeek(endDate)[1],
       additionalData: {}
     };
     objectEach(additionalData, (function(prop, i) {
-      $__5.rangeBars[row][startColumn].additionalData[i] = prop;
+      $__9.rangeBars[row][startDateColumn].additionalData[i] = prop;
     }));
-    this.rangeList[sourceIndex] = [row, startColumn];
-    this.renderRangeBar(row, startColumn, endColumn, additionalData);
-    this.hot.render();
-    return [row, startColumn];
+    if (this.colorData[row]) {
+      this.rangeBars[row][startDateColumn].colors = this.colorData[row];
+    }
+    this.rangeList[row] = [row, startDateColumn];
+    this.renderRangeBar(row, startDateColumn, endDateColumn, additionalData);
+    return [row, startDateColumn];
   },
-  renderRangeBar: function(row, startColumn, endColumn, additionalData) {
-    var currentBar = this.rangeBars[row][startColumn];
+  getRangeBarData: function(row, column) {
+    var rangeBarCoords = this.getRangeBarCoordinates(row);
+    if (!rangeBarCoords) {
+      return false;
+    }
+    var rangeBarData = this.rangeBars[rangeBarCoords[0]][rangeBarCoords[1]];
+    if (rangeBarData && row === rangeBarCoords[0] && (column === rangeBarCoords[1] || column > rangeBarCoords[1] && column < rangeBarCoords[1] + rangeBarData.barLength)) {
+      return rangeBarData;
+    } else {
+      return false;
+    }
+  },
+  updateRangeBarData: function(row, column, data) {
+    var rangeBar = this.getRangeBarData(row, column);
+    objectEach(data, (function(val, prop) {
+      if (rangeBar[prop] !== val) {
+        rangeBar[prop] = val;
+      }
+    }));
+  },
+  renderRangeBar: function(row, startDateColumn, endDateColumn, additionalData) {
+    var currentBar = this.rangeBars[row][startDateColumn];
     var rowCount = this.hot.countRows();
     if (row > rowCount - 1) {
       this.hot.alter('insert_row', rowCount - 1, row - rowCount + 1);
     }
-    for (var i = startColumn; i <= endColumn; i++) {
+    for (var i = startDateColumn; i <= endDateColumn; i++) {
       var cellMeta = this.hot.getCellMeta(row, i);
       var newClassName = (cellMeta.className || '') + ' rangeBar ' + 'color-green';
-      if ((i === startColumn && currentBar.partialStart) || (i === endColumn && currentBar.partialEnd)) {
+      if ((i === startDateColumn && currentBar.partialStart) || (i === endDateColumn && currentBar.partialEnd)) {
         newClassName += ' partial';
       }
       this.hot.setCellMeta(row, i, 'originalClassName', cellMeta.className);
@@ -1685,33 +1905,43 @@ var $GanttChart = GanttChart;
     this.hot.render();
   },
   removeRangeBarByDate: function(row, startDate) {
-    var startColumn = this.dateToColumn(startDate);
-    this.removeRangeBarByColumn(row, startColumn);
+    var startDateColumn = this.dateCalculator.dateToColumn(startDate);
+    this.removeRangeBarByColumn(row, startDateColumn);
   },
-  removeRangeBarByColumn: function(row, startColumn) {
-    var $__5 = this;
-    var rangeBar = this.rangeBars[row][startColumn];
+  removeRangeBarByColumn: function(row, startDateColumn) {
+    var $__9 = this;
+    var rangeBar = this.rangeBars[row][startDateColumn];
     if (!rangeBar) {
       return;
     }
-    this.unrenderRangeBar(row, startColumn, startColumn + rangeBar.barLength - 1);
-    this.rangeBars[row][startColumn] = null;
+    this.unrenderRangeBar(row, startDateColumn, startDateColumn + rangeBar.barLength - 1);
+    this.rangeBars[row][startDateColumn] = null;
     objectEach(this.rangeList, (function(prop, i) {
       i = parseInt(i, 10);
-      if (JSON.stringify(prop) === JSON.stringify([row, startColumn])) {
-        $__5.rangeList[i] = null;
+      if (JSON.stringify(prop) === JSON.stringify([row, startDateColumn])) {
+        $__9.rangeList[i] = null;
       }
     }));
   },
-  unrenderRangeBar: function(row, startColumn, endColumn) {
-    for (var i = startColumn; i <= endColumn; i++) {
+  removeAllRangeBars: function() {
+    var $__9 = this;
+    objectEach(this.rangeBars, (function(row, i) {
+      objectEach(row, (function(bar, j) {
+        $__9.removeRangeBarByColumn(i, j);
+      }));
+    }));
+  },
+  unrenderRangeBar: function(row, startDateColumn, endDateColumn) {
+    for (var i = startDateColumn; i <= endDateColumn; i++) {
       var cellMeta = this.hot.getCellMeta(row, i);
       this.hot.setCellMeta(row, i, 'className', cellMeta.originalClassName);
       this.hot.setCellMeta(row, i, 'originalClassName', void 0);
     }
     this.hot.render();
   },
-  uniformBackgorundRenderer: function(instance, TD, row, col, prop, value, cellProperties) {
+  uniformBackgroundRenderer: function(instance, TD, row, col, prop, value, cellProperties) {
+    var rangeBarInfo = this.getRangeBarData(row, col);
+    var rangeBarCoords = this.getRangeBarCoordinates(row);
     if (cellProperties.className) {
       TD.className = cellProperties.className;
     }
@@ -1721,27 +1951,186 @@ var $GanttChart = GanttChart;
     }));
     titleValue = titleValue.replace(/\n$/, '');
     TD.title = titleValue;
+    if (rangeBarInfo && rangeBarInfo.colors) {
+      if (col === rangeBarCoords[1] && rangeBarInfo.partialStart || col === (rangeBarCoords[1] + rangeBarInfo.barLength - 1) && rangeBarInfo.partialEnd) {
+        TD.style.background = rangeBarInfo.colors[1];
+      } else {
+        TD.style.background = rangeBarInfo.colors[0];
+      }
+    } else {
+      TD.style.background = '';
+    }
+  },
+  setRangeBarColors: function(rows) {
+    var $__9 = this;
+    this.colorData = rows;
+    objectEach(rows, (function(colors, i) {
+      var barCoords = $__9.getRangeBarCoordinates(i);
+      if (barCoords) {
+        $__9.updateRangeBarData(barCoords[0], barCoords[1], {colors: colors});
+      }
+    }));
+    this.hot.render();
+  },
+  setYear: function(year) {
+    var newSettings = extend(this.hot.getSettings().ganttChart, {startYear: year});
+    this.hot.updateSettings({ganttChart: newSettings});
   },
   onAfterInit: function() {
-    this.assignGanttSettings();
-    if (this.settings.dataSource) {
-      this.loadData(this.settings.dataSource);
-    }
     this.nestedHeadersPlugin = this.hot.getPlugin('nestedHeaders');
-    addClass(this.hot.rootElement, 'ganttChart');
+    this.applyDataSource();
+  },
+  onUpdateSettings: function() {
+    if (this.internalUpdateSettings) {
+      return;
+    }
+    $traceurRuntime.superGet(this, $GanttChart.prototype, "onUpdateSettings").call(this);
+  },
+  destroy: function() {
+    if (this.hotSource) {
+      this.dataFeed.removeSourceHotHooks(this.hotSource);
+    }
+    $traceurRuntime.superGet(this, $GanttChart.prototype, "destroy").call(this);
+  }
+}, {}, BasePlugin);
+;
+registerPlugin('ganttChart', GanttChart);
+
+//# 
+},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/data":61,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":62,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object":67,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins.js":75,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base.js":76,"dateCalculator":10,"ganttChartDataFeed":12}],12:[function(require,module,exports){
+"use strict";
+Object.defineProperties(exports, {
+  GanttChartDataFeed: {get: function() {
+      return GanttChartDataFeed;
+    }},
+  __esModule: {value: true}
+});
+var $__handsontable_47_helpers_47_object__,
+    $__handsontable_47_helpers_47_array__,
+    $__dateCalculator__;
+var $__0 = ($__handsontable_47_helpers_47_object__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object"), $__handsontable_47_helpers_47_object__ && $__handsontable_47_helpers_47_object__.__esModule && $__handsontable_47_helpers_47_object__ || {default: $__handsontable_47_helpers_47_object__}),
+    objectEach = $__0.objectEach,
+    deepClone = $__0.deepClone;
+var arrayEach = ($__handsontable_47_helpers_47_array__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array"), $__handsontable_47_helpers_47_array__ && $__handsontable_47_helpers_47_array__.__esModule && $__handsontable_47_helpers_47_array__ || {default: $__handsontable_47_helpers_47_array__}).arrayEach;
+var DateCalculator = ($__dateCalculator__ = require("dateCalculator"), $__dateCalculator__ && $__dateCalculator__.__esModule && $__dateCalculator__ || {default: $__dateCalculator__}).DateCalculator;
+var GanttChartDataFeed = function GanttChartDataFeed(chartInstance, data, startDateColumn, endDateColumn, additionalData) {
+  this.data = data;
+  this.chartInstance = chartInstance;
+  this.chartPlugin = this.chartInstance.getPlugin('ganttChart');
+  this.hotSource = null;
+  this.applyData(data, startDateColumn, endDateColumn, additionalData);
+};
+($traceurRuntime.createClass)(GanttChartDataFeed, {
+  applyData: function(data, startDateColumn, endDateColumn, additionalData) {
+    if (Object.prototype.toString.call(data) === '[object Array]') {
+      this.loadData(data);
+    } else if (data.guid) {
+      this.bindWithHotInstance(data, startDateColumn, endDateColumn, additionalData);
+    }
+  },
+  bindWithHotInstance: function(instance, startDateColumn, endDateColumn, additionalData) {
+    this.hotSource = {
+      instance: instance,
+      startColumn: startDateColumn,
+      endColumn: endDateColumn,
+      additionalData: additionalData
+    };
+    this.addSourceHotHooks();
+    this.updateFromSource();
+  },
+  addSourceHotHooks: function() {
+    var $__3 = this;
+    this.hotSource.instance.addHook('afterChange', (function(changes, source) {
+      return $__3.onAfterSourceChange(changes, source);
+    }));
+    this.hotSource.instance.addHook('afterColumnSort', (function(column, order) {
+      return $__3.onAfterColumnSort(column, order);
+    }));
+  },
+  removeSourceHotHooks: function(hotSource) {
+    var $__3 = this;
+    hotSource.instance.removeHook('afterChange', (function(changes, source) {
+      return $__3.onAfterSourceChange(changes, source);
+    }));
+    hotSource.instance.removeHook('afterColumnSort', (function(column, order) {
+      return $__3.onAfterColumnSort(column, order);
+    }));
+  },
+  getDataFromSource: function(row) {
+    var additionalObjectData = {};
+    var hotSource = this.hotSource;
+    var sourceHotRows;
+    var rangeBarData = [];
+    if (row === void 0) {
+      sourceHotRows = hotSource.instance.getData(0, 0, hotSource.instance.countRows() - 1, hotSource.instance.countCols() - 1);
+    } else {
+      sourceHotRows = [];
+      sourceHotRows[row] = hotSource.instance.getDataAtRow(row);
+    }
+    var $__6 = function(i, dataLength) {
+      additionalObjectData = {};
+      if (sourceHotRows[i][hotSource.startColumn] === null || sourceHotRows[i][hotSource.startColumn] === '') {
+        return 0;
+      }
+      objectEach(hotSource.additionalData, (function(prop, j) {
+        additionalObjectData[j] = sourceHotRows[i][prop];
+      }));
+      rangeBarData.push([i, sourceHotRows[i][hotSource.startColumn], sourceHotRows[i][hotSource.endColumn], additionalObjectData, i]);
+    },
+        $__7;
+    $__5: for (var i = row || 0,
+        dataLength = sourceHotRows.length; i < (row ? row + 1 : dataLength); i++) {
+      $__7 = $__6(i, dataLength);
+      switch ($__7) {
+        case 0:
+          continue $__5;
+      }
+    }
+    return rangeBarData;
+  },
+  updateFromSource: function(row) {
+    var $__3 = this;
+    var dataFromSource = this.getDataFromSource(row);
+    if (!row && isNaN(row)) {
+      this.chartPlugin.clearRangeBars();
+      this.chartPlugin.clearRangeList();
+    }
+    arrayEach(dataFromSource, (function(bar) {
+      bar = $__3.trimRangeIfNeeded(bar);
+      $__3.chartPlugin.addRangeBar.apply($__3.chartPlugin, bar);
+    }));
+  },
+  loadData: function(data) {
+    var $__3 = this;
+    arrayEach(data, (function(bar, i) {
+      bar = $__3.trimRangeIfNeeded(bar);
+      $__3.chartPlugin.addRangeBar(i, bar.startDate, bar.endDate, bar.additionalData);
+    }));
+  },
+  trimRangeIfNeeded: function(bar) {
+    var startDate = new Date(bar[1]);
+    var endDate = new Date(bar[2]);
+    if (typeof startDate === 'string' || typeof endDate === 'string') {
+      return false;
+    }
+    var startYear = startDate.getFullYear();
+    var endYear = endDate.getFullYear();
+    if (startYear < this.chartPlugin.currentYear) {
+      bar[1] = '01/01/' + this.chartPlugin.currentYear;
+    }
+    if (endYear > this.chartPlugin.currentYear) {
+      bar[2] = '12/31/' + this.chartPlugin.currentYear;
+    }
+    return bar;
   },
   onAfterSourceChange: function(changes, source) {
-    var $__5 = this;
+    var $__3 = this;
     var changesByRows = {};
     for (var i = 0,
         changesLength = changes.length; i < changesLength; i++) {
       var currentChange = changes[i];
-      var sourceHotSortPlugin = this.hotSource.instance.getPlugin('columnSorting');
       var row = parseInt(currentChange[0], 10);
       var col = parseInt(currentChange[1], 10);
-      if (sourceHotSortPlugin) {
-        row = sourceHotSortPlugin.translateRow(row) || row;
-      }
       if (!changesByRows[row]) {
         changesByRows[row] = {};
       }
@@ -1749,33 +2138,21 @@ var $GanttChart = GanttChart;
     }
     objectEach(changesByRows, (function(prop, i) {
       i = parseInt(i, 10);
-      if ($__5.rangeList[i]) {
-        $__5.removeRangeBarByColumn(i, $__5.rangeList[i][1]);
+      if ($__3.chartPlugin.getRangeBarCoordinates(i)) {
+        $__3.chartPlugin.removeRangeBarByColumn(i, $__3.chartPlugin.rangeList[i][1]);
       }
-      $__5.updateFromHOT(i);
+      $__3.updateFromSource(i);
     }));
   },
-  destroy: function() {
-    if (this.hotSource) {
-      this.removeSourceHotHooks(this.hotSource);
-    }
-    this.settings = null;
-    this.currentYear = null;
-    this.monthList = null;
-    this.rangeBars = null;
-    this.rangeList = null;
-    this.nestedHeadersPlugin = null;
-    this.daysInColumns = null;
-    this.hotSource = null;
-    this.overallWeeks = null;
-    this.initialSettings = null;
+  onAfterColumnSort: function(column, order) {
+    this.chartPlugin.removeAllRangeBars();
+    this.updateFromSource();
   }
-}, {}, BasePlugin);
+}, {});
 ;
-registerPlugin('ganttChart', GanttChart);
 
 //# 
-},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":55,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object":60,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins.js":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base.js":67}],9:[function(require,module,exports){
+},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object":67,"dateCalculator":10}],13:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   HeaderTooltips: {get: function() {
@@ -1871,7 +2248,7 @@ var $HeaderTooltips = HeaderTooltips;
 registerPlugin('headerTooltips', HeaderTooltips);
 
 //# 
-},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element.js":55,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins.js":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base.js":67}],10:[function(require,module,exports){
+},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element.js":62,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins.js":75,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base.js":76}],14:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   HiddenColumns: {get: function() {
@@ -1937,14 +2314,13 @@ var $HiddenColumns = HiddenColumns;
     $traceurRuntime.superGet(this, $HiddenColumns.prototype, "enablePlugin").call(this);
   },
   updatePlugin: function() {
-    this.hiddenColumns.length = 0;
     this.disablePlugin();
     this.enablePlugin();
     $traceurRuntime.superGet(this, $HiddenColumns.prototype, "updatePlugin").call(this);
   },
   disablePlugin: function() {
     this.settings = {};
-    this.hiddenColumns.length = 0;
+    this.hiddenColumns = [];
     this.lastSelectedColumn = -1;
     $traceurRuntime.superGet(this, $HiddenColumns.prototype, "disablePlugin").call(this);
     this.resetCellsMeta();
@@ -2094,9 +2470,6 @@ var $HiddenColumns = HiddenColumns;
     this.lastSelectedColumn = coords.col;
   },
   destroy: function() {
-    this.settings = null;
-    this.hiddenColumns = null;
-    this.lastSelectedColumn = null;
     $traceurRuntime.superGet(this, $HiddenColumns.prototype, "destroy").call(this);
   }
 }, {}, BasePlugin);
@@ -2107,7 +2480,7 @@ function hiddenRenderer(hotInstance, td) {
 registerPlugin('hiddenColumns', HiddenColumns);
 
 //# 
-},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":52,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":55,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base":67}],11:[function(require,module,exports){
+},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":62,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins":75,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base":76}],15:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   HiddenRows: {get: function() {
@@ -2183,14 +2556,13 @@ var $HiddenRows = HiddenRows;
     $traceurRuntime.superGet(this, $HiddenRows.prototype, "enablePlugin").call(this);
   },
   updatePlugin: function() {
-    this.hiddenRows.length = 0;
     this.disablePlugin();
     this.enablePlugin();
     $traceurRuntime.superGet(this, $HiddenRows.prototype, "updatePlugin").call(this);
   },
   disablePlugin: function() {
     this.settings = {};
-    this.hiddenRows.length = 0;
+    this.hiddenRows = [];
     this.lastSelectedRow = -1;
     $traceurRuntime.superGet(this, $HiddenRows.prototype, "disablePlugin").call(this);
     this.resetCellsMeta();
@@ -2313,13 +2685,16 @@ var $HiddenRows = HiddenRows;
     });
     coords.row = getNextRow(coords.row);
     this.lastSelectedRow = coords.row;
+  },
+  destroy: function() {
+    $traceurRuntime.superGet(this, $HiddenRows.prototype, "destroy").call(this);
   }
 }, {}, BasePlugin);
 ;
 registerPlugin('hiddenRows', HiddenRows);
 
 //# 
-},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":52,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":55,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base":67}],12:[function(require,module,exports){
+},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":62,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins":75,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base":76}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   NestedHeaders: {get: function() {
@@ -2635,7 +3010,189 @@ var $NestedHeaders = NestedHeaders;
 registerPlugin('nestedHeaders', NestedHeaders);
 
 //# 
-},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":52,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":55,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object":60,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base":67}],13:[function(require,module,exports){
+},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/dom/element":62,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object":67,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins":75,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base":76}],17:[function(require,module,exports){
+"use strict";
+Object.defineProperties(exports, {
+  RowsMapper: {get: function() {
+      return RowsMapper;
+    }},
+  __esModule: {value: true}
+});
+var $__handsontable_47_mixins_47_arrayMapper__,
+    $__handsontable_47_helpers_47_object__,
+    $__handsontable_47_helpers_47_number__;
+var arrayMapper = ($__handsontable_47_mixins_47_arrayMapper__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/mixins/arrayMapper"), $__handsontable_47_mixins_47_arrayMapper__ && $__handsontable_47_mixins_47_arrayMapper__.__esModule && $__handsontable_47_mixins_47_arrayMapper__ || {default: $__handsontable_47_mixins_47_arrayMapper__}).arrayMapper;
+var mixin = ($__handsontable_47_helpers_47_object__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object"), $__handsontable_47_helpers_47_object__ && $__handsontable_47_helpers_47_object__.__esModule && $__handsontable_47_helpers_47_object__ || {default: $__handsontable_47_helpers_47_object__}).mixin;
+var rangeEach = ($__handsontable_47_helpers_47_number__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number"), $__handsontable_47_helpers_47_number__ && $__handsontable_47_helpers_47_number__.__esModule && $__handsontable_47_helpers_47_number__ || {default: $__handsontable_47_helpers_47_number__}).rangeEach;
+var RowsMapper = function RowsMapper(trimRows) {
+  this.trimRows = trimRows;
+  this.length = 0;
+};
+($traceurRuntime.createClass)(RowsMapper, {
+  setLength: function(length) {
+    this.length = length;
+  },
+  createMap: function() {
+    var $__3 = this;
+    var rowOffset = 0;
+    this._arrayMap.length = 0;
+    rangeEach(this.length - 1, (function(itemIndex) {
+      if ($__3.trimRows.isTrimmed(itemIndex)) {
+        rowOffset++;
+      } else {
+        $__3._arrayMap[itemIndex - rowOffset] = itemIndex;
+      }
+    }));
+  },
+  destroy: function() {
+    this._arrayMap = null;
+  }
+}, {});
+mixin(RowsMapper, arrayMapper);
+;
+Handsontable.utils = Handsontable.utils || {};
+Handsontable.utils.TrimRowsRowsMapper = RowsMapper;
+
+//# 
+},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/object":67,"../../../node_modules/hot-builder/node_modules/handsontable/src/mixins/arrayMapper":71}],18:[function(require,module,exports){
+"use strict";
+Object.defineProperties(exports, {
+  TrimRows: {get: function() {
+      return TrimRows;
+    }},
+  __esModule: {value: true}
+});
+var $__handsontable_47_plugins_47__95_base__,
+    $__handsontable_47_helpers_47_array__,
+    $__handsontable_47_helpers_47_number__,
+    $__handsontable_47_plugins__,
+    $__rowsMapper__;
+var BasePlugin = ($__handsontable_47_plugins_47__95_base__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base"), $__handsontable_47_plugins_47__95_base__ && $__handsontable_47_plugins_47__95_base__.__esModule && $__handsontable_47_plugins_47__95_base__ || {default: $__handsontable_47_plugins_47__95_base__}).default;
+var arrayEach = ($__handsontable_47_helpers_47_array__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array"), $__handsontable_47_helpers_47_array__ && $__handsontable_47_helpers_47_array__.__esModule && $__handsontable_47_helpers_47_array__ || {default: $__handsontable_47_helpers_47_array__}).arrayEach;
+var rangeEach = ($__handsontable_47_helpers_47_number__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number"), $__handsontable_47_helpers_47_number__ && $__handsontable_47_helpers_47_number__.__esModule && $__handsontable_47_helpers_47_number__ || {default: $__handsontable_47_helpers_47_number__}).rangeEach;
+var registerPlugin = ($__handsontable_47_plugins__ = require("../../../node_modules/hot-builder/node_modules/handsontable/src/plugins"), $__handsontable_47_plugins__ && $__handsontable_47_plugins__.__esModule && $__handsontable_47_plugins__ || {default: $__handsontable_47_plugins__}).registerPlugin;
+var RowsMapper = ($__rowsMapper__ = require("rowsMapper"), $__rowsMapper__ && $__rowsMapper__.__esModule && $__rowsMapper__ || {default: $__rowsMapper__}).RowsMapper;
+var TrimRows = function TrimRows(hotInstance) {
+  $traceurRuntime.superConstructor($TrimRows).call(this, hotInstance);
+  this.trimmedRows = [];
+  this.removedRows = [];
+  this.rowsMapper = new RowsMapper(this);
+};
+var $TrimRows = TrimRows;
+($traceurRuntime.createClass)(TrimRows, {
+  isEnabled: function() {
+    return !!this.hot.getSettings().trimRows;
+  },
+  enablePlugin: function() {
+    var $__5 = this;
+    if (this.enabled) {
+      return;
+    }
+    var settings = this.hot.getSettings().trimRows;
+    if (Array.isArray(settings)) {
+      this.trimmedRows = settings;
+    }
+    this.rowsMapper.setLength(this.hot.countSourceRows());
+    this.rowsMapper.createMap();
+    this.addHook('modifyRow', (function(row, source) {
+      return $__5.onModifyRow(row, source);
+    }));
+    this.addHook('afterCreateRow', (function(index, amount) {
+      return $__5.rowsMapper.shiftItems(index, amount);
+    }));
+    this.addHook('beforeRemoveRow', (function(index, amount) {
+      return $__5.onBeforeRemoveRow(index, amount);
+    }));
+    this.addHook('afterRemoveRow', (function(index, amount) {
+      return $__5.onAfterRemoveRow(index, amount);
+    }));
+    this.addHook('afterLoadData', (function(firstRun) {
+      return $__5.onAfterLoadData(firstRun);
+    }));
+    $traceurRuntime.superGet(this, $TrimRows.prototype, "enablePlugin").call(this);
+  },
+  updatePlugin: function() {
+    this.disablePlugin();
+    this.enablePlugin();
+    $traceurRuntime.superGet(this, $TrimRows.prototype, "updatePlugin").call(this);
+  },
+  disablePlugin: function() {
+    this.trimmedRows = [];
+    this.removedRows.length = 0;
+    this.rowsMapper.clearMap();
+    $traceurRuntime.superGet(this, $TrimRows.prototype, "disablePlugin").call(this);
+  },
+  trimRows: function(rows) {
+    var $__5 = this;
+    arrayEach(rows, (function(row) {
+      row = parseInt(row, 10);
+      if (!$__5.isTrimmed(row)) {
+        $__5.trimmedRows.push(row);
+      }
+    }));
+    this.rowsMapper.createMap();
+    this.hot.runHooks('afterTrimRow', rows);
+  },
+  trimRow: function() {
+    for (var row = [],
+        $__7 = 0; $__7 < arguments.length; $__7++)
+      row[$__7] = arguments[$__7];
+    this.trimRows(row);
+  },
+  untrimRows: function(rows) {
+    var $__5 = this;
+    arrayEach(rows, (function(row) {
+      row = parseInt(row, 10);
+      if ($__5.isTrimmed(row)) {
+        $__5.trimmedRows.splice($__5.trimmedRows.indexOf(row), 1);
+      }
+    }));
+    this.rowsMapper.createMap();
+    this.hot.runHooks('afterUntrimRow', rows);
+  },
+  untrimRow: function() {
+    for (var row = [],
+        $__8 = 0; $__8 < arguments.length; $__8++)
+      row[$__8] = arguments[$__8];
+    this.untrimRows(row);
+  },
+  isTrimmed: function(row) {
+    return this.trimmedRows.indexOf(row) > -1;
+  },
+  onModifyRow: function(row, source) {
+    if (source !== $TrimRows.name) {
+      row = this.rowsMapper.getValueByIndex(row);
+    }
+    return row;
+  },
+  onBeforeRemoveRow: function(index, amount) {
+    var $__5 = this;
+    this.removedRows.length = 0;
+    if (index !== false) {
+      rangeEach(index, index + amount - 1, (function(removedIndex) {
+        $__5.removedRows.push($__5.hot.runHooks('modifyRow', removedIndex, $TrimRows.name));
+      }));
+    }
+  },
+  onAfterRemoveRow: function(index, amount) {
+    this.rowsMapper.unshiftItems(this.removedRows);
+  },
+  onAfterLoadData: function(firstRun) {
+    if (!firstRun) {
+      this.rowsMapper.setLength(this.hot.countSourceRows());
+      this.rowsMapper.createMap();
+    }
+  },
+  destroy: function() {
+    this.rowsMapper.destroy();
+    $traceurRuntime.superGet(this, $TrimRows.prototype, "destroy").call(this);
+  }
+}, {}, BasePlugin);
+;
+registerPlugin('trimRows', TrimRows);
+
+//# 
+},{"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/array":59,"../../../node_modules/hot-builder/node_modules/handsontable/src/helpers/number":66,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins":75,"../../../node_modules/hot-builder/node_modules/handsontable/src/plugins/_base":76,"rowsMapper":17}],19:[function(require,module,exports){
 "use strict";
 if (window.jQuery) {
   (function(window, $, Handsontable) {
@@ -2681,7 +3238,7 @@ if (window.jQuery) {
 }
 
 //# 
-},{}],14:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableBorder: {get: function() {
@@ -3078,7 +3635,7 @@ var WalkontableBorder = function WalkontableBorder(wotInstance, settings) {
 window.WalkontableBorder = WalkontableBorder;
 
 //# 
-},{"cell/coords":17,"eventManager":51,"helpers/dom/element":55,"helpers/dom/event":56,"overlay/_base.js":23}],15:[function(require,module,exports){
+},{"cell/coords":23,"eventManager":58,"helpers/dom/element":62,"helpers/dom/event":63,"overlay/_base.js":29}],21:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableViewportColumnsCalculator: {get: function() {
@@ -3237,7 +3794,7 @@ var $WalkontableViewportColumnsCalculator = WalkontableViewportColumnsCalculator
 window.WalkontableViewportColumnsCalculator = WalkontableViewportColumnsCalculator;
 
 //# 
-},{}],16:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableViewportRowsCalculator: {get: function() {
@@ -3328,7 +3885,7 @@ var $WalkontableViewportRowsCalculator = WalkontableViewportRowsCalculator;
 window.WalkontableViewportRowsCalculator = WalkontableViewportRowsCalculator;
 
 //# 
-},{}],17:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableCellCoords: {get: function() {
@@ -3378,7 +3935,7 @@ var WalkontableCellCoords = function WalkontableCellCoords(row, col) {
 window.WalkontableCellCoords = WalkontableCellCoords;
 
 //# 
-},{}],18:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableCellRange: {get: function() {
@@ -3636,7 +4193,7 @@ var $WalkontableCellRange = WalkontableCellRange;
 window.WalkontableCellRange = WalkontableCellRange;
 
 //# 
-},{"cell/coords":17}],19:[function(require,module,exports){
+},{"cell/coords":23}],25:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   Walkontable: {get: function() {
@@ -3806,7 +4363,7 @@ var Walkontable = function Walkontable(settings) {
 window.Walkontable = Walkontable;
 
 //# 
-},{"event":20,"helpers/dom/element":55,"helpers/object":60,"helpers/string":62,"overlay/_base.js":23,"overlay/debug.js":24,"overlay/left.js":25,"overlay/top.js":26,"overlay/topLeftCorner.js":27,"overlays":28,"scroll":29,"settings":31,"table":32,"viewport":34}],20:[function(require,module,exports){
+},{"event":26,"helpers/dom/element":62,"helpers/object":67,"helpers/string":69,"overlay/_base.js":29,"overlay/debug.js":30,"overlay/left.js":31,"overlay/top.js":32,"overlay/topLeftCorner.js":33,"overlays":34,"scroll":35,"settings":37,"table":38,"viewport":40}],26:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableEvent: {get: function() {
@@ -3968,7 +4525,7 @@ WalkontableEvent.prototype.parentCell = function(elem) {
 window.WalkontableEvent = WalkontableEvent;
 
 //# 
-},{"eventManager":51,"helpers/dom/element":55}],21:[function(require,module,exports){
+},{"eventManager":58,"helpers/dom/element":62}],27:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableColumnFilter: {get: function() {
@@ -4011,7 +4568,7 @@ var WalkontableColumnFilter = function WalkontableColumnFilter(offset, total, co
 window.WalkontableColumnFilter = WalkontableColumnFilter;
 
 //# 
-},{}],22:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableRowFilter: {get: function() {
@@ -4054,7 +4611,7 @@ var WalkontableRowFilter = function WalkontableRowFilter(offset, total, countTH)
 window.WalkontableRowFilter = WalkontableRowFilter;
 
 //# 
-},{}],23:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableOverlay: {get: function() {
@@ -4164,7 +4721,7 @@ var $WalkontableOverlay = WalkontableOverlay;
 window.WalkontableOverlay = WalkontableOverlay;
 
 //# 
-},{"eventManager":51,"helpers/dom/element":55,"helpers/object":60}],24:[function(require,module,exports){
+},{"eventManager":58,"helpers/dom/element":62,"helpers/object":67}],30:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableDebugOverlay: {get: function() {
@@ -4190,7 +4747,7 @@ window.WalkontableDebugOverlay = WalkontableDebugOverlay;
 WalkontableOverlay.registerOverlay(WalkontableOverlay.CLONE_DEBUG, WalkontableDebugOverlay);
 
 //# 
-},{"_base":23,"helpers/dom/element":55}],25:[function(require,module,exports){
+},{"_base":29,"helpers/dom/element":62}],31:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableLeftOverlay: {get: function() {
@@ -4373,7 +4930,7 @@ window.WalkontableLeftOverlay = WalkontableLeftOverlay;
 WalkontableOverlay.registerOverlay(WalkontableOverlay.CLONE_LEFT, WalkontableLeftOverlay);
 
 //# 
-},{"_base":23,"helpers/dom/element":55}],26:[function(require,module,exports){
+},{"_base":29,"helpers/dom/element":62}],32:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableTopOverlay: {get: function() {
@@ -4444,7 +5001,8 @@ var $WalkontableTopOverlay = WalkontableTopOverlay;
     var sum = 0;
     var defaultRowHeight = this.wot.wtSettings.settings.defaultRowHeight;
     while (from < to) {
-      sum += this.wot.wtTable.getRowHeight(from) || defaultRowHeight;
+      var height = this.wot.wtTable.getRowHeight(from);
+      sum += height === void 0 ? defaultRowHeight : height;
       from++;
     }
     return sum;
@@ -4564,7 +5122,7 @@ window.WalkontableTopOverlay = WalkontableTopOverlay;
 WalkontableOverlay.registerOverlay(WalkontableOverlay.CLONE_TOP, WalkontableTopOverlay);
 
 //# 
-},{"_base":23,"helpers/dom/element":55}],27:[function(require,module,exports){
+},{"_base":29,"helpers/dom/element":62}],33:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableTopLeftCornerOverlay: {get: function() {
@@ -4624,7 +5182,7 @@ window.WalkontableTopLeftCornerOverlay = WalkontableTopLeftCornerOverlay;
 WalkontableOverlay.registerOverlay(WalkontableOverlay.CLONE_TOP_LEFT_CORNER, WalkontableTopLeftCornerOverlay);
 
 //# 
-},{"_base":23,"helpers/dom/element":55}],28:[function(require,module,exports){
+},{"_base":29,"helpers/dom/element":62}],34:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableOverlays: {get: function() {
@@ -4981,7 +5539,7 @@ var WalkontableOverlays = function WalkontableOverlays(wotInstance) {
 window.WalkontableOverlays = WalkontableOverlays;
 
 //# 
-},{"eventManager":51,"helpers/dom/element":55,"helpers/unicode":63}],29:[function(require,module,exports){
+},{"eventManager":58,"helpers/dom/element":62,"helpers/unicode":70}],35:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableScroll: {get: function() {
@@ -5023,7 +5581,7 @@ var WalkontableScroll = function WalkontableScroll(wotInstance) {
 window.WalkontableScroll = WalkontableScroll;
 
 //# 
-},{}],30:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableSelection: {get: function() {
@@ -5151,7 +5709,7 @@ var WalkontableSelection = function WalkontableSelection(settings, cellRange) {
 window.WalkontableSelection = WalkontableSelection;
 
 //# 
-},{"border":14,"cell/coords":17,"cell/range":18,"helpers/dom/element":55}],31:[function(require,module,exports){
+},{"border":20,"cell/coords":23,"cell/range":24,"helpers/dom/element":62}],37:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableSettings: {get: function() {
@@ -5261,7 +5819,7 @@ var WalkontableSettings = function WalkontableSettings(wotInstance, settings) {
 window.WalkontableSettings = WalkontableSettings;
 
 //# 
-},{"helpers/dom/element":55}],32:[function(require,module,exports){
+},{"helpers/dom/element":62}],38:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableTable: {get: function() {
@@ -5596,7 +6154,7 @@ var WalkontableTable = function WalkontableTable(wotInstance, table) {
     var height = this.wot.wtSettings.settings.rowHeight(sourceRow);
     var oversizedHeight = this.wot.wtViewport.oversizedRows[sourceRow];
     if (oversizedHeight !== void 0) {
-      height = height ? Math.max(height, oversizedHeight) : oversizedHeight;
+      height = height === void 0 ? oversizedHeight : Math.max(height, oversizedHeight);
     }
     return height;
   },
@@ -5640,7 +6198,7 @@ var WalkontableTable = function WalkontableTable(wotInstance, table) {
 window.WalkontableTable = WalkontableTable;
 
 //# 
-},{"cell/coords":17,"cell/range":18,"filter/column":21,"filter/row":22,"helpers/dom/element":55,"tableRenderer":33}],33:[function(require,module,exports){
+},{"cell/coords":23,"cell/range":24,"filter/column":27,"filter/row":28,"helpers/dom/element":62,"tableRenderer":39}],39:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableTableRenderer: {get: function() {
@@ -6042,7 +6600,7 @@ function replaceThWithTd(TH, TR) {
 window.WalkontableTableRenderer = WalkontableTableRenderer;
 
 //# 
-},{"helpers/dom/element":55}],34:[function(require,module,exports){
+},{"helpers/dom/element":62}],40:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   WalkontableViewport: {get: function() {
@@ -6329,7 +6887,7 @@ var WalkontableViewport = function WalkontableViewport(wotInstance) {
 window.WalkontableViewport = WalkontableViewport;
 
 //# 
-},{"calculator/viewportColumns":15,"calculator/viewportRows":16,"eventManager":51,"helpers/dom/element":55}],35:[function(require,module,exports){
+},{"calculator/viewportColumns":21,"calculator/viewportRows":22,"eventManager":58,"helpers/dom/element":62}],41:[function(require,module,exports){
 "use strict";
 var $__helpers_47_browser__,
     $__editors__,
@@ -6430,7 +6988,7 @@ Handsontable.cellLookup = {validator: {
   }};
 
 //# 
-},{"editors":39,"editors/autocompleteEditor":41,"editors/checkboxEditor":42,"editors/dateEditor":43,"editors/dropdownEditor":44,"editors/handsontableEditor":45,"editors/mobileTextEditor":46,"editors/numericEditor":47,"editors/passwordEditor":48,"editors/selectEditor":49,"editors/textEditor":50,"helpers/browser":53,"renderers":97,"renderers/autocompleteRenderer":99,"renderers/checkboxRenderer":100,"renderers/htmlRenderer":101,"renderers/numericRenderer":102,"renderers/passwordRenderer":103,"renderers/textRenderer":104,"validators/autocompleteValidator":109,"validators/dateValidator":110,"validators/numericValidator":111}],36:[function(require,module,exports){
+},{"editors":46,"editors/autocompleteEditor":48,"editors/checkboxEditor":49,"editors/dateEditor":50,"editors/dropdownEditor":51,"editors/handsontableEditor":52,"editors/mobileTextEditor":53,"editors/numericEditor":54,"editors/passwordEditor":55,"editors/selectEditor":56,"editors/textEditor":57,"helpers/browser":60,"renderers":106,"renderers/autocompleteRenderer":108,"renderers/checkboxRenderer":109,"renderers/htmlRenderer":110,"renderers/numericRenderer":111,"renderers/passwordRenderer":112,"renderers/textRenderer":113,"validators/autocompleteValidator":118,"validators/dateValidator":119,"validators/numericValidator":120}],42:[function(require,module,exports){
 "use strict";
 var $__numeral__,
     $__helpers_47_dom_47_element__,
@@ -6445,6 +7003,7 @@ var $__numeral__,
     $__helpers_47_string__,
     $__helpers_47_number__,
     $__tableView__,
+    $__dataSource__,
     $__helpers_47_data__,
     $__3rdparty_47_walkontable_47_src_47_cell_47_coords__,
     $__3rdparty_47_walkontable_47_src_47_cell_47_range__,
@@ -6471,10 +7030,11 @@ var getRenderer = ($__renderers__ = require("renderers"), $__renderers__ && $__r
 var randomString = ($__helpers_47_string__ = require("helpers/string"), $__helpers_47_string__ && $__helpers_47_string__.__esModule && $__helpers_47_string__ || {default: $__helpers_47_string__}).randomString;
 var rangeEach = ($__helpers_47_number__ = require("helpers/number"), $__helpers_47_number__ && $__helpers_47_number__.__esModule && $__helpers_47_number__ || {default: $__helpers_47_number__}).rangeEach;
 var TableView = ($__tableView__ = require("tableView"), $__tableView__ && $__tableView__.__esModule && $__tableView__ || {default: $__tableView__}).TableView;
-var $__13 = ($__helpers_47_data__ = require("helpers/data"), $__helpers_47_data__ && $__helpers_47_data__.__esModule && $__helpers_47_data__ || {default: $__helpers_47_data__}),
-    translateRowsToColumns = $__13.translateRowsToColumns,
-    cellMethodLookupFactory = $__13.cellMethodLookupFactory,
-    spreadsheetColumnLabel = $__13.spreadsheetColumnLabel;
+var DataSource = ($__dataSource__ = require("dataSource"), $__dataSource__ && $__dataSource__.__esModule && $__dataSource__ || {default: $__dataSource__}).DataSource;
+var $__14 = ($__helpers_47_data__ = require("helpers/data"), $__helpers_47_data__ && $__helpers_47_data__.__esModule && $__helpers_47_data__ || {default: $__helpers_47_data__}),
+    translateRowsToColumns = $__14.translateRowsToColumns,
+    cellMethodLookupFactory = $__14.cellMethodLookupFactory,
+    spreadsheetColumnLabel = $__14.spreadsheetColumnLabel;
 var WalkontableCellCoords = ($__3rdparty_47_walkontable_47_src_47_cell_47_coords__ = require("3rdparty/walkontable/src/cell/coords"), $__3rdparty_47_walkontable_47_src_47_cell_47_coords__ && $__3rdparty_47_walkontable_47_src_47_cell_47_coords__.__esModule && $__3rdparty_47_walkontable_47_src_47_cell_47_coords__ || {default: $__3rdparty_47_walkontable_47_src_47_cell_47_coords__}).WalkontableCellCoords;
 var WalkontableCellRange = ($__3rdparty_47_walkontable_47_src_47_cell_47_range__ = require("3rdparty/walkontable/src/cell/range"), $__3rdparty_47_walkontable_47_src_47_cell_47_range__ && $__3rdparty_47_walkontable_47_src_47_cell_47_range__.__esModule && $__3rdparty_47_walkontable_47_src_47_cell_47_range__ || {default: $__3rdparty_47_walkontable_47_src_47_cell_47_range__}).WalkontableCellRange;
 var WalkontableSelection = ($__3rdparty_47_walkontable_47_src_47_selection__ = require("3rdparty/walkontable/src/selection"), $__3rdparty_47_walkontable_47_src_47_selection__ && $__3rdparty_47_walkontable_47_src_47_selection__.__esModule && $__3rdparty_47_walkontable_47_src_47_selection__ || {default: $__3rdparty_47_walkontable_47_src_47_selection__}).WalkontableSelection;
@@ -6483,6 +7043,7 @@ Handsontable.activeGuid = null;
 Handsontable.Core = function Core(rootElement, userSettings) {
   var priv,
       datamap,
+      dataSource,
       grid,
       selection,
       editorManager,
@@ -6518,7 +7079,7 @@ Handsontable.Core = function Core(rootElement, userSettings) {
       amount = amount || 1;
       switch (action) {
         case 'insert_row':
-          if (instance.getSettings().maxRows === instance.countRows()) {
+          if (instance.getSettings().maxRows === instance.countSourceRows()) {
             return;
           }
           delta = datamap.createRow(index, amount);
@@ -6548,7 +7109,6 @@ Handsontable.Core = function Core(rootElement, userSettings) {
           }
           break;
         case 'remove_row':
-          index = instance.runHooks('modifyCol', index);
           datamap.removeRow(index, amount);
           priv.cellSettings.splice(index, amount);
           var totalRows = instance.countRows();
@@ -7060,6 +7620,7 @@ Handsontable.Core = function Core(rootElement, userSettings) {
     }
   };
   this.init = function() {
+    dataSource = new DataSource(instance, priv.settings.data);
     Handsontable.hooks.run(instance, 'beforeInit');
     if (Handsontable.mobileBrowser) {
       addClass(instance.rootElement, 'mobile');
@@ -7191,8 +7752,8 @@ Handsontable.Core = function Core(rootElement, userSettings) {
   this.validateCell = function(value, cellProperties, callback, source) {
     var validator = instance.getCellValidator(cellProperties);
     function done(valid) {
-      var col = cellProperties.col,
-          row = cellProperties.row,
+      var col = cellProperties.logicalCol,
+          row = cellProperties.logicalRow,
           td = instance.getCell(row, col, true);
       if (td) {
         instance.view.wt.wtSettings.settings.cellRenderer(row, col, td);
@@ -7344,9 +7905,13 @@ Handsontable.Core = function Core(rootElement, userSettings) {
       instance.dataType = 'object';
     }
     datamap = new DataMap(instance, priv, GridSettings);
+    dataSource.data = data;
+    dataSource.dataType = instance.dataType;
+    dataSource.colToProp = datamap.colToProp.bind(datamap);
+    dataSource.propToCol = datamap.propToCol.bind(datamap);
     clearCellSettingCache();
     grid.adjustRowsAndCols();
-    Handsontable.hooks.run(instance, 'afterLoadData');
+    Handsontable.hooks.run(instance, 'afterLoadData', priv.firstRun);
     if (priv.firstRun) {
       priv.firstRun = [null, 'loadData'];
     } else {
@@ -7534,23 +8099,27 @@ Handsontable.Core = function Core(rootElement, userSettings) {
     range = datamap.getRange(new WalkontableCellCoords(0, datamap.propToCol(prop)), new WalkontableCellCoords(priv.settings.data.length - 1, datamap.propToCol(prop)), datamap.DESTINATION_RENDERER);
     return out.concat.apply(out, range);
   };
-  this.getSourceDataAtCol = function(col) {
-    var out = [],
-        data = priv.settings.data;
-    for (var i = 0; i < data.length; i++) {
-      out.push(data[i][col]);
+  this.getSourceData = function(r, c, r2, c2) {
+    var data;
+    if (r === void 0) {
+      data = dataSource.getData();
+    } else {
+      data = dataSource.getByRange(new WalkontableCellCoords(r, c), new WalkontableCellCoords(r2, c2));
     }
-    return out;
+    return data;
+  };
+  this.getSourceDataAtCol = function(column) {
+    return dataSource.getAtColumn(column);
   };
   this.getSourceDataAtRow = function(row) {
-    return priv.settings.data[row];
+    return dataSource.getAtRow(row);
   };
   this.getDataAtRow = function(row) {
     var data = datamap.getRange(new WalkontableCellCoords(row, 0), new WalkontableCellCoords(row, this.countCols() - 1), datamap.DESTINATION_RENDERER);
     return data[0];
   };
   this.getDataType = function(rowFrom, columnFrom, rowTo, columnTo) {
-    var $__18 = this;
+    var $__19 = this;
     var previousType = null;
     var currentType = null;
     if (rowFrom === void 0) {
@@ -7569,7 +8138,7 @@ Handsontable.Core = function Core(rootElement, userSettings) {
     rangeEach(Math.min(rowFrom, rowTo), Math.max(rowFrom, rowTo), (function(row) {
       var isTypeEqual = true;
       rangeEach(Math.min(columnFrom, columnTo), Math.max(columnFrom, columnTo), (function(column) {
-        var cellType = $__18.getCellMeta(row, column);
+        var cellType = $__19.getCellMeta(row, column);
         currentType = cellType.type;
         if (previousType) {
           isTypeEqual = previousType === currentType;
@@ -7615,6 +8184,8 @@ Handsontable.Core = function Core(rootElement, userSettings) {
   this.getCellMeta = function(row, col) {
     var prop = datamap.colToProp(col),
         cellProperties;
+    var logicalRow = row;
+    var logicalCol = col;
     row = translateRowIndex(row);
     col = translateColIndex(col);
     if (!priv.columnSettings[col]) {
@@ -7629,6 +8200,8 @@ Handsontable.Core = function Core(rootElement, userSettings) {
     cellProperties = priv.cellSettings[row][col];
     cellProperties.row = row;
     cellProperties.col = col;
+    cellProperties.logicalRow = logicalRow;
+    cellProperties.logicalCol = logicalCol;
     cellProperties.prop = prop;
     cellProperties.instance = instance;
     Handsontable.hooks.run(instance, 'beforeGetCellMeta', row, col, cellProperties);
@@ -7683,22 +8256,23 @@ Handsontable.Core = function Core(rootElement, userSettings) {
     waitingForValidator.checkIfQueueIsEmpty();
   };
   this.getRowHeader = function(row) {
-    if (row === void 0) {
-      var out = [];
-      for (var i = 0,
-          ilen = instance.countRows(); i < ilen; i++) {
-        out.push(instance.getRowHeader(i));
-      }
-      return out;
-    } else if (Array.isArray(priv.settings.rowHeaders) && priv.settings.rowHeaders[row] !== void 0) {
-      return priv.settings.rowHeaders[row];
-    } else if (typeof priv.settings.rowHeaders === 'function') {
-      return priv.settings.rowHeaders(row);
-    } else if (priv.settings.rowHeaders && typeof priv.settings.rowHeaders !== 'string' && typeof priv.settings.rowHeaders !== 'number') {
-      return row + 1;
-    } else {
-      return priv.settings.rowHeaders;
+    var rowHeader = priv.settings.rowHeaders;
+    if (row !== void 0) {
+      row = Handsontable.hooks.run(instance, 'modifyRowHeader', row);
     }
+    if (row === void 0) {
+      rowHeader = [];
+      rangeEach(instance.countRows() - 1, (function(i) {
+        rowHeader.push(instance.getRowHeader(i));
+      }));
+    } else if (Array.isArray(rowHeader) && rowHeader[row] !== void 0) {
+      rowHeader = rowHeader[row];
+    } else if (typeof rowHeader === 'function') {
+      rowHeader = rowHeader(row);
+    } else if (rowHeader && typeof rowHeader !== 'string' && typeof rowHeader !== 'number') {
+      rowHeader = row + 1;
+    }
+    return rowHeader;
   };
   this.hasRowHeaders = function() {
     return !!priv.settings.rowHeaders;
@@ -7716,6 +8290,7 @@ Handsontable.Core = function Core(rootElement, userSettings) {
     return false;
   };
   this.getColHeader = function(col) {
+    col = Handsontable.hooks.run(instance, 'modifyColHeader', col);
     if (col === void 0) {
       var out = [];
       for (var i = 0,
@@ -7790,8 +8365,11 @@ Handsontable.Core = function Core(rootElement, userSettings) {
     height = Handsontable.hooks.run(instance, 'modifyRowHeight', height, row);
     return height;
   };
+  this.countSourceRows = function() {
+    return this.getSourceData().length;
+  };
   this.countRows = function() {
-    return priv.settings.data.length;
+    return datamap.getLength();
   };
   this.countCols = function() {
     if (instance.dataType === 'object' || instance.dataType === 'function') {
@@ -7942,6 +8520,10 @@ Handsontable.Core = function Core(rootElement, userSettings) {
     if (instance.view) {
       instance.view.destroy();
     }
+    if (dataSource) {
+      dataSource.destroy();
+    }
+    dataSource = null;
     empty(instance.rootElement);
     eventManager.destroy();
     Handsontable.hooks.run(instance, 'afterDestroy');
@@ -8139,7 +8721,7 @@ DefaultSettings.prototype = {
 Handsontable.DefaultSettings = DefaultSettings;
 
 //# 
-},{"3rdparty/walkontable/src/calculator/viewportColumns":15,"3rdparty/walkontable/src/cell/coords":17,"3rdparty/walkontable/src/cell/range":18,"3rdparty/walkontable/src/selection":30,"dataMap":37,"editorManager":38,"eventManager":51,"helpers/array":52,"helpers/data":54,"helpers/dom/element":55,"helpers/number":59,"helpers/object":60,"helpers/setting":61,"helpers/string":62,"numeral":"numeral","plugins":66,"renderers":97,"tableView":106}],37:[function(require,module,exports){
+},{"3rdparty/walkontable/src/calculator/viewportColumns":21,"3rdparty/walkontable/src/cell/coords":23,"3rdparty/walkontable/src/cell/range":24,"3rdparty/walkontable/src/selection":36,"dataMap":43,"dataSource":44,"editorManager":45,"eventManager":58,"helpers/array":59,"helpers/data":61,"helpers/dom/element":62,"helpers/number":66,"helpers/object":67,"helpers/setting":68,"helpers/string":69,"numeral":"numeral","plugins":75,"renderers":106,"tableView":115}],43:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   DataMap: {get: function() {
@@ -8152,6 +8734,7 @@ var $__SheetClip__,
     $__helpers_47_setting__,
     $__helpers_47_object__,
     $__helpers_47_array__,
+    $__helpers_47_number__,
     $__multiMap__;
 var SheetClip = ($__SheetClip__ = require("SheetClip"), $__SheetClip__ && $__SheetClip__.__esModule && $__SheetClip__ || {default: $__SheetClip__}).default;
 var cellMethodLookupFactory = ($__helpers_47_data__ = require("helpers/data"), $__helpers_47_data__ && $__helpers_47_data__.__esModule && $__helpers_47_data__ || {default: $__helpers_47_data__}).cellMethodLookupFactory;
@@ -8162,6 +8745,7 @@ var $__3 = ($__helpers_47_object__ = require("helpers/object"), $__helpers_47_ob
 var $__4 = ($__helpers_47_array__ = require("helpers/array"), $__helpers_47_array__ && $__helpers_47_array__.__esModule && $__helpers_47_array__ || {default: $__helpers_47_array__}),
     extendArray = $__4.extendArray,
     to2dArray = $__4.to2dArray;
+var rangeEach = ($__helpers_47_number__ = require("helpers/number"), $__helpers_47_number__ && $__helpers_47_number__.__esModule && $__helpers_47_number__ || {default: $__helpers_47_number__}).rangeEach;
 var MultiMap = ($__multiMap__ = require("multiMap"), $__multiMap__ && $__multiMap__.__esModule && $__multiMap__ || {default: $__multiMap__}).MultiMap;
 function DataMap(instance, priv, GridSettings) {
   this.instance = instance;
@@ -8259,12 +8843,12 @@ DataMap.prototype.createRow = function(index, amount, createdAutomatically) {
   if (!amount) {
     amount = 1;
   }
-  if (typeof index !== 'number' || index >= this.instance.countRows()) {
-    index = this.instance.countRows();
+  if (typeof index !== 'number' || index >= this.instance.countSourceRows()) {
+    index = this.instance.countSourceRows();
   }
   currentIndex = index;
   var maxRows = this.instance.getSettings().maxRows;
-  while (numberOfCreatedRows < amount && this.instance.countRows() < maxRows) {
+  while (numberOfCreatedRows < amount && this.instance.countSourceRows() < maxRows) {
     if (this.instance.dataType === 'array') {
       row = [];
       for (var c = 0; c < colCount; c++) {
@@ -8276,7 +8860,7 @@ DataMap.prototype.createRow = function(index, amount, createdAutomatically) {
       row = {};
       deepExtend(row, this.getSchema());
     }
-    if (index === this.instance.countRows()) {
+    if (index === this.instance.countSourceRows()) {
       this.dataSource.push(row);
     } else {
       this.dataSource.splice(index, 0, row);
@@ -8292,7 +8876,7 @@ DataMap.prototype.createCol = function(index, amount, createdAutomatically) {
   if (!this.instance.isColumnModificationAllowed()) {
     throw new Error('Cannot create new column. When data source in an object, ' + 'you can only have as much columns as defined in first data row, data schema or in the \'columns\' setting.' + 'If you want to be able to add new columns, you have to use array datasource.');
   }
-  var rlen = this.instance.countRows(),
+  var rlen = this.instance.countSourceRows(),
       data = this.dataSource,
       constructor,
       numberOfCreatedCols = 0,
@@ -8332,9 +8916,9 @@ DataMap.prototype.removeRow = function(index, amount) {
   if (typeof index !== 'number') {
     index = -amount;
   }
-  index = (this.instance.countRows() + index) % this.instance.countRows();
+  index = (this.instance.countSourceRows() + index) % this.instance.countSourceRows();
   var logicRows = this.physicalRowsToLogical(index, amount);
-  var actionWasNotCancelled = Handsontable.hooks.run(this.instance, 'beforeRemoveRow', index, amount);
+  var actionWasNotCancelled = Handsontable.hooks.run(this.instance, 'beforeRemoveRow', index, amount, logicRows);
   if (actionWasNotCancelled === false) {
     return;
   }
@@ -8344,7 +8928,7 @@ DataMap.prototype.removeRow = function(index, amount) {
   });
   data.length = 0;
   Array.prototype.push.apply(data, newData);
-  Handsontable.hooks.run(this.instance, 'afterRemoveRow', index, amount);
+  Handsontable.hooks.run(this.instance, 'afterRemoveRow', index, amount, logicRows);
   this.instance.forceFullRender = true;
 };
 DataMap.prototype.removeCol = function(index, amount) {
@@ -8364,7 +8948,7 @@ DataMap.prototype.removeCol = function(index, amount) {
   }
   var data = this.dataSource;
   for (var r = 0,
-      rlen = this.instance.countRows(); r < rlen; r++) {
+      rlen = this.instance.countSourceRows(); r < rlen; r++) {
     data[r].splice(index, amount);
   }
   this.priv.columnSettings.splice(index, amount);
@@ -8418,9 +9002,11 @@ DataMap.prototype.get = function(row, prop) {
     return out;
   } else if (typeof prop === 'function') {
     return prop(this.dataSource.slice(row, row + 1)[0]);
-  } else {
-    return this.dataSource[row] ? this.dataSource[row][prop] : null;
   }
+  if (this.dataSource[row] && this.dataSource[row].hasOwnProperty && this.dataSource[row].hasOwnProperty(prop)) {
+    return this.dataSource[row][prop];
+  }
+  return null;
 };
 var copyableLookup = cellMethodLookupFactory('copyable', false);
 DataMap.prototype.getCopyable = function(row, prop) {
@@ -8449,7 +9035,7 @@ DataMap.prototype.set = function(row, prop, value, source) {
   }
 };
 DataMap.prototype.physicalRowsToLogical = function(index, amount) {
-  var totalRows = this.instance.countRows();
+  var totalRows = this.instance.countSourceRows();
   var physicRow = (totalRows + index) % totalRows;
   var logicRows = [];
   var rowsToRemove = amount;
@@ -8463,14 +9049,36 @@ DataMap.prototype.physicalRowsToLogical = function(index, amount) {
   return logicRows;
 };
 DataMap.prototype.clear = function() {
-  for (var r = 0; r < this.instance.countRows(); r++) {
+  for (var r = 0; r < this.instance.countSourceRows(); r++) {
     for (var c = 0; c < this.instance.countCols(); c++) {
       this.set(r, this.colToProp(c), '');
     }
   }
 };
+DataMap.prototype.getLength = function() {
+  var $__7 = this;
+  var length = this.instance.countSourceRows();
+  rangeEach(this.instance.countSourceRows() - 1, (function(row) {
+    row = Handsontable.hooks.run($__7.instance, 'modifyRow', row);
+    if (row === null) {
+      length--;
+    }
+  }));
+  return length;
+};
 DataMap.prototype.getAll = function() {
-  return this.dataSource;
+  var start = {
+    row: 0,
+    col: 0
+  };
+  var end = {
+    row: Math.max(this.instance.countSourceRows() - 1, 0),
+    col: Math.max(this.instance.countCols() - 1, 0)
+  };
+  if (start.row - end.row === 0 && !this.instance.countSourceRows()) {
+    return [];
+  }
+  return this.getRange(start, end, DataMap.prototype.DESTINATION_RENDERER);
 };
 DataMap.prototype.getRange = function(start, end, destination) {
   var r,
@@ -8478,16 +9086,24 @@ DataMap.prototype.getRange = function(start, end, destination) {
       c,
       clen,
       output = [],
-      row;
+      row,
+      rowExists;
   var getFn = destination === this.DESTINATION_CLIPBOARD_GENERATOR ? this.getCopyable : this.get;
   rlen = Math.max(start.row, end.row);
   clen = Math.max(start.col, end.col);
   for (r = Math.min(start.row, end.row); r <= rlen; r++) {
     row = [];
+    var physicalRow = Handsontable.hooks.run(this.instance, 'modifyRow', row);
     for (c = Math.min(start.col, end.col); c <= clen; c++) {
+      var rowValue;
+      if (physicalRow === null) {
+        break;
+      }
       row.push(getFn.call(this, r, this.colToProp(c)));
     }
-    output.push(row);
+    if (physicalRow !== null) {
+      output.push(row);
+    }
   }
   return output;
 };
@@ -8501,7 +9117,82 @@ DataMap.prototype.getCopyableText = function(start, end) {
 Handsontable.DataMap = DataMap;
 
 //# 
-},{"SheetClip":"SheetClip","helpers/array":52,"helpers/data":54,"helpers/object":60,"helpers/setting":61,"multiMap":64}],38:[function(require,module,exports){
+},{"SheetClip":"SheetClip","helpers/array":59,"helpers/data":61,"helpers/number":66,"helpers/object":67,"helpers/setting":68,"multiMap":73}],44:[function(require,module,exports){
+"use strict";
+Object.defineProperties(exports, {
+  DataSource: {get: function() {
+      return DataSource;
+    }},
+  __esModule: {value: true}
+});
+var $__helpers_47_data__,
+    $__helpers_47_setting__,
+    $__helpers_47_object__,
+    $__helpers_47_array__,
+    $__helpers_47_number__;
+var cellMethodLookupFactory = ($__helpers_47_data__ = require("helpers/data"), $__helpers_47_data__ && $__helpers_47_data__.__esModule && $__helpers_47_data__ || {default: $__helpers_47_data__}).cellMethodLookupFactory;
+var columnFactory = ($__helpers_47_setting__ = require("helpers/setting"), $__helpers_47_setting__ && $__helpers_47_setting__.__esModule && $__helpers_47_setting__ || {default: $__helpers_47_setting__}).columnFactory;
+var $__2 = ($__helpers_47_object__ = require("helpers/object"), $__helpers_47_object__ && $__helpers_47_object__.__esModule && $__helpers_47_object__ || {default: $__helpers_47_object__}),
+    duckSchema = $__2.duckSchema,
+    deepExtend = $__2.deepExtend;
+var $__3 = ($__helpers_47_array__ = require("helpers/array"), $__helpers_47_array__ && $__helpers_47_array__.__esModule && $__helpers_47_array__ || {default: $__helpers_47_array__}),
+    extendArray = $__3.extendArray,
+    arrayEach = $__3.arrayEach;
+var rangeEach = ($__helpers_47_number__ = require("helpers/number"), $__helpers_47_number__ && $__helpers_47_number__.__esModule && $__helpers_47_number__ || {default: $__helpers_47_number__}).rangeEach;
+var DataSource = function DataSource(hotInstance, dataSource) {
+  this.hot = hotInstance;
+  this.data = dataSource;
+  this.dataType = 'array';
+  this.colToProp = (function() {});
+  this.propToCol = (function() {});
+};
+($traceurRuntime.createClass)(DataSource, {
+  getData: function() {
+    return this.data;
+  },
+  getAtColumn: function(column) {
+    var $__5 = this;
+    var result = [];
+    arrayEach(this.data, (function(row) {
+      return result.push(row[$__5.colToProp(column)]);
+    }));
+    return result;
+  },
+  getAtRow: function(row) {
+    return this.data[row];
+  },
+  getByRange: function(start, end) {
+    var $__5 = this;
+    var startRow = Math.min(start.row, end.row);
+    var startCol = Math.min(start.col, end.col);
+    var endRow = Math.max(start.row, end.row);
+    var endCol = Math.max(start.col, end.col);
+    var result = [];
+    rangeEach(startRow, endRow, (function(currentRow) {
+      var row = $__5.getAtRow(currentRow);
+      var newRow;
+      if ($__5.dataType === 'array') {
+        newRow = row.slice(startCol, endCol);
+      } else if ($__5.dataType === 'object') {
+        newRow = {};
+        rangeEach(startCol, endCol, (function(column) {
+          var prop = $__5.colToProp(column);
+          newRow[prop] = row[prop];
+        }));
+      }
+      result.push(newRow);
+    }));
+    return result;
+  },
+  destroy: function() {
+    this.data = null;
+    this.hot = null;
+  }
+}, {});
+;
+
+//# 
+},{"helpers/array":59,"helpers/data":61,"helpers/number":66,"helpers/object":67,"helpers/setting":68}],45:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   EditorManager: {get: function() {
@@ -8797,7 +9488,7 @@ function EditorManager(instance, priv, selection) {
 }
 
 //# 
-},{"3rdparty/walkontable/src/cell/coords":17,"editors":39,"eventManager":51,"helpers/dom/event":56,"helpers/unicode":63}],39:[function(require,module,exports){
+},{"3rdparty/walkontable/src/cell/coords":23,"editors":46,"eventManager":58,"helpers/dom/event":63,"helpers/unicode":70}],46:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   registerEditor: {get: function() {
@@ -8879,7 +9570,7 @@ function hasEditor(editorName) {
 }
 
 //# 
-},{"helpers/string":62}],40:[function(require,module,exports){
+},{"helpers/string":69}],47:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   BaseEditor: {get: function() {
@@ -9086,7 +9777,7 @@ BaseEditor.prototype.checkEditorSection = function() {
 };
 
 //# 
-},{"3rdparty/walkontable/src/cell/coords":17,"helpers/mixed":58}],41:[function(require,module,exports){
+},{"3rdparty/walkontable/src/cell/coords":23,"helpers/mixed":65}],48:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   AutocompleteEditor: {get: function() {
@@ -9350,7 +10041,7 @@ AutocompleteEditor.prototype.allowKeyEventPropagation = function(keyCode) {
 registerEditor('autocomplete', AutocompleteEditor);
 
 //# 
-},{"editors":39,"handsontableEditor":45,"helpers/array":52,"helpers/dom/element":55,"helpers/mixed":58,"helpers/unicode":63}],42:[function(require,module,exports){
+},{"editors":46,"handsontableEditor":52,"helpers/array":59,"helpers/dom/element":62,"helpers/mixed":65,"helpers/unicode":70}],49:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   CheckboxEditor: {get: function() {
@@ -9387,7 +10078,7 @@ var $CheckboxEditor = CheckboxEditor;
 registerEditor('checkbox', CheckboxEditor);
 
 //# 
-},{"_baseEditor":40,"editors":39,"helpers/dom/element":55}],43:[function(require,module,exports){
+},{"_baseEditor":47,"editors":46,"helpers/dom/element":62}],50:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   DateEditor: {get: function() {
@@ -9574,7 +10265,7 @@ var $DateEditor = DateEditor;
 registerEditor('date', DateEditor);
 
 //# 
-},{"editors":39,"eventManager":51,"helpers/dom/element":55,"helpers/dom/event":56,"helpers/object":60,"helpers/unicode":63,"moment":undefined,"pikaday":undefined,"textEditor":50}],44:[function(require,module,exports){
+},{"editors":46,"eventManager":58,"helpers/dom/element":62,"helpers/dom/event":63,"helpers/object":67,"helpers/unicode":70,"moment":undefined,"pikaday":undefined,"textEditor":57}],51:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   DropdownEditor: {get: function() {
@@ -9610,7 +10301,7 @@ Handsontable.hooks.add('beforeValidate', function(value, row, col, source) {
 registerEditor('dropdown', DropdownEditor);
 
 //# 
-},{"autocompleteEditor":41,"editors":39}],45:[function(require,module,exports){
+},{"autocompleteEditor":48,"editors":46}],52:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   HandsontableEditor: {get: function() {
@@ -9761,7 +10452,7 @@ HandsontableEditor.prototype.assignHooks = function() {
 registerEditor('handsontable', HandsontableEditor);
 
 //# 
-},{"editors":39,"helpers/dom/element":55,"helpers/dom/event":56,"helpers/object":60,"helpers/unicode":63,"textEditor":50}],46:[function(require,module,exports){
+},{"editors":46,"helpers/dom/element":62,"helpers/dom/event":63,"helpers/object":67,"helpers/unicode":70,"textEditor":57}],53:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   MobileTextEditor: {get: function() {
@@ -10020,7 +10711,7 @@ MobileTextEditor.prototype.destroy = function() {
 registerEditor('mobile', MobileTextEditor);
 
 //# 
-},{"_baseEditor":40,"editors":39,"eventManager":51,"helpers/dom/element":55,"helpers/dom/event":56,"helpers/unicode":63}],47:[function(require,module,exports){
+},{"_baseEditor":47,"editors":46,"eventManager":58,"helpers/dom/element":62,"helpers/dom/event":63,"helpers/unicode":70}],54:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   NumericEditor: {get: function() {
@@ -10054,7 +10745,7 @@ var $NumericEditor = NumericEditor;
 registerEditor('numeric', NumericEditor);
 
 //# 
-},{"editors":39,"numeral":"numeral","textEditor":50}],48:[function(require,module,exports){
+},{"editors":46,"numeral":"numeral","textEditor":57}],55:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   PasswordEditor: {get: function() {
@@ -10089,7 +10780,7 @@ var $PasswordEditor = PasswordEditor;
 registerEditor('password', PasswordEditor);
 
 //# 
-},{"editors":39,"helpers/dom/element":55,"textEditor":50}],49:[function(require,module,exports){
+},{"editors":46,"helpers/dom/element":62,"textEditor":57}],56:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   SelectEditor: {get: function() {
@@ -10311,7 +11002,7 @@ SelectEditor.prototype.getEditedCell = function() {
 registerEditor('select', SelectEditor);
 
 //# 
-},{"_baseEditor":40,"editors":39,"helpers/dom/element":55,"helpers/dom/event":56,"helpers/unicode":63}],50:[function(require,module,exports){
+},{"_baseEditor":47,"editors":46,"helpers/dom/element":62,"helpers/dom/event":63,"helpers/unicode":70}],57:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   TextEditor: {get: function() {
@@ -10616,7 +11307,7 @@ TextEditor.prototype.destroy = function() {
 registerEditor('text', TextEditor);
 
 //# 
-},{"_baseEditor":40,"autoResize":"autoResize","editors":39,"eventManager":51,"helpers/dom/element":55,"helpers/dom/event":56,"helpers/unicode":63}],51:[function(require,module,exports){
+},{"_baseEditor":47,"autoResize":"autoResize","editors":46,"eventManager":58,"helpers/dom/element":62,"helpers/dom/event":63,"helpers/unicode":70}],58:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   EventManager: {get: function() {
@@ -10813,7 +11504,7 @@ function eventManager(context) {
 }
 
 //# 
-},{"helpers/browser":53,"helpers/dom/element":55}],52:[function(require,module,exports){
+},{"helpers/browser":60,"helpers/dom/element":62}],59:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   to2dArray: {get: function() {
@@ -10839,6 +11530,12 @@ Object.defineProperties(exports, {
     }},
   arraySum: {get: function() {
       return arraySum;
+    }},
+  arrayMax: {get: function() {
+      return arrayMax;
+    }},
+  arrayMin: {get: function() {
+      return arrayMin;
     }},
   arrayAvg: {get: function() {
       return arrayAvg;
@@ -10934,6 +11631,16 @@ function arraySum(array) {
     return (a + b);
   }), 0);
 }
+function arrayMax(array) {
+  return arrayReduce(array, (function(a, b) {
+    return (a > b ? a : b);
+  }), Array.isArray(array) ? array[0] : void 0);
+}
+function arrayMin(array) {
+  return arrayReduce(array, (function(a, b) {
+    return (a < b ? a : b);
+  }), Array.isArray(array) ? array[0] : void 0);
+}
 function arrayAvg(array) {
   if (!array.length) {
     return 0;
@@ -10956,7 +11663,7 @@ function arrayUnique(array) {
 }
 
 //# 
-},{}],53:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   isIE8: {get: function() {
@@ -11042,7 +11749,7 @@ function hasCaptionProblem() {
 }
 
 //# 
-},{}],54:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   spreadsheetColumnLabel: {get: function() {
@@ -11053,6 +11760,9 @@ Object.defineProperties(exports, {
     }},
   createSpreadsheetObjectData: {get: function() {
       return createSpreadsheetObjectData;
+    }},
+  createEmptySpreadsheetData: {get: function() {
+      return createEmptySpreadsheetData;
     }},
   translateRowsToColumns: {get: function() {
       return translateRowsToColumns;
@@ -11105,6 +11815,18 @@ function createSpreadsheetObjectData(rowCount, colCount) {
   }
   return rows;
 }
+function createEmptySpreadsheetData(rows, columns) {
+  var data = [];
+  var row;
+  for (var i = 0; i < rows; i++) {
+    row = [];
+    for (var j = 0; j < columns; j++) {
+      row.push('');
+    }
+    data.push(row);
+  }
+  return data;
+}
 function translateRowsToColumns(input) {
   var i,
       ilen,
@@ -11156,7 +11878,7 @@ function cellMethodLookupFactory(methodName, allowUndefined) {
 }
 
 //# 
-},{"object":60}],55:[function(require,module,exports){
+},{"object":67}],62:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   closest: {get: function() {
@@ -11848,7 +12570,7 @@ function cancelAnimationFrame(id) {
 }
 
 //# 
-},{"../browser":53}],56:[function(require,module,exports){
+},{"../browser":60}],63:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   stopImmediatePropagation: {get: function() {
@@ -11900,7 +12622,7 @@ function pageY(event) {
 }
 
 //# 
-},{}],57:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   proxy: {get: function() {
@@ -11973,7 +12695,7 @@ function throttleAfterHits(func) {
 }
 
 //# 
-},{}],58:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   stringify: {get: function() {
@@ -12001,7 +12723,7 @@ function stringify(value) {
 }
 
 //# 
-},{}],59:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   isNumeric: {get: function() {
@@ -12009,6 +12731,9 @@ Object.defineProperties(exports, {
     }},
   rangeEach: {get: function() {
       return rangeEach;
+    }},
+  rangeEachReverse: {get: function() {
+      return rangeEachReverse;
     }},
   valueAccordingPercent: {get: function() {
       return valueAccordingPercent;
@@ -12019,28 +12744,29 @@ function isNumeric(n) {
   var t = typeof n;
   return t == 'number' ? !isNaN(n) && isFinite(n) : t == 'string' ? !n.length ? false : n.length == 1 ? /\d/.test(n) : /^\s*[+-]?\s*(?:(?:\d+(?:\.\d+)?(?:e[+-]?\d+)?)|(?:0x[a-f\d]+))\s*$/i.test(n) : t == 'object' ? !!n && typeof n.valueOf() == 'number' && !(n instanceof Date) : false;
 }
-function rangeEach(rangeFrom, rangeTo, iteratee, onlyForward) {
+function rangeEach(rangeFrom, rangeTo, iteratee) {
   var index = -1;
-  var _rangeTo = rangeTo;
-  var _rangeFrom = 0;
   if (typeof rangeTo === 'function') {
     iteratee = rangeTo;
-    _rangeTo = rangeFrom;
+    rangeTo = rangeFrom;
   } else {
     index = rangeFrom - 1;
   }
-  if (onlyForward || rangeFrom <= _rangeTo) {
-    while (++index <= _rangeTo) {
-      if (iteratee(index) === false) {
-        break;
-      }
+  while (++index <= rangeTo) {
+    if (iteratee(index) === false) {
+      break;
     }
-  } else {
-    index = rangeFrom + 1;
-    while (--index >= rangeTo) {
-      if (iteratee(index) === false) {
-        break;
-      }
+  }
+}
+function rangeEachReverse(rangeFrom, rangeTo, iteratee) {
+  var index = rangeFrom + 1;
+  if (typeof rangeTo === 'function') {
+    iteratee = rangeTo;
+    rangeTo = 0;
+  }
+  while (--index >= rangeTo) {
+    if (iteratee(index) === false) {
+      break;
     }
   }
 }
@@ -12051,7 +12777,7 @@ function valueAccordingPercent(value, percent) {
 }
 
 //# 
-},{}],60:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   duckSchema: {get: function() {
@@ -12161,8 +12887,15 @@ function mixin(Base) {
   for (var mixins = [],
       $__1 = 1; $__1 < arguments.length; $__1++)
     mixins[$__1 - 1] = arguments[$__1];
+  if (!Base.MIXINS) {
+    Base.MIXINS = [];
+  }
   arrayEach(mixins, (function(mixin) {
+    Base.MIXINS.push(mixin.MIXIN_NAME);
     objectEach(mixin, (function(value, key) {
+      if (Base.prototype[key] !== void 0) {
+        throw new Error(("Mixin conflict. Property '" + key + "' already exist and cannot be overwritten."));
+      }
       if (typeof value === 'function') {
         Base.prototype[key] = value;
       } else {
@@ -12223,9 +12956,9 @@ function getPrototypeOf(obj) {
 }
 function defineGetter(object, property, value, options) {
   options.value = value;
-  options.writable = options.writable === false ? false : true;
-  options.enumerable = options.enumerable === false ? false : true;
-  options.configurable = options.configurable === false ? false : true;
+  options.writable = options.writable !== false;
+  options.enumerable = options.enumerable !== false;
+  options.configurable = options.configurable !== false;
   Object.defineProperty(object, property, options);
 }
 function objectEach(object, iteratee) {
@@ -12240,7 +12973,7 @@ function objectEach(object, iteratee) {
 }
 
 //# 
-},{"array":52}],61:[function(require,module,exports){
+},{"array":59}],68:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   columnFactory: {get: function() {
@@ -12262,7 +12995,7 @@ function columnFactory(GridSettings, conflictList) {
 }
 
 //# 
-},{"object":60}],62:[function(require,module,exports){
+},{"object":67}],69:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   toUpperCaseFirst: {get: function() {
@@ -12341,7 +13074,7 @@ function isPercentValue(value) {
 }
 
 //# 
-},{"mixed":58,"number":59}],63:[function(require,module,exports){
+},{"mixed":65,"number":66}],70:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   KEY_CODES: {get: function() {
@@ -12430,7 +13163,154 @@ function isKey(keyCode, baseCode) {
 }
 
 //# 
-},{"array":52}],64:[function(require,module,exports){
+},{"array":59}],71:[function(require,module,exports){
+"use strict";
+Object.defineProperties(exports, {
+  arrayMapper: {get: function() {
+      return arrayMapper;
+    }},
+  __esModule: {value: true}
+});
+var $___46__46__47_helpers_47_array__,
+    $___46__46__47_helpers_47_object__,
+    $___46__46__47_helpers_47_number__;
+var $__0 = ($___46__46__47_helpers_47_array__ = require("helpers/array"), $___46__46__47_helpers_47_array__ && $___46__46__47_helpers_47_array__.__esModule && $___46__46__47_helpers_47_array__ || {default: $___46__46__47_helpers_47_array__}),
+    arrayEach = $__0.arrayEach,
+    arrayReduce = $__0.arrayReduce,
+    arrayMap = $__0.arrayMap,
+    arrayMax = $__0.arrayMax;
+var defineGetter = ($___46__46__47_helpers_47_object__ = require("helpers/object"), $___46__46__47_helpers_47_object__ && $___46__46__47_helpers_47_object__.__esModule && $___46__46__47_helpers_47_object__ || {default: $___46__46__47_helpers_47_object__}).defineGetter;
+var rangeEach = ($___46__46__47_helpers_47_number__ = require("helpers/number"), $___46__46__47_helpers_47_number__ && $___46__46__47_helpers_47_number__.__esModule && $___46__46__47_helpers_47_number__ || {default: $___46__46__47_helpers_47_number__}).rangeEach;
+var MIXIN_NAME = 'arrayMapper';
+var arrayMapper = {
+  _arrayMap: [],
+  getValueByIndex: function(index) {
+    var value;
+    return (value = this._arrayMap[index]) === void 0 ? null : value;
+  },
+  getIndexByValue: function(value) {
+    var index;
+    return (index = this._arrayMap.indexOf(value)) === -1 ? null : index;
+  },
+  insertItems: function(index) {
+    var amount = arguments[1] !== (void 0) ? arguments[1] : 1;
+    var $__3 = this;
+    var newIndex = arrayMax(this._arrayMap) + 1;
+    var addedItems = [];
+    rangeEach(amount - 1, (function(count) {
+      addedItems.push($__3._arrayMap.splice(index + count, 0, newIndex + count));
+    }));
+    return addedItems;
+  },
+  removeItems: function(index) {
+    var amount = arguments[1] !== (void 0) ? arguments[1] : 1;
+    var $__3 = this;
+    var removedItems = [];
+    if (Array.isArray(index)) {
+      var mapCopy = [].concat(this._arrayMap);
+      index.sort((function(a, b) {
+        return b - a;
+      }));
+      removedItems = arrayReduce(index, (function(acc, item) {
+        $__3._arrayMap.splice(item, 1);
+        return acc.concat(mapCopy.slice(item, item + 1));
+      }), []);
+    } else {
+      removedItems = this._arrayMap.splice(index, amount);
+    }
+    return removedItems;
+  },
+  unshiftItems: function(index) {
+    var amount = arguments[1] !== (void 0) ? arguments[1] : 1;
+    var removedItems = this.removeItems(index, amount);
+    function countRowShift(logicalRow) {
+      return arrayReduce(removedItems, (function(count, removedLogicalRow) {
+        if (logicalRow > removedLogicalRow) {
+          count++;
+        }
+        return count;
+      }), 0);
+    }
+    this._arrayMap = arrayMap(this._arrayMap, (function(logicalRow, physicalRow) {
+      var rowShift = countRowShift(logicalRow);
+      if (rowShift) {
+        logicalRow -= rowShift;
+      }
+      return logicalRow;
+    }));
+  },
+  shiftItems: function(index) {
+    var amount = arguments[1] !== (void 0) ? arguments[1] : 1;
+    var $__3 = this;
+    this._arrayMap = arrayMap(this._arrayMap, (function(row) {
+      if (row >= index) {
+        row += amount;
+      }
+      return row;
+    }));
+    rangeEach(amount - 1, (function(count) {
+      $__3._arrayMap.splice(index + count, 0, index + count);
+    }));
+  },
+  clearMap: function() {
+    this._arrayMap.length = 0;
+  }
+};
+defineGetter(arrayMapper, 'MIXIN_NAME', MIXIN_NAME, {
+  writable: false,
+  enumerable: false
+});
+;
+Handsontable.utils = Handsontable.utils || {};
+Handsontable.utils.arrayMapper = arrayMapper;
+
+//# 
+},{"helpers/array":59,"helpers/number":66,"helpers/object":67}],72:[function(require,module,exports){
+"use strict";
+Object.defineProperties(exports, {
+  localHooks: {get: function() {
+      return localHooks;
+    }},
+  __esModule: {value: true}
+});
+var $___46__46__47_helpers_47_array__,
+    $___46__46__47_helpers_47_object__;
+var arrayEach = ($___46__46__47_helpers_47_array__ = require("helpers/array"), $___46__46__47_helpers_47_array__ && $___46__46__47_helpers_47_array__.__esModule && $___46__46__47_helpers_47_array__ || {default: $___46__46__47_helpers_47_array__}).arrayEach;
+var defineGetter = ($___46__46__47_helpers_47_object__ = require("helpers/object"), $___46__46__47_helpers_47_object__ && $___46__46__47_helpers_47_object__.__esModule && $___46__46__47_helpers_47_object__ || {default: $___46__46__47_helpers_47_object__}).defineGetter;
+var MIXIN_NAME = 'localHooks';
+var localHooks = {
+  _localHooks: Object.create(null),
+  addLocalHook: function(key, callback) {
+    if (!this._localHooks[key]) {
+      this._localHooks[key] = [];
+    }
+    this._localHooks[key].push(callback);
+  },
+  runLocalHooks: function(key) {
+    for (var params = [],
+        $__3 = 1; $__3 < arguments.length; $__3++)
+      params[$__3 - 1] = arguments[$__3];
+    var $__2 = this;
+    if (this._localHooks[key]) {
+      arrayEach(this._localHooks[key], (function(callback) {
+        return callback.apply($__2, params);
+      }));
+    }
+  },
+  clearLocalHooks: function() {
+    this._localHooks = {};
+  }
+};
+defineGetter(localHooks, 'MIXIN_NAME', MIXIN_NAME, {
+  writable: false,
+  enumerable: false
+});
+;
+Handsontable.utils = Handsontable.utils || {};
+Handsontable.utils.localHooks = localHooks;
+
+//# 
+},{"helpers/array":59,"helpers/object":67}],73:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   MultiMap: {get: function() {
@@ -12482,20 +13362,17 @@ function MultiMap() {
 }
 
 //# 
-},{}],65:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   Hooks: {get: function() {
       return Hooks;
     }},
-  localHooks: {get: function() {
-      return localHooks;
-    }},
   __esModule: {value: true}
 });
 var $__helpers_47_array__,
     $__helpers_47_object__;
-var REGISTERED_HOOKS = ['afterCellMetaReset', 'afterChange', 'afterChangesObserved', 'afterColumnMove', 'afterColumnResize', 'afterContextMenuDefaultOptions', 'afterContextMenuHide', 'afterContextMenuShow', 'afterCopyLimit', 'afterCreateCol', 'afterCreateRow', 'afterDeselect', 'afterDestroy', 'afterDocumentKeyDown', 'afterGetCellMeta', 'afterGetColHeader', 'afterGetRowHeader', 'afterInit', 'afterIsMultipleSelectionCheck', 'afterLoadData', 'afterMomentumScroll', 'afterOnCellCornerMouseDown', 'afterOnCellMouseDown', 'afterOnCellMouseOver', 'afterRemoveCol', 'afterRemoveRow', 'afterRender', 'afterRenderer', 'afterScrollHorizontally', 'afterScrollVertically', 'afterSelection', 'afterSelectionByProp', 'afterSelectionEnd', 'afterSelectionEndByProp', 'afterSetCellMeta', 'afterUpdateSettings', 'afterValidate', 'beforeAutofill', 'beforeCellAlignment', 'beforeChange', 'beforeChangeRender', 'beforeDrawBorders', 'beforeGetCellMeta', 'beforeInit', 'beforeInitWalkontable', 'beforeKeyDown', 'beforeOnCellMouseDown', 'beforeRemoveCol', 'beforeRemoveRow', 'beforeRender', 'beforeSetRangeEnd', 'beforeTouchScroll', 'beforeValidate', 'construct', 'init', 'modifyCol', 'modifyColWidth', 'modifyRow', 'modifyRowHeight', 'persistentStateLoad', 'persistentStateReset', 'persistentStateSave', 'beforeColumnSort', 'afterColumnSort', 'afterAutofillApplyValues', 'modifyCopyableRange', 'beforeColumnMove', 'afterColumnMove', 'beforeRowMove', 'afterRowMove', 'beforeColumnResize', 'afterColumnResize', 'beforeRowResize', 'afterRowResize'];
+var REGISTERED_HOOKS = ['afterCellMetaReset', 'afterChange', 'afterChangesObserved', 'afterColumnMove', 'afterColumnResize', 'afterContextMenuDefaultOptions', 'afterContextMenuHide', 'afterContextMenuShow', 'afterCopyLimit', 'afterCreateCol', 'afterCreateRow', 'afterDeselect', 'afterDestroy', 'afterDocumentKeyDown', 'afterGetCellMeta', 'afterGetColHeader', 'afterGetRowHeader', 'afterInit', 'afterIsMultipleSelectionCheck', 'afterLoadData', 'afterMomentumScroll', 'afterOnCellCornerMouseDown', 'afterOnCellMouseDown', 'afterOnCellMouseOver', 'afterRemoveCol', 'afterRemoveRow', 'afterRender', 'afterRenderer', 'afterScrollHorizontally', 'afterScrollVertically', 'afterSelection', 'afterSelectionByProp', 'afterSelectionEnd', 'afterSelectionEndByProp', 'afterSetCellMeta', 'afterUpdateSettings', 'afterValidate', 'beforeAutofill', 'beforeCellAlignment', 'beforeChange', 'beforeChangeRender', 'beforeDrawBorders', 'beforeGetCellMeta', 'beforeInit', 'beforeInitWalkontable', 'beforeKeyDown', 'beforeOnCellMouseDown', 'beforeRemoveCol', 'beforeRemoveRow', 'beforeRender', 'beforeSetRangeEnd', 'beforeTouchScroll', 'beforeValidate', 'construct', 'init', 'modifyCol', 'modifyColumnHeader', 'modifyColWidth', 'modifyRow', 'modifyRowHeader', 'modifyRowHeight', 'persistentStateLoad', 'persistentStateReset', 'persistentStateSave', 'beforeColumnSort', 'afterColumnSort', 'afterAutofillApplyValues', 'modifyCopyableRange', 'beforeColumnMove', 'afterColumnMove', 'beforeRowMove', 'afterRowMove', 'beforeColumnResize', 'afterColumnResize', 'beforeRowResize', 'afterRowResize'];
 var arrayEach = ($__helpers_47_array__ = require("helpers/array"), $__helpers_47_array__ && $__helpers_47_array__.__esModule && $__helpers_47_array__ || {default: $__helpers_47_array__}).arrayEach;
 var objectEach = ($__helpers_47_object__ = require("helpers/object"), $__helpers_47_object__ && $__helpers_47_object__.__esModule && $__helpers_47_object__ || {default: $__helpers_47_object__}).objectEach;
 var Hooks = function Hooks() {
@@ -12584,19 +13461,19 @@ var Hooks = function Hooks() {
     }
     {
       var localHandlers = this.getBucket(context)[key];
-      var index$__5 = -1;
-      var length$__6 = localHandlers ? localHandlers.length : 0;
-      if (length$__6) {
-        while (++index$__5 < length$__6) {
-          if (!localHandlers[index$__5] || localHandlers[index$__5].skip) {
+      var index$__4 = -1;
+      var length$__5 = localHandlers ? localHandlers.length : 0;
+      if (length$__5) {
+        while (++index$__4 < length$__5) {
+          if (!localHandlers[index$__4] || localHandlers[index$__4].skip) {
             continue;
           }
-          var res$__7 = localHandlers[index$__5].call(context, p1, p2, p3, p4, p5, p6);
-          if (res$__7 !== void 0) {
-            p1 = res$__7;
+          var res$__6 = localHandlers[index$__4].call(context, p1, p2, p3, p4, p5, p6);
+          if (res$__6 !== void 0) {
+            p1 = res$__6;
           }
-          if (localHandlers[index$__5] && localHandlers[index$__5].runOnce) {
-            this.remove(key, localHandlers[index$__5], context);
+          if (localHandlers[index$__4] && localHandlers[index$__4].runOnce) {
+            this.remove(key, localHandlers[index$__4], context);
           }
         }
       }
@@ -12627,36 +13504,11 @@ var Hooks = function Hooks() {
   }
 }, {});
 ;
-var localHooks = {
-  _localHooks: Object.create(null),
-  addLocalHook: function(key, callback) {
-    if (!this._localHooks[key]) {
-      this._localHooks[key] = [];
-    }
-    this._localHooks[key].push(callback);
-  },
-  runLocalHooks: function(key) {
-    for (var params = [],
-        $__4 = 1; $__4 < arguments.length; $__4++)
-      params[$__4 - 1] = arguments[$__4];
-    var $__2 = this;
-    if (this._localHooks[key]) {
-      arrayEach(this._localHooks[key], (function(callback) {
-        return callback.apply($__2, params);
-      }));
-    }
-  },
-  clearLocalHooks: function() {
-    this._localHooks = {};
-  }
-};
-;
 Handsontable.utils = Handsontable.utils || {};
 Handsontable.utils.Hooks = Hooks;
-Handsontable.utils.localHooks = localHooks;
 
 //# 
-},{"helpers/array":52,"helpers/object":60}],66:[function(require,module,exports){
+},{"helpers/array":59,"helpers/object":67}],75:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   registerPlugin: {get: function() {
@@ -12729,7 +13581,7 @@ function getPluginName(hotInstance, plugin) {
 ;
 
 //# 
-},{"helpers/object":60,"helpers/string":62}],67:[function(require,module,exports){
+},{"helpers/object":67,"helpers/string":69}],76:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   default: {get: function() {
@@ -12744,9 +13596,7 @@ var $__0 = ($___46__46__47_helpers_47_object__ = require("helpers/object"), $___
     defineGetter = $__0.defineGetter,
     objectEach = $__0.objectEach;
 var arrayEach = ($___46__46__47_helpers_47_array__ = require("helpers/array"), $___46__46__47_helpers_47_array__ && $___46__46__47_helpers_47_array__.__esModule && $___46__46__47_helpers_47_array__ || {default: $___46__46__47_helpers_47_array__}).arrayEach;
-var $__2 = ($___46__46__47_plugins__ = require("plugins"), $___46__46__47_plugins__ && $___46__46__47_plugins__.__esModule && $___46__46__47_plugins__ || {default: $___46__46__47_plugins__}),
-    getRegistredPluginNames = $__2.getRegistredPluginNames,
-    getPluginName = $__2.getPluginName;
+var getRegistredPluginNames = ($___46__46__47_plugins__ = require("plugins"), $___46__46__47_plugins__ && $___46__46__47_plugins__.__esModule && $___46__46__47_plugins__ || {default: $___46__46__47_plugins__}).getRegistredPluginNames;
 var privatePool = new WeakMap();
 var initializedPlugins = null;
 var BasePlugin = function BasePlugin(hotInstance) {
@@ -12754,9 +13604,11 @@ var BasePlugin = function BasePlugin(hotInstance) {
   defineGetter(this, 'hot', hotInstance, {writable: false});
   privatePool.set(this, {hooks: {}});
   initializedPlugins = null;
+  if (!this.constructor.name) {
+    this.constructor.name = getPluginName(this);
+  }
   this.pluginsInitializedCallbacks = [];
   this.isPluginsReady = false;
-  this.pluginName = null;
   this.enabled = false;
   this.initialized = false;
   this.hot.addHook('afterPluginsInitialized', (function() {
@@ -12771,15 +13623,15 @@ var BasePlugin = function BasePlugin(hotInstance) {
 };
 ($traceurRuntime.createClass)(BasePlugin, {
   init: function() {
-    this.pluginName = getPluginName(this.hot, this);
+    var pluginName = this.constructor.name;
     if (this.isEnabled && this.isEnabled()) {
       this.enablePlugin();
     }
     if (!initializedPlugins) {
       initializedPlugins = getRegistredPluginNames(this.hot);
     }
-    if (initializedPlugins.indexOf(this.pluginName) >= 0) {
-      initializedPlugins.splice(initializedPlugins.indexOf(this.pluginName), 1);
+    if (initializedPlugins.indexOf(pluginName) >= 0) {
+      initializedPlugins.splice(initializedPlugins.indexOf(pluginName), 1);
     }
     if (!initializedPlugins.length) {
       this.hot.runHooks('afterPluginsInitialized');
@@ -12839,25 +13691,36 @@ var BasePlugin = function BasePlugin(hotInstance) {
         this.enablePlugin();
       }
       if (this.enabled && this.isEnabled()) {
-        if (this.updatePlugin) {
-          this.updatePlugin();
-        }
+        this.updatePlugin();
       }
     }
   },
   updatePlugin: function() {},
   destroy: function() {
+    var $__3 = this;
     if (this.eventManager) {
       this.eventManager.destroy();
     }
     this.clearHooks();
+    objectEach(this, (function(value, property) {
+      if (property !== 'hot') {
+        $__3[property] = null;
+      }
+    }));
     delete this.hot;
   }
 }, {});
+function getPluginName(plugin) {
+  var name = plugin.constructor.name;
+  if (!name) {
+    name = plugin.constructor.toString().match(/^function\s*([^\s(]+)/)[1];
+  }
+  return name;
+}
 var $__default = BasePlugin;
 
 //# 
-},{"helpers/array":52,"helpers/object":60,"plugins":66}],68:[function(require,module,exports){
+},{"helpers/array":59,"helpers/object":67,"plugins":75}],77:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   AutoColumnSize: {get: function() {
@@ -13129,7 +13992,7 @@ var $AutoColumnSize = AutoColumnSize;
 registerPlugin('autoColumnSize', AutoColumnSize);
 
 //# 
-},{"3rdparty/walkontable/src/calculator/viewportColumns":15,"_base":67,"helpers/array":52,"helpers/dom/element":55,"helpers/number":59,"helpers/object":60,"helpers/string":62,"plugins":66,"utils/ghostTable":107,"utils/samplesGenerator":108}],69:[function(require,module,exports){
+},{"3rdparty/walkontable/src/calculator/viewportColumns":21,"_base":76,"helpers/array":59,"helpers/dom/element":62,"helpers/number":66,"helpers/object":67,"helpers/string":69,"plugins":75,"utils/ghostTable":116,"utils/samplesGenerator":117}],78:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   AutoRowSize: {get: function() {
@@ -13434,7 +14297,7 @@ var $AutoRowSize = AutoRowSize;
 registerPlugin('autoRowSize', AutoRowSize);
 
 //# 
-},{"_base":67,"helpers/array":52,"helpers/dom/element":55,"helpers/number":59,"helpers/object":60,"helpers/string":62,"plugins":66,"utils/ghostTable":107,"utils/samplesGenerator":108}],70:[function(require,module,exports){
+},{"_base":76,"helpers/array":59,"helpers/dom/element":62,"helpers/number":66,"helpers/object":67,"helpers/string":69,"plugins":75,"utils/ghostTable":116,"utils/samplesGenerator":117}],79:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   Autofill: {get: function() {
@@ -13685,15 +14548,16 @@ Handsontable.hooks.add('afterInit', function() {
 Handsontable.Autofill = Autofill;
 
 //# 
-},{"3rdparty/walkontable/src/cell/coords":17,"eventManager":51,"helpers/dom/element":55,"plugins":66}],71:[function(require,module,exports){
+},{"3rdparty/walkontable/src/cell/coords":23,"eventManager":58,"helpers/dom/element":62,"plugins":75}],80:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
-  default: {get: function() {
-      return $__default;
+  ColumnSorting: {get: function() {
+      return ColumnSorting;
     }},
   __esModule: {value: true}
 });
 var $___46__46__47__46__46__47_helpers_47_dom_47_element__,
+    $___46__46__47__46__46__47_helpers_47_array__,
     $___46__46__47__46__46__47_eventManager__,
     $___46__46__47__95_base__,
     $___46__46__47__46__46__47_plugins__;
@@ -13703,6 +14567,10 @@ var $__0 = ($___46__46__47__46__46__47_helpers_47_dom_47_element__ = require("he
     hasClass = $__0.hasClass,
     index = $__0.index,
     removeClass = $__0.removeClass;
+var $__1 = ($___46__46__47__46__46__47_helpers_47_array__ = require("helpers/array"), $___46__46__47__46__46__47_helpers_47_array__ && $___46__46__47__46__46__47_helpers_47_array__.__esModule && $___46__46__47__46__46__47_helpers_47_array__ || {default: $___46__46__47__46__46__47_helpers_47_array__}),
+    arrayEach = $__1.arrayEach,
+    arrayMap = $__1.arrayMap,
+    arrayReduce = $__1.arrayReduce;
 var eventManagerObject = ($___46__46__47__46__46__47_eventManager__ = require("eventManager"), $___46__46__47__46__46__47_eventManager__ && $___46__46__47__46__46__47_eventManager__.__esModule && $___46__46__47__46__46__47_eventManager__ || {default: $___46__46__47__46__46__47_eventManager__}).eventManager;
 var BasePlugin = ($___46__46__47__95_base__ = require("_base"), $___46__46__47__95_base__ && $___46__46__47__95_base__.__esModule && $___46__46__47__95_base__ || {default: $___46__46__47__95_base__}).default;
 var registerPlugin = ($___46__46__47__46__46__47_plugins__ = require("plugins"), $___46__46__47__46__46__47_plugins__ && $___46__46__47__46__46__47_plugins__.__esModule && $___46__46__47__46__46__47_plugins__ || {default: $___46__46__47__46__46__47_plugins__}).registerPlugin;
@@ -13718,7 +14586,7 @@ var $ColumnSorting = ColumnSorting;
     return !!(this.hot.getSettings().columnSorting);
   },
   enablePlugin: function() {
-    var $__4 = this;
+    var $__5 = this;
     if (this.enabled) {
       return;
     }
@@ -13732,14 +14600,20 @@ var $ColumnSorting = ColumnSorting;
       this.enableObserveChangesPlugin();
     }
     this.bindColumnSortingAfterClick();
+    this.addHook('afterTrimRow', (function(row) {
+      return $__5.sort();
+    }));
+    this.addHook('afterUntrimRow', (function(row) {
+      return $__5.sort();
+    }));
     this.addHook('modifyRow', (function(row) {
-      return $__4.translateRow(row);
+      return $__5.translateRow(row);
     }));
     this.addHook('afterUpdateSettings', (function() {
-      return $__4.onAfterUpdateSettings();
+      return $__5.onAfterUpdateSettings();
     }));
     this.addHook('afterGetColHeader', (function(col, TH) {
-      return $__4.getColHeader(col, TH);
+      return $__5.getColHeader(col, TH);
     }));
     this.addHook('afterCreateRow', function() {
       _this.afterCreateRow.apply(_this, arguments);
@@ -13748,12 +14622,12 @@ var $ColumnSorting = ColumnSorting;
       _this.afterRemoveRow.apply(_this, arguments);
     });
     this.addHook('afterInit', (function() {
-      return $__4.sortBySettings();
+      return $__5.sortBySettings();
     }));
     this.addHook('afterLoadData', (function() {
-      $__4.hot.sortIndex = [];
-      if ($__4.hot.view) {
-        $__4.sortBySettings();
+      $__5.hot.sortIndex = [];
+      if ($__5.hot.view) {
+        $__5.sortBySettings();
       }
     }));
     if (this.hot.view) {
@@ -13924,6 +14798,7 @@ var $ColumnSorting = ColumnSorting;
   },
   sort: function() {
     if (typeof this.hot.sortOrder == 'undefined') {
+      this.hot.sortIndex.length = 0;
       return;
     }
     var colMeta,
@@ -14002,7 +14877,7 @@ var $ColumnSorting = ColumnSorting;
       }
     }
     for (var i = 0; i < amount; i++) {
-      this.hot.sortIndex.splice(index + i, 0, [index + i, this.hot.getData()[index + i][this.hot.sortColumn + this.hot.colOffset()]]);
+      this.hot.sortIndex.splice(index + i, 0, [index + i, this.hot.getSourceData()[index + i][this.hot.sortColumn + this.hot.colOffset()]]);
     }
     this.saveSortingState();
   },
@@ -14010,21 +14885,33 @@ var $ColumnSorting = ColumnSorting;
     if (!this.isSorted()) {
       return;
     }
-    var physicalRemovedIndex = this.translateRow(index);
-    this.hot.sortIndex.splice(index, amount);
-    for (var i = 0; i < this.hot.sortIndex.length; i++) {
-      if (this.hot.sortIndex[i][0] > physicalRemovedIndex) {
-        this.hot.sortIndex[i][0] -= amount;
-      }
+    var removedRows = this.hot.sortIndex.splice(index, amount);
+    removedRows = arrayMap(removedRows, (function(row) {
+      return row[0];
+    }));
+    function countRowShift(logicalRow) {
+      return arrayReduce(removedRows, (function(count, removedLogicalRow) {
+        if (logicalRow > removedLogicalRow) {
+          count++;
+        }
+        return count;
+      }), 0);
     }
+    this.hot.sortIndex = arrayMap(this.hot.sortIndex, (function(logicalRow, physicalRow) {
+      var rowShift = countRowShift(logicalRow[0]);
+      if (rowShift) {
+        logicalRow[0] -= rowShift;
+      }
+      return logicalRow;
+    }));
     this.saveSortingState();
   }
 }, {}, BasePlugin);
-var $__default = ColumnSorting;
+;
 registerPlugin('columnSorting', ColumnSorting);
 
 //# 
-},{"_base":67,"eventManager":51,"helpers/dom/element":55,"plugins":66}],72:[function(require,module,exports){
+},{"_base":76,"eventManager":58,"helpers/array":59,"helpers/dom/element":62,"plugins":75}],81:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   CommentEditor: {get: function() {
@@ -14112,7 +14999,7 @@ var $CommentEditor = CommentEditor;
 ;
 
 //# 
-},{"helpers/dom/element":55}],73:[function(require,module,exports){
+},{"helpers/dom/element":62}],82:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   Comments: {get: function() {
@@ -14404,7 +15291,7 @@ var $Comments = Comments;
 registerPlugin('comments', Comments);
 
 //# 
-},{"3rdparty/walkontable/src/cell/coords":17,"_base":67,"commentEditor":72,"eventManager":51,"helpers/dom/element":55,"plugins":66}],74:[function(require,module,exports){
+},{"3rdparty/walkontable/src/cell/coords":23,"_base":76,"commentEditor":81,"eventManager":58,"helpers/dom/element":62,"plugins":75}],83:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   CommandExecutor: {get: function() {
@@ -14477,7 +15364,7 @@ function findSubCommand(subCommandName, subCommands) {
 ;
 
 //# 
-},{"helpers/array":52}],75:[function(require,module,exports){
+},{"helpers/array":59}],84:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   ContextMenu: {get: function() {
@@ -14646,7 +15533,7 @@ Handsontable.hooks.register('afterContextMenuExecute');
 registerPlugin('contextMenu', ContextMenu);
 
 //# 
-},{"_base":67,"commandExecutor":74,"eventManager":51,"helpers/array":52,"helpers/dom/element":55,"helpers/dom/event":56,"helpers/object":60,"itemsFactory":77,"menu":78,"plugins":66,"predefinedItems":79}],76:[function(require,module,exports){
+},{"_base":76,"commandExecutor":83,"eventManager":58,"helpers/array":59,"helpers/dom/element":62,"helpers/dom/event":63,"helpers/object":67,"itemsFactory":86,"menu":87,"plugins":75,"predefinedItems":88}],85:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   Cursor: {get: function() {
@@ -14726,7 +15613,7 @@ Handsontable.plugins.utils = Handsontable.plugins.utils || {};
 Handsontable.plugins.utils.Cursor = Cursor;
 
 //# 
-},{"helpers/dom/element":55,"helpers/dom/event":56}],77:[function(require,module,exports){
+},{"helpers/dom/element":62,"helpers/dom/event":63}],86:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   ItemsFactory: {get: function() {
@@ -14845,7 +15732,7 @@ function getItems() {
 ;
 
 //# 
-},{"helpers/array":52,"helpers/object":60,"predefinedItems":79}],78:[function(require,module,exports){
+},{"helpers/array":59,"helpers/object":67,"predefinedItems":88}],87:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   Menu: {get: function() {
@@ -14860,7 +15747,7 @@ var $___46__46__47__46__46__47_helpers_47_dom_47_element__,
     $___46__46__47__46__46__47_helpers_47_object__,
     $__utils__,
     $___46__46__47__46__46__47_helpers_47_unicode__,
-    $___46__46__47__46__46__47_pluginHooks__,
+    $___46__46__47__46__46__47_mixins_47_localHooks__,
     $__predefinedItems__,
     $___46__46__47__46__46__47_helpers_47_dom_47_event__;
 var $__0 = ($___46__46__47__46__46__47_helpers_47_dom_47_element__ = require("helpers/dom/element"), $___46__46__47__46__46__47_helpers_47_dom_47_element__ && $___46__46__47__46__46__47_helpers_47_dom_47_element__.__esModule && $___46__46__47__46__46__47_helpers_47_dom_47_element__ || {default: $___46__46__47__46__46__47_helpers_47_dom_47_element__}),
@@ -14889,7 +15776,7 @@ var $__5 = ($__utils__ = require("utils"), $__utils__ && $__utils__.__esModule &
     hasSubMenu = $__5.hasSubMenu,
     normalizeSelection = $__5.normalizeSelection;
 var KEY_CODES = ($___46__46__47__46__46__47_helpers_47_unicode__ = require("helpers/unicode"), $___46__46__47__46__46__47_helpers_47_unicode__ && $___46__46__47__46__46__47_helpers_47_unicode__.__esModule && $___46__46__47__46__46__47_helpers_47_unicode__ || {default: $___46__46__47__46__46__47_helpers_47_unicode__}).KEY_CODES;
-var localHooks = ($___46__46__47__46__46__47_pluginHooks__ = require("pluginHooks"), $___46__46__47__46__46__47_pluginHooks__ && $___46__46__47__46__46__47_pluginHooks__.__esModule && $___46__46__47__46__46__47_pluginHooks__ || {default: $___46__46__47__46__46__47_pluginHooks__}).localHooks;
+var localHooks = ($___46__46__47__46__46__47_mixins_47_localHooks__ = require("mixins/localHooks"), $___46__46__47__46__46__47_mixins_47_localHooks__ && $___46__46__47__46__46__47_mixins_47_localHooks__.__esModule && $___46__46__47__46__46__47_mixins_47_localHooks__ || {default: $___46__46__47__46__46__47_mixins_47_localHooks__}).localHooks;
 var $__8 = ($__predefinedItems__ = require("predefinedItems"), $__predefinedItems__ && $__predefinedItems__.__esModule && $__predefinedItems__ || {default: $__predefinedItems__}),
     SEPARATOR = $__8.SEPARATOR,
     predefinedItems = $__8.predefinedItems;
@@ -14991,7 +15878,7 @@ var $Menu = Menu;
     if (!cell || !hasSubMenu(cell)) {
       return false;
     }
-    var dataItem = this.hotMenu.getData()[row];
+    var dataItem = this.hotMenu.getSourceDataAtRow(row);
     var subMenu = new $Menu(this.hot, {
       parent: this,
       name: dataItem.name,
@@ -15004,7 +15891,7 @@ var $Menu = Menu;
     return subMenu;
   },
   closeSubMenu: function(row) {
-    var dataItem = this.hotMenu.getData()[row];
+    var dataItem = this.hotMenu.getSourceDataAtRow(row);
     var menus = this.hotSubMenus[dataItem.key];
     if (menus) {
       menus.destroy();
@@ -15034,7 +15921,7 @@ var $Menu = Menu;
     if (!this.isOpened() || !this.hotMenu.getSelected()) {
       return;
     }
-    var selectedItem = this.hotMenu.getData()[this.hotMenu.getSelected()[0]];
+    var selectedItem = this.hotMenu.getSourceDataAtRow(this.hotMenu.getSelected()[0]);
     this.runLocalHooks('select', selectedItem, event);
     if (selectedItem.isCommand === false) {
       return;
@@ -15136,7 +16023,7 @@ var $Menu = Menu;
   },
   menuItemRenderer: function(hot, TD, row, col, prop, value) {
     var $__10 = this;
-    var item = hot.getData()[row];
+    var item = hot.getSourceDataAtRow(row);
     var wrapper = document.createElement('div');
     var isSubMenu = (function(item) {
       return item.hasOwnProperty('submenu');
@@ -15243,7 +16130,7 @@ var $Menu = Menu;
         break;
       case KEY_CODES.ENTER:
         if (selection) {
-          if (this.hotMenu.getData()[selection[0]].submenu) {
+          if (this.hotMenu.getSourceDataAtRow(selection[0]).submenu) {
             stopEvent = true;
           } else {
             this.executeCommand(event);
@@ -15319,7 +16206,7 @@ mixin(Menu, localHooks);
 ;
 
 //# 
-},{"cursor":76,"eventManager":51,"helpers/array":52,"helpers/dom/element":55,"helpers/dom/event":56,"helpers/object":60,"helpers/unicode":63,"pluginHooks":65,"predefinedItems":79,"utils":80}],79:[function(require,module,exports){
+},{"cursor":85,"eventManager":58,"helpers/array":59,"helpers/dom/element":62,"helpers/dom/event":63,"helpers/object":67,"helpers/unicode":70,"mixins/localHooks":72,"predefinedItems":88,"utils":89}],88:[function(require,module,exports){
 "use strict";
 var $__4;
 Object.defineProperties(exports, {
@@ -15874,7 +16761,7 @@ var _predefinedItems = ($__4 = {}, Object.defineProperty($__4, SEPARATOR, {
 }), $__4);
 
 //# 
-},{"helpers/number":59,"helpers/object":60,"utils":80}],80:[function(require,module,exports){
+},{"helpers/number":66,"helpers/object":67,"utils":89}],89:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   normalizeSelection: {get: function() {
@@ -16016,7 +16903,7 @@ function markLabelAsSelected(label) {
 }
 
 //# 
-},{"helpers/dom/element":55}],81:[function(require,module,exports){
+},{"helpers/dom/element":62}],90:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   ContextMenuCopyPaste: {get: function() {
@@ -16108,7 +16995,7 @@ var $ContextMenuCopyPaste = ContextMenuCopyPaste;
   onAfterContextMenuShow: function() {
     var $__6 = this;
     var contextMenu = this.hot.getPlugin('contextMenu');
-    var data = contextMenu.menu.hotMenu.getData();
+    var data = contextMenu.menu.hotMenu.getSourceData();
     arrayEach(data, (function(item, index) {
       if (item.key === 'copy') {
         var zeroClipboardInstance = new ZeroClipboard(contextMenu.menu.hotMenu.getCell(index, 0));
@@ -16148,7 +17035,7 @@ var $ContextMenuCopyPaste = ContextMenuCopyPaste;
 registerPlugin('contextMenuCopyPaste', ContextMenuCopyPaste);
 
 //# 
-},{"_base":67,"eventManager":51,"helpers/array":52,"helpers/dom/element":55,"plugins":66,"zeroclipboard":undefined}],82:[function(require,module,exports){
+},{"_base":76,"eventManager":58,"helpers/array":59,"helpers/dom/element":62,"plugins":75,"zeroclipboard":undefined}],91:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   CopyPastePlugin: {get: function() {
@@ -16173,7 +17060,9 @@ var $__2 = ($___46__46__47__46__46__47_helpers_47_unicode__ = require("helpers/u
     isCtrlKey = $__2.isCtrlKey;
 var arrayEach = ($___46__46__47__46__46__47_helpers_47_array__ = require("helpers/array"), $___46__46__47__46__46__47_helpers_47_array__ && $___46__46__47__46__46__47_helpers_47_array__.__esModule && $___46__46__47__46__46__47_helpers_47_array__ || {default: $___46__46__47__46__46__47_helpers_47_array__}).arrayEach;
 var rangeEach = ($___46__46__47__46__46__47_helpers_47_number__ = require("helpers/number"), $___46__46__47__46__46__47_helpers_47_number__ && $___46__46__47__46__46__47_helpers_47_number__.__esModule && $___46__46__47__46__46__47_helpers_47_number__ || {default: $___46__46__47__46__46__47_helpers_47_number__}).rangeEach;
-var stopImmediatePropagation = ($___46__46__47__46__46__47_helpers_47_dom_47_event__ = require("helpers/dom/event"), $___46__46__47__46__46__47_helpers_47_dom_47_event__ && $___46__46__47__46__46__47_helpers_47_dom_47_event__.__esModule && $___46__46__47__46__46__47_helpers_47_dom_47_event__ || {default: $___46__46__47__46__46__47_helpers_47_dom_47_event__}).stopImmediatePropagation;
+var $__5 = ($___46__46__47__46__46__47_helpers_47_dom_47_event__ = require("helpers/dom/event"), $___46__46__47__46__46__47_helpers_47_dom_47_event__ && $___46__46__47__46__46__47_helpers_47_dom_47_event__.__esModule && $___46__46__47__46__46__47_helpers_47_dom_47_event__ || {default: $___46__46__47__46__46__47_helpers_47_dom_47_event__}),
+    stopImmediatePropagation = $__5.stopImmediatePropagation,
+    isImmediatePropagationStopped = $__5.isImmediatePropagationStopped;
 var proxy = ($___46__46__47__46__46__47_helpers_47_function__ = require("helpers/function"), $___46__46__47__46__46__47_helpers_47_function__ && $___46__46__47__46__46__47_helpers_47_function__.__esModule && $___46__46__47__46__46__47_helpers_47_function__ || {default: $___46__46__47__46__46__47_helpers_47_function__}).proxy;
 var registerPlugin = ($___46__46__47__46__46__47_plugins__ = require("plugins"), $___46__46__47__46__46__47_plugins__ && $___46__46__47__46__46__47_plugins__.__esModule && $___46__46__47__46__46__47_plugins__ || {default: $___46__46__47__46__46__47_plugins__}).registerPlugin;
 var WalkontableCellCoords = ($___46__46__47__46__46__47_3rdparty_47_walkontable_47_src_47_cell_47_coords__ = require("3rdparty/walkontable/src/cell/coords"), $___46__46__47__46__46__47_3rdparty_47_walkontable_47_src_47_cell_47_coords__ && $___46__46__47__46__46__47_3rdparty_47_walkontable_47_src_47_cell_47_coords__.__esModule && $___46__46__47__46__46__47_3rdparty_47_walkontable_47_src_47_cell_47_coords__ || {default: $___46__46__47__46__46__47_3rdparty_47_walkontable_47_src_47_cell_47_coords__}).WalkontableCellCoords;
@@ -16247,6 +17136,9 @@ function CopyPastePlugin(instance) {
       return;
     }
     if (instance.getActiveEditor() && instance.getActiveEditor().isOpened()) {
+      return;
+    }
+    if (isImmediatePropagationStopped(event)) {
       return;
     }
     if (isCtrlKey(event.keyCode)) {
@@ -16341,7 +17233,7 @@ Handsontable.hooks.register('modifyCopyableRange');
 ;
 
 //# 
-},{"3rdparty/walkontable/src/cell/coords":17,"3rdparty/walkontable/src/cell/range":18,"SheetClip":"SheetClip","copyPaste":"copyPaste","helpers/array":52,"helpers/dom/event":56,"helpers/function":57,"helpers/number":59,"helpers/unicode":63,"plugins":66}],83:[function(require,module,exports){
+},{"3rdparty/walkontable/src/cell/coords":23,"3rdparty/walkontable/src/cell/range":24,"SheetClip":"SheetClip","copyPaste":"copyPaste","helpers/array":59,"helpers/dom/event":63,"helpers/function":64,"helpers/number":66,"helpers/unicode":70,"plugins":75}],92:[function(require,module,exports){
 "use strict";
 var $___46__46__47__46__46__47_plugins__,
     $___46__46__47__46__46__47_3rdparty_47_walkontable_47_src_47_cell_47_range__,
@@ -16678,7 +17570,7 @@ Handsontable.hooks.add('afterInit', function() {
 Handsontable.CustomBorders = CustomBorders;
 
 //# 
-},{"3rdparty/walkontable/src/cell/range":18,"3rdparty/walkontable/src/selection":30,"plugins":66}],84:[function(require,module,exports){
+},{"3rdparty/walkontable/src/cell/range":24,"3rdparty/walkontable/src/selection":36,"plugins":75}],93:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   DragToScroll: {get: function() {
@@ -16766,7 +17658,7 @@ Handsontable.hooks.add('afterOnCellCornerMouseDown', function() {
 Handsontable.plugins.DragToScroll = DragToScroll;
 
 //# 
-},{"eventManager":51,"plugins":66}],85:[function(require,module,exports){
+},{"eventManager":58,"plugins":75}],94:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   ManualColumnFreeze: {get: function() {
@@ -16923,7 +17815,7 @@ var $ManualColumnFreeze = ManualColumnFreeze;
 registerPlugin('manualColumnFreeze', ManualColumnFreeze);
 
 //# 
-},{"_base":67,"plugins":66}],86:[function(require,module,exports){
+},{"_base":76,"plugins":75}],95:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   ManualColumnMove: {get: function() {
@@ -17191,7 +18083,7 @@ Handsontable.hooks.register('beforeColumnMove');
 Handsontable.hooks.register('afterColumnMove');
 
 //# 
-},{"eventManager":51,"helpers/dom/element":55,"helpers/dom/event":56,"plugins":66}],87:[function(require,module,exports){
+},{"eventManager":58,"helpers/dom/element":62,"helpers/dom/event":63,"plugins":75}],96:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   ManualColumnResize: {get: function() {
@@ -17435,7 +18327,7 @@ var $ManualColumnResize = ManualColumnResize;
 registerPlugin('manualColumnResize', ManualColumnResize);
 
 //# 
-},{"_base.js":67,"eventManager":51,"helpers/dom/element":55,"helpers/dom/event":56,"plugins":66}],88:[function(require,module,exports){
+},{"_base.js":76,"eventManager":58,"helpers/dom/element":62,"helpers/dom/event":63,"plugins":75}],97:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   ManualRowMove: {get: function() {
@@ -17657,7 +18549,7 @@ Handsontable.hooks.register('beforeRowMove');
 Handsontable.hooks.register('afterRowMove');
 
 //# 
-},{"eventManager":51,"helpers/dom/element":55,"helpers/dom/event":56,"plugins":66}],89:[function(require,module,exports){
+},{"eventManager":58,"helpers/dom/element":62,"helpers/dom/event":63,"plugins":75}],98:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   ManualRowResize: {get: function() {
@@ -17899,7 +18791,7 @@ var $ManualRowResize = ManualRowResize;
 registerPlugin('manualRowResize', ManualRowResize);
 
 //# 
-},{"_base.js":67,"eventManager":51,"helpers/dom/element":55,"helpers/dom/event":56,"plugins":66}],90:[function(require,module,exports){
+},{"_base.js":76,"eventManager":58,"helpers/dom/element":62,"helpers/dom/event":63,"plugins":75}],99:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   MergeCells: {get: function() {
@@ -18437,7 +19329,7 @@ Handsontable.hooks.add('afterRemoveRow', onAfterRemoveRow);
 Handsontable.MergeCells = MergeCells;
 
 //# 
-},{"3rdparty/walkontable/src/cell/coords":17,"3rdparty/walkontable/src/cell/range":18,"3rdparty/walkontable/src/table":32,"helpers/dom/event":56,"plugins":66}],91:[function(require,module,exports){
+},{"3rdparty/walkontable/src/cell/coords":23,"3rdparty/walkontable/src/cell/range":24,"3rdparty/walkontable/src/table":38,"helpers/dom/event":63,"plugins":75}],100:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   MultipleSelectionHandles: {get: function() {
@@ -18724,7 +19616,7 @@ var $MultipleSelectionHandles = MultipleSelectionHandles;
 registerPlugin('multipleSelectionHandles', MultipleSelectionHandles);
 
 //# 
-},{"_base":67,"eventManager":51,"helpers/dom/element":55,"plugins":66}],92:[function(require,module,exports){
+},{"_base":76,"eventManager":58,"helpers/dom/element":62,"plugins":75}],101:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   ObserveChanges: {get: function() {
@@ -18763,7 +19655,7 @@ function createObserver() {
   instance.resumeObservingChanges = function() {
     instance.observeChangesActive = true;
   };
-  instance.observedData = instance.getData();
+  instance.observedData = instance.getSourceData();
   instance.observer = jsonpatch.observe(instance.observedData, function(patches) {
     if (instance.observeChangesActive) {
       runHookForOperation.call(instance, patches);
@@ -18878,7 +19770,7 @@ function afterTableAlter() {
 }
 
 //# 
-},{"jsonpatch":"jsonpatch","plugins":66}],93:[function(require,module,exports){
+},{"jsonpatch":"jsonpatch","plugins":75}],102:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   HandsontablePersistentState: {get: function() {
@@ -18990,7 +19882,7 @@ Handsontable.hooks.add('beforeInit', htPersistentState.init);
 Handsontable.hooks.add('afterUpdateSettings', htPersistentState.init);
 
 //# 
-},{"plugins":66}],94:[function(require,module,exports){
+},{"plugins":75}],103:[function(require,module,exports){
 "use strict";
 var $___46__46__47__46__46__47_helpers_47_dom_47_element__,
     $___46__46__47__46__46__47_renderers__;
@@ -19098,7 +19990,7 @@ Handsontable.hooks.add('afterInit', init);
 Handsontable.hooks.add('afterUpdateSettings', init);
 
 //# 
-},{"helpers/dom/element":55,"renderers":97}],95:[function(require,module,exports){
+},{"helpers/dom/element":62,"renderers":106}],104:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   TouchScroll: {get: function() {
@@ -19211,7 +20103,7 @@ var $TouchScroll = TouchScroll;
 registerPlugin('touchScroll', TouchScroll);
 
 //# 
-},{"_base":67,"helpers/dom/element":55,"plugins":66}],96:[function(require,module,exports){
+},{"_base":76,"helpers/dom/element":62,"plugins":75}],105:[function(require,module,exports){
 "use strict";
 var $___46__46__47__46__46__47_helpers_47_object__,
     $___46__46__47__46__46__47_helpers_47_dom_47_event__;
@@ -19239,7 +20131,7 @@ Handsontable.UndoRedo = function(instance) {
     plugin.done(action);
   });
   instance.addHook('beforeRemoveRow', function(index, amount) {
-    var originalData = plugin.instance.getData();
+    var originalData = plugin.instance.getSourceData();
     index = (originalData.length + index) % originalData.length;
     var removedData = originalData.slice(index, index + amount);
     var action = new Handsontable.UndoRedo.RemoveRowAction(index, removedData);
@@ -19253,7 +20145,7 @@ Handsontable.UndoRedo = function(instance) {
     plugin.done(action);
   });
   instance.addHook('beforeRemoveCol', function(index, amount) {
-    var originalData = plugin.instance.getData();
+    var originalData = plugin.instance.getSourceData();
     index = (plugin.instance.countCols() + index) % plugin.instance.countCols();
     var removedData = [];
     for (var i = 0,
@@ -19374,7 +20266,7 @@ inherit(Handsontable.UndoRedo.RemoveRowAction, Handsontable.UndoRedo.Action);
 Handsontable.UndoRedo.RemoveRowAction.prototype.undo = function(instance, undoneCallback) {
   var spliceArgs = [this.index, 0];
   Array.prototype.push.apply(spliceArgs, this.data);
-  Array.prototype.splice.apply(instance.getData(), spliceArgs);
+  Array.prototype.splice.apply(instance.getSourceData(), spliceArgs);
   instance.addHookOnce('afterRender', undoneCallback);
   instance.render();
 };
@@ -19433,7 +20325,7 @@ Handsontable.UndoRedo.RemoveColumnAction.prototype.undo = function(instance, und
   var row,
       spliceArgs;
   for (var i = 0,
-      len = instance.getData().length; i < len; i++) {
+      len = instance.getSourceData().length; i < len; i++) {
     row = instance.getSourceDataAtRow(i);
     spliceArgs = [this.index, 0];
     Array.prototype.push.apply(spliceArgs, this.data[i]);
@@ -19517,7 +20409,7 @@ Handsontable.hooks.add('afterInit', init);
 Handsontable.hooks.add('afterUpdateSettings', init);
 
 //# 
-},{"helpers/dom/event":56,"helpers/object":60}],97:[function(require,module,exports){
+},{"helpers/dom/event":63,"helpers/object":67}],106:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   registerRenderer: {get: function() {
@@ -19562,7 +20454,7 @@ function hasRenderer(rendererName) {
 ;
 
 //# 
-},{"helpers/string":62}],98:[function(require,module,exports){
+},{"helpers/string":69}],107:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   cellDecorator: {get: function() {
@@ -19604,7 +20496,7 @@ function cellDecorator(instance, TD, row, col, prop, value, cellProperties) {
 }
 
 //# 
-},{"helpers/dom/element":55,"renderers":97}],99:[function(require,module,exports){
+},{"helpers/dom/element":62,"renderers":106}],108:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   autocompleteRenderer: {get: function() {
@@ -19661,7 +20553,7 @@ function autocompleteRenderer(instance, TD, row, col, prop, value, cellPropertie
 registerRenderer('autocomplete', autocompleteRenderer);
 
 //# 
-},{"3rdparty/walkontable/src/cell/coords":17,"eventManager":51,"helpers/dom/element":55,"renderers":97}],100:[function(require,module,exports){
+},{"3rdparty/walkontable/src/cell/coords":23,"eventManager":58,"helpers/dom/element":62,"renderers":106}],109:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   checkboxRenderer: {get: function() {
@@ -19818,7 +20710,7 @@ function preventDefault(event) {
 }
 
 //# 
-},{"eventManager":51,"helpers/dom/element":55,"helpers/dom/event":56,"helpers/string":62,"helpers/unicode":63,"renderers":97}],101:[function(require,module,exports){
+},{"eventManager":58,"helpers/dom/element":62,"helpers/dom/event":63,"helpers/string":69,"helpers/unicode":70,"renderers":106}],110:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   htmlRenderer: {get: function() {
@@ -19840,7 +20732,7 @@ function htmlRenderer(instance, TD, row, col, prop, value, cellProperties) {
 registerRenderer('html', htmlRenderer);
 
 //# 
-},{"helpers/dom/element":55,"renderers":97}],102:[function(require,module,exports){
+},{"helpers/dom/element":62,"renderers":106}],111:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   numericRenderer: {get: function() {
@@ -19872,7 +20764,7 @@ function numericRenderer(instance, TD, row, col, prop, value, cellProperties) {
 registerRenderer('numeric', numericRenderer);
 
 //# 
-},{"helpers/dom/element":55,"helpers/number":59,"numeral":"numeral","renderers":97}],103:[function(require,module,exports){
+},{"helpers/dom/element":62,"helpers/number":66,"numeral":"numeral","renderers":106}],112:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   passwordRenderer: {get: function() {
@@ -19899,7 +20791,7 @@ function passwordRenderer(instance, TD, row, col, prop, value, cellProperties) {
 registerRenderer('password', passwordRenderer);
 
 //# 
-},{"helpers/dom/element":55,"renderers":97}],104:[function(require,module,exports){
+},{"helpers/dom/element":62,"renderers":106}],113:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   textRenderer: {get: function() {
@@ -19942,7 +20834,7 @@ function textRenderer(instance, TD, row, col, prop, value, cellProperties) {
 registerRenderer('text', textRenderer);
 
 //# 
-},{"helpers/dom/element":55,"helpers/mixed":58,"renderers":97}],105:[function(require,module,exports){
+},{"helpers/dom/element":62,"helpers/mixed":65,"renderers":106}],114:[function(require,module,exports){
 "use strict";
 (function(global) {
   'use strict';
@@ -20325,7 +21217,7 @@ registerRenderer('text', textRenderer);
 })();
 
 //# 
-},{}],106:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   TableView: {get: function() {
@@ -20499,8 +21391,12 @@ function TableView(instance) {
     table: table,
     stretchH: this.settings.stretchH,
     data: instance.getDataAtCell,
-    totalRows: instance.countRows,
-    totalColumns: instance.countCols,
+    totalRows: (function() {
+      return instance.countRows();
+    }),
+    totalColumns: (function() {
+      return instance.countCols();
+    }),
     fixedColumnsLeft: function() {
       return that.settings.fixedColumnsLeft;
     },
@@ -20515,24 +21411,24 @@ function TableView(instance) {
     },
     renderAllRows: that.settings.renderAllRows,
     rowHeaders: function() {
-      var arr = [];
+      var headerRenderers = [];
       if (instance.hasRowHeaders()) {
-        arr.push(function(index, TH) {
-          that.appendRowHeader(index, TH);
+        headerRenderers.push(function(row, TH) {
+          that.appendRowHeader(row, TH);
         });
       }
-      Handsontable.hooks.run(instance, 'afterGetRowHeaderRenderers', arr);
-      return arr;
+      Handsontable.hooks.run(instance, 'afterGetRowHeaderRenderers', headerRenderers);
+      return headerRenderers;
     },
     columnHeaders: function() {
-      var arr = [];
+      var headerRenderers = [];
       if (instance.hasColHeaders()) {
-        arr.push(function(index, TH) {
-          that.appendColHeader(index, TH);
+        headerRenderers.push(function(column, TH) {
+          that.appendColHeader(column, TH);
         });
       }
-      Handsontable.hooks.run(instance, 'afterGetColumnHeaderRenderers', arr);
-      return arr;
+      Handsontable.hooks.run(instance, 'afterGetColumnHeaderRenderers', headerRenderers);
+      return headerRenderers;
     },
     columnWidth: instance.getColWidth,
     rowHeight: instance.getRowHeight,
@@ -20808,7 +21704,7 @@ TableView.prototype.destroy = function() {
 ;
 
 //# 
-},{"3rdparty/walkontable/src/cell/coords":17,"3rdparty/walkontable/src/core":19,"3rdparty/walkontable/src/selection":30,"eventManager":51,"helpers/dom/element":55,"helpers/dom/event":56}],107:[function(require,module,exports){
+},{"3rdparty/walkontable/src/cell/coords":23,"3rdparty/walkontable/src/core":25,"3rdparty/walkontable/src/selection":36,"eventManager":58,"helpers/dom/element":62,"helpers/dom/event":63}],116:[function(require,module,exports){
 "use strict";
 Object.defineProperties(exports, {
   GhostTable: {get: function() {
@@ -21033,7 +21929,7 @@ Handsontable.utils = Handsontable.utils || {};
 Handsontable.utils.GhostTable = GhostTable;
 
 //# 
-},{"helpers/array":52,"helpers/dom/element":55,"helpers/mixed":58,"helpers/number":59,"helpers/object":60}],108:[function(require,module,exports){
+},{"helpers/array":59,"helpers/dom/element":62,"helpers/mixed":65,"helpers/number":66,"helpers/object":67}],117:[function(require,module,exports){
 "use strict";
 var $__7;
 Object.defineProperties(exports, {
@@ -21147,7 +22043,7 @@ Handsontable.utils = Handsontable.utils || {};
 Handsontable.utils.SamplesGenerator = SamplesGenerator;
 
 //# 
-},{"helpers/array":52,"helpers/dom/element":55,"helpers/mixed":58,"helpers/number":59,"helpers/object":60}],109:[function(require,module,exports){
+},{"helpers/array":59,"helpers/dom/element":62,"helpers/mixed":65,"helpers/number":66,"helpers/object":67}],118:[function(require,module,exports){
 "use strict";
 var $___46__46__47_helpers_47_mixed__;
 var stringify = ($___46__46__47_helpers_47_mixed__ = require("helpers/mixed"), $___46__46__47_helpers_47_mixed__ && $___46__46__47_helpers_47_mixed__.__esModule && $___46__46__47_helpers_47_mixed__ || {default: $___46__46__47_helpers_47_mixed__}).stringify;
@@ -21182,7 +22078,7 @@ function process(value, callback) {
 }
 
 //# 
-},{"helpers/mixed":58}],110:[function(require,module,exports){
+},{"helpers/mixed":65}],119:[function(require,module,exports){
 "use strict";
 var $__moment__,
     $___46__46__47_editors__;
@@ -21228,7 +22124,7 @@ var correctFormat = function correctFormat(value, dateFormat) {
 };
 
 //# 
-},{"editors":39,"moment":undefined}],111:[function(require,module,exports){
+},{"editors":46,"moment":undefined}],120:[function(require,module,exports){
 "use strict";
 Handsontable.NumericValidator = function(value, callback) {
   if (value === null) {
@@ -22829,5 +23725,5 @@ if (typeof exports !== "undefined") {
 }).call(window);
 
 //# 
-},{}]},{},[1,4,68,70,69,71,92,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,93,94,95,96,109,110,111,99,100,101,102,103,104,41,45,42,43,50,44,46,47,48,49,5,12,10,6,7,8,9,11])("numeral")
+},{}]},{},[1,4,77,79,78,80,101,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,102,103,104,105,118,119,120,108,109,110,111,112,113,48,52,49,50,57,51,53,54,55,56,5,6,7,16,14,8,9,10,11,12,13,15,17,18])("numeral")
 });

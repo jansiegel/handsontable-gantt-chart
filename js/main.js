@@ -1,10 +1,16 @@
 var hot,
   source;
+
 document.addEventListener('DOMContentLoaded', function() {
+  var barColors = {
+    SUBMITTED_FOR_APPROVAL: ['#FF880C', '#FFA547'],
+    CONTRACTED: ['#2A74D0', '#588DD0']
+  };
+
   var sourceHotContainer = document.querySelector('#source');
   source = new Handsontable(sourceHotContainer, {
     data: [
-      ['Vendor One', 'Posters', 'New York, NY', '2', '1/5/2015', '1/20/2015'],
+      ['Vendor One', 'Posters', 'New York, NY', '2', '1/12/2015', '1/20/2016'],
       ['Vendor Two', 'Malls', 'Los Angeles, CA', '1', '1/11/2015', '1/29/2015'],
       ['Vendor Three', 'Posters', 'Chicago, IL', '2', '1/15/2015', '2/20/2015'],
       ['Vendor Four', 'Malls', 'Philadelphia, PA', '1', '1/3/2015', '3/29/2015'],
@@ -45,7 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
         type: 'date',
         dateFormat: 'M/D/YYYY'
       },
-    ]
+    ],
+    columnSorting: true
   });
 
   var filterChartController = new FilterChart(source);
@@ -60,6 +67,16 @@ document.addEventListener('DOMContentLoaded', function() {
     hiddenRows: true,
     rowHeights: 26,
     ganttChart: {
+      dataSource: {
+        instance: source,
+        startDateColumn: 4,
+        endDateColumn: 5,
+        additionalData: {
+          vendor: 0,
+          format: 1,
+          market: 2
+        }
+      },
       firstWeekDay: 'monday',
       startYear: 2015
     },
@@ -68,13 +85,16 @@ document.addEventListener('DOMContentLoaded', function() {
     width: hotContainerParentWidth
   });
 
-  hot.getPlugin('ganttChart').connectToHOTInstance(source, 4, 5, {
-    vendor: 0,
-    format: 1,
-    market: 2
+  hot.getPlugin('ganttChart').setRangeBarColors({
+    // shades by row:
+    0: barColors.SUBMITTED_FOR_APPROVAL,
+    2: barColors.CONTRACTED,
+    5: barColors.CONTRACTED,
+    6: barColors.SUBMITTED_FOR_APPROVAL,
   });
 
   filterChartController.setChartInstance(hot);
   filterChartController.positionTableWithChart();
+  filterChartController.fillYearSelect(2);
   filterChartController.bindEvents();
 });

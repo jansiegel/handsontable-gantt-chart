@@ -29,6 +29,10 @@ $blue: #045ab0;
   font-family: 'Lato', sans-serif;
 }
 
+*:focus {
+  outline: none;
+}
+
 body {
   background: #fefefe;
   margin-bottom: 5em;
@@ -56,11 +60,48 @@ h1.main {
   width: span(6) + gutter();
   text-align: left;
   float: left;
-}
 
-#hot {
-  //margin: 0 auto;
-  overflow: hidden;
+  #hot {
+    //margin: 0 auto;
+    overflow: hidden;
+  }
+
+  #hot-helpers {
+    .helper-section {
+      padding: 0.5em 0 0 0;
+      font-size: 0.9em;
+      display: inline-block;
+
+      select {
+        margin-left: 1em;
+        padding: 4px 12px 4px 12px;
+        background-color: transparent;
+        border: 1px solid $blue;
+        font-size: 0.8em;
+        font-weight: 700;
+        color: $blue;
+      }
+
+      button {
+        padding: 4px 12px 4px 12px;
+        background-color: transparent;
+        border: 1px solid $blue;
+        font-size: 0.8em;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: $blue;
+        cursor: pointer;
+      }
+    }
+
+    .helper-section:first-of-type {
+      float: left;
+    }
+
+    .helper-section:last-of-type {
+      float: right;
+    }
+  }
 }
 
 #source {
@@ -89,26 +130,6 @@ h1.main {
     background: #EEE;
     text-align: center;
   }
-
-  //#visible-columns {
-  //  visibility: hidden;
-  //
-  //  padding-bottom: 5px;
-  //  border-bottom: 1px solid #F1EAEA;
-  //
-  //  .column {
-  //    display: inline-block;
-  //    font-size: 12px;
-  //
-  //    input[type=checkbox] {
-  //      margin-right: 5px;
-  //    }
-  //
-  //    label {
-  //      margin-right: 15px;
-  //    }
-  //  }
-  //}
 }
 
 #filter table {
@@ -152,6 +173,19 @@ h1.main {
     text-transform: uppercase;
     font-size: 1em;
     margin: 0.5em 0 0.5em 0;
+  }
+
+  .all-none {
+    text-transform: lowercase;
+    font-size: 0.7em;
+    margin: -0.5em 0 0.5em 0;
+    text-align: center;
+
+    a {
+      color: #045ab0;
+      text-decoration: none;
+      font-weight: bold;
+    }
   }
 
   ol {

@@ -2,6 +2,9 @@
 * {
   font-family: 'Lato', sans-serif; }
 
+*:focus {
+  outline: none; }
+
 body {
   background: #fefefe;
   margin-bottom: 5em;
@@ -30,9 +33,33 @@ h1.main {
   width: 50.60241%;
   text-align: left;
   float: left; }
-
-#hot {
-  overflow: hidden; }
+  #hot-container #hot {
+    overflow: hidden; }
+  #hot-container #hot-helpers .helper-section {
+    padding: 0.5em 0 0 0;
+    font-size: 0.9em;
+    display: inline-block; }
+    #hot-container #hot-helpers .helper-section select {
+      margin-left: 1em;
+      padding: 4px 12px 4px 12px;
+      background-color: transparent;
+      border: 1px solid #045ab0;
+      font-size: 0.8em;
+      font-weight: 700;
+      color: #045ab0; }
+    #hot-container #hot-helpers .helper-section button {
+      padding: 4px 12px 4px 12px;
+      background-color: transparent;
+      border: 1px solid #045ab0;
+      font-size: 0.8em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #045ab0;
+      cursor: pointer; }
+  #hot-container #hot-helpers .helper-section:first-of-type {
+    float: left; }
+  #hot-container #hot-helpers .helper-section:last-of-type {
+    float: right; }
 
 #source {
   width: 100%;
@@ -94,6 +121,15 @@ h1.main {
     text-transform: uppercase;
     font-size: 1em;
     margin: 0.5em 0 0.5em 0; }
+  #filter-modal .all-none {
+    text-transform: lowercase;
+    font-size: 0.7em;
+    margin: -0.5em 0 0.5em 0;
+    text-align: center; }
+    #filter-modal .all-none a {
+      color: #045ab0;
+      text-decoration: none;
+      font-weight: bold; }
   #filter-modal ol {
     margin: 0;
     list-style: none;

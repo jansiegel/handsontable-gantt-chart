@@ -6,6 +6,8 @@
  */
 function FilterChart(sourceInstance) {
 
+  var _this = this;
+
   /**
    * Handsontable instance with the Gantt Chart Plugin enabled.
    *
@@ -49,7 +51,10 @@ function FilterChart(sourceInstance) {
    */
   this.marketColumn;
 
-  sourceInstance.addHook('afterChange', onSourceChange);
+  sourceInstance.addHook('afterChange', function() {
+    return onSourceChange.apply(_this, arguments);
+  });
+  sourceInstance.addHook('afterColumnSort', onSourceSort);
 
   /**
    * Set the chart-enabled Handsontable instance.
@@ -72,29 +77,103 @@ function FilterChart(sourceInstance) {
    */
   this.bindEvents = function() {
     var _this = this;
+    var filterModalEl = document.querySelector('#filter-modal');
 
     //display modal
-    this.addEvent(document.querySelector('#filter-modal-trigger'), 'mousedown', this.toggleFilterModal);
+    this.addEvent(document.querySelectorAll('#filter-modal-trigger'), 'mousedown', this.toggleFilterModal);
 
     //appply filter changes
-    this.addEvent(document.querySelector('#filter-modal .apply'), 'mousedown', function() {
+    this.addEvent(filterModalEl.querySelectorAll('.apply'), 'mousedown', function() {
       _this.applyFiltering.call(_this);
     });
 
     //close modal
-    this.addEvent(document.querySelector('#filter-modal .cancel'), 'mousedown', this.toggleFilterModal);
-    this.addEvent(document.querySelector('#filter-modal .apply'), 'mousedown', this.toggleFilterModal);
+    this.addEvent(filterModalEl.querySelectorAll('.cancel'), 'mousedown', this.toggleFilterModal);
+    this.addEvent(filterModalEl.querySelectorAll('.apply'), 'mousedown', this.toggleFilterModal);
+
+    //select all in modal
+    this.addEvent(filterModalEl.querySelectorAll('a.all-button'), 'mousedown', function(event) {
+      return _this.modalSelectEntireColumn.apply(_this, arguments);
+    });
+
+    //select none in modal
+    this.addEvent(filterModalEl.querySelectorAll('a.none-button'), 'mousedown', function(event) {
+      return _this.modalDeselectEntireColumn.apply(_this, arguments);
+    });
+
+    // select the year to display in the chart
+    this.addEvent(document.querySelectorAll('#hot-year'), 'change', function(event) {
+      return _this.onYearSelectChange.apply(_this, arguments);
+    });
+
+    // collapse all sections in the chart
+    this.addEvent(document.querySelectorAll('#collapse-all'), 'mousedown', function(event) {
+      return _this.collapseTheChart();
+    });
+
+    // expand all sections in the chart
+    this.addEvent(document.querySelectorAll('#expand-all'), 'mousedown', function(event) {
+      return _this.expandTheChart();
+    });
   };
 
   /**
    * Add a DOM event.
    *
-   * @param {Element} element
+   * @param {NodeList} element
    * @param {Event} event
    * @param {Function} callback
    */
   this.addEvent = function(element, event, callback) {
-    element.addEventListener(event, callback);
+    for(var i = 0; i < element.length; i++) {
+      element[i].addEventListener(event, callback);
+    }
+  };
+
+  /**
+   * Sets all the checkboxes in the modal to the provided value.
+   *
+   * @param {HTMLElement} target Event target.
+   * @param {Boolean} value Value to set the checkboxes to.
+   */
+  this.setAllModalCheckboxes = function(target, value) {
+    var target = target;
+    var parent = target;
+    var checkboxes;
+
+    while (parent.className.indexOf('section') === -1) {
+      parent = parent.parentNode;
+    }
+
+    checkboxes = parent.querySelectorAll('ol li input[type=checkbox]');
+
+    for(var i = 0; i < checkboxes.length; i++) {
+      checkboxes[i].checked = value;
+    }
+  };
+
+  /**
+   * Select the entire checkbox column in the modal.
+   *
+   * @param {MouseEvent} event Mousedown event object.
+   * @returns {Boolean}
+   */
+  this.modalSelectEntireColumn = function(event) {
+    this.setAllModalCheckboxes(event.target, true);
+
+    return false;
+  };
+
+  /**
+   * Deselect the entire checkbox column in the modal.
+   *
+   * @param {MouseEvent} event Mousedown event object.
+   * @returns {Boolean}
+   */
+  this.modalDeselectEntireColumn = function(event) {
+    this.setAllModalCheckboxes(event.target, false);
+
+    return false;
   };
 
   /**
@@ -194,8 +273,6 @@ function FilterChart(sourceInstance) {
       this.filterTable.querySelector('tbody tr:nth-child(' + parseInt(hiddenFilterTableRows[i] + 1, 10) + ')').className += 'hidden';
     }
 
-    //_this.filterTable.querySelector('tbody tr:nth-child(' + parseInt(rows[i] + 1, 10) + ')').className += 'hidden';
-
     this.chartInstance.render();
   };
 
@@ -240,6 +317,44 @@ function FilterChart(sourceInstance) {
   };
 
   /**
+   * Get unique values from the provided column.
+   *
+   * @param {Number} column
+   * @returns {Array}
+   */
+  this.getUniqueColumnValues = function(column) {
+    var colValues = this.sourceInstance.getDataAtCol(column);
+    var uniqueValues = [];
+
+    for (var i = 0, colValsCount = colValues.length; i < colValsCount; i++) {
+      if (colValues[i] && uniqueValues.indexOf(colValues[i]) === -1) {
+        uniqueValues.push(colValues[i]);
+      }
+    }
+
+    return uniqueValues;
+  };
+
+  /**
+   * Clear the filter modal.
+   */
+  this.clearTheFilterModal = function() {
+    var vendorFilter = document.querySelector('#vendor-filter');
+    var formatFilter = document.querySelector('#format-filter');
+    var marketFilter = document.querySelector('#market-filter');
+
+    function removeChildren(parent) {
+      while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+      }
+    }
+
+    removeChildren(vendorFilter);
+    removeChildren(formatFilter);
+    removeChildren(marketFilter);
+  };
+
+  /**
    * Fill the filtering modal with data.
    *
    * @param {Number} vendorColumn Index of the column containing Vendor information.
@@ -251,10 +366,9 @@ function FilterChart(sourceInstance) {
     this.formatColumn = formatColumn;
     this.marketColumn = marketColumn;
 
-    var columnData = this.sourceInstance.getSettings().columns;
-    var vendorList = columnData[vendorColumn].source;
-    var formatList = columnData[formatColumn].source;
-    var marketList = columnData[marketColumn].source;
+    var vendorList = this.getUniqueColumnValues(vendorColumn);
+    var formatList = this.getUniqueColumnValues(formatColumn);
+    var marketList = this.getUniqueColumnValues(marketColumn);
 
     var vendorFilter = document.querySelector('#vendor-filter');
     var formatFilter = document.querySelector('#format-filter');
@@ -294,31 +408,6 @@ function FilterChart(sourceInstance) {
     this.filterTable.style.marginTop = chartTBODYoffset.top - filterTBODYoffset.top - 1 + 'px';
   };
 
-  //this.fillTheColumnChoices = function() {
-  //  var headers = this.sourceInstance.getColHeader();
-  //  var filterContainer = document.querySelector('#visible-columns');
-  //  var checkboxContainer = filterContainer.querySelector('.column').cloneNode(true);
-  //  var tempCheckboxContainer;
-  //  var checkbox;
-  //  var label;
-  //
-  //  while (filterContainer.firstChild) {
-  //    filterContainer.removeChild(filterContainer.firstChild);
-  //  }
-  //
-  //  for (var i = 0; i < headers.length; i++) {
-  //    tempCheckboxContainer = checkboxContainer.cloneNode(true);
-  //    checkbox = tempCheckboxContainer.querySelector('input');
-  //    label = tempCheckboxContainer.querySelector('label');
-  //
-  //    checkbox.id = 'column_' + i;
-  //    checkbox.setAttribute('checked', true);
-  //    label.innerText = headers[i];
-  //
-  //    filterContainer.appendChild(tempCheckboxContainer);
-  //  }
-  //};
-
   /**
    * Fill the filtering table with data.
    */
@@ -326,12 +415,20 @@ function FilterChart(sourceInstance) {
     var rowCount = this.sourceInstance.countRows();
     var columnCount = this.sourceInstance.countCols();
     var hotHeaders = this.sourceInstance.getColHeader();
-    var hotData = this.sourceInstance.getData();
+    var hotData = this.sourceInstance.getData(0, 0, this.sourceInstance.countRows() - 1, this.sourceInstance.countCols() - 1);
     var tableHeader = document.querySelector('#filter table thead');
     var tableBody = document.querySelector('#filter table tbody');
     var tempRow;
     var tempCell;
     var skipRow;
+
+    while (tableHeader.firstChild) {
+      tableHeader.removeChild(tableHeader.firstChild);
+    }
+
+    while (tableBody.firstChild) {
+      tableBody.removeChild(tableBody.firstChild);
+    }
 
     tempRow = document.createElement('TR');
 
@@ -340,6 +437,7 @@ function FilterChart(sourceInstance) {
       tempCell.innerHTML = hotHeaders[j];
       tempRow.appendChild(tempCell);
     }
+
     tableHeader.appendChild(tempRow);
 
     for (var i = 0; i < rowCount; i++) {
@@ -367,20 +465,80 @@ function FilterChart(sourceInstance) {
   };
 
   /**
+   * Fill the options for the year selector.
+   *
+   * @param {Number} yearOffset Number of years to display before and after the current year.
+   */
+  this.fillYearSelect = function(yearOffset) {
+    var selectEl = document.querySelector('#hot-year');
+    var currentYear = this.chartInstance.getPlugin('ganttChart').currentYear;
+    var baseYear = parseInt(currentYear - (yearOffset || 2), 10);
+    var tempOptionEl;
+
+    for (var i = baseYear; i < baseYear + 1 + (2 * yearOffset || 2); i++) {
+      tempOptionEl = document.createElement('OPTION');
+      tempOptionEl.textContent = i;
+      tempOptionEl.value = i;
+
+      if (i === currentYear) {
+        tempOptionEl.selected = 'selected';
+      }
+
+      selectEl.appendChild(tempOptionEl);
+    }
+  };
+
+  /**
+   * Update the filter table entry.
+   *
+   * @param {Number} row Row index.
+   * @param {Number} column Column index.
+   * @param {String} value Value for the update.
+   */
+  this.updateFilterTableEntry = function(row, column, value) {
+    document.querySelector('#filter tbody tr:nth-child(' + parseInt(row + 1, 10) + ') td:nth-child(' + parseInt(column + 1, 10) + ')').innerHTML = value;
+  };
+
+  /**
+   * Collapse all collapsible headers in the chart.
+   */
+  this.collapseTheChart = function() {
+    this.chartInstance.getPlugin('collapsibleColumns').collapseAll();
+  };
+
+  /**
+   * Expand all collapsible headers in the chart.
+   */
+  this.expandTheChart = function() {
+    this.chartInstance.getPlugin('collapsibleColumns').expandAll();
+  };
+
+  /**
    * Source Handsontable instance's afterChange hook callback.
    *
    * @param {Array} changes List of changes.
    * @param {String} source Change source.
    */
   function onSourceChange(changes, source) {
-    var row, col, value;
+    var row, col, oldValue, newValue;
 
     for (var i = 0; i < changes.length; i++) {
       row = changes[i][0];
       col = changes[i][1];
-      value = changes[i][3];
+      oldValue = changes[i][2];
+      newValue = changes[i][3];
 
-      document.querySelector('#filter tbody tr:nth-child(' + parseInt(row + 1, 10) + ') td:nth-child(' + parseInt(col + 1, 10) + ')').innerHTML = value;
+      this.updateFilterTableEntry(row, col, newValue);
+      this.clearTheFilterModal();
+      this.fillTheFilterModal(this.vendorColumn, this.formatColumn, this.marketColumn);
     }
+  }
+
+  this.onYearSelectChange = function(event) {
+    this.chartInstance.getPlugin('ganttChart').setYear(parseInt(event.target.value,10));
+  };
+
+  function onSourceSort(column, order) {
+    _this.fillTheFilterTable();
   }
 }
